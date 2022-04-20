@@ -5,6 +5,16 @@
   justify-content: flex-start;
   align-items: flex-start;
   cursor: pointer;
+  opacity: 1;
+  transition: all 0.3s ease;
+  visibility: visible;
+
+  &.active {
+    .entry-right {
+      transition: all 0.3s ease;
+      border-left: 2px solid $color-purple;
+    }
+  }
   
   &:hover {
     .entry-right {

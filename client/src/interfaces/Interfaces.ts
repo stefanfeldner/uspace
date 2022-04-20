@@ -3,6 +3,7 @@ export interface UserSpaceRoleType {
     username: string;
     email: string;
     picture_url?: string;
+    id?: number;
   };
 }
 

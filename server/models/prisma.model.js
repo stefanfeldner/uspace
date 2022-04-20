@@ -175,7 +175,8 @@ const returnSpaceData = async (id) => {
             select: {
               username: true,
               email: true,
-              picture_url: true
+              picture_url: true,
+              id: true,
             },
           },
         },

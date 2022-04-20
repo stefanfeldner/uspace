@@ -13,8 +13,10 @@ export const SpaceContext = createContext<SpaceDataType[]>([]);
 
 function Space() {
   const [opened, setOpened] = useState(false);
+  // TODO: Fix it to only work with posts inside a space not with all in the db
   const [spaceData, setSpaceData] = useState<SpaceDataType[]>([]);
   const { isLoading } = useAuth0();
+  const [clickedPost, setClickedPost] = useState<number>(0);
   const spaceId = useParams().id; // returns number of current space
   const url = `http://localhost:3001/spaceData/${spaceId}`;
 
@@ -48,10 +50,10 @@ function Space() {
           <div className="container">
             <div className="main-wrapper">
               <div className="main-left">
-                {spaceData && <EntryList />}
+                {spaceData && <EntryList setClickedPost={setClickedPost} />}
               </div>
               <div className="main-right">
-                {spaceData && <EntryDetail />}
+                {spaceData && <EntryDetail clickedPost={clickedPost} />}
               </div>
             </div>
           </div>
@@ -61,7 +63,7 @@ function Space() {
           size="lg"
           opened={opened}
           onClose={() => setOpened(false)}
-          title="Create a Ticket"
+          title="Post an Update"
         >
           <CreateEntryForm setOpened={setOpened} />
         </Modal>

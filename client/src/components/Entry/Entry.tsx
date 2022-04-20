@@ -1,13 +1,15 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './Entry.scss';
 import { PostType } from '../../interfaces/Interfaces';
 
 interface Incoming {
   post: PostType;
+  setClickedPost: Function;
 }
 
 function Entry(props: Incoming) {
   const { post } = props;
+  const [clicked, setClicked] = useState<boolean>(false);
 
   // format date to show MONTH DAY
   const date = new Date(post.created_at).toLocaleDateString('en-EN', {
@@ -19,8 +21,13 @@ function Entry(props: Incoming) {
   const content =
     post.content.replace(/(<([^>]+)>)/gi, '').slice(0, 90) + '...';
 
+  const changeDetails = (id: number) => {
+    props.setClickedPost(id - 1); // posts start at 1 in db - subtract one
+    setClicked(prev => !prev); // TODO: only show one as active not two
+  };
+
   return (
-    <div className="entry">
+    <div className={clicked ? 'entry active' : 'entry'} onClick={() => changeDetails(post.id)}>
       <div className="entry-left">
         <div className="entry-left-date">{date}</div>
       </div>

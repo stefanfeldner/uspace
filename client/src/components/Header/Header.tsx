@@ -28,7 +28,7 @@ function Header(props: Incoming) {
               if (props.setOpened) props.setOpened(true);
             }}
           >
-            Create a Ticket
+            Post an Update
           </button>
           <img
             onClick={showMenu}

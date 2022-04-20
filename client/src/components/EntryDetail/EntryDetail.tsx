@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import './EntryDetail.scss';
 import AvatarHoodie from '../../assets/img/avatar-hoodie.jpg';
 import CommentSection from '../CommentSection/CommentSection';
@@ -6,10 +6,13 @@ import { SpaceContext } from '../../pages/Space';
 import { SpaceDataType } from '../../interfaces/Interfaces';
 import DOMPurify from 'dompurify';
 
-function EntryDetail() {
+interface Incoming {
+  clickedPost: number;
+}
+
+function EntryDetail(props: Incoming) {
   const spaceData = useContext<SpaceDataType[]>(SpaceContext);
-  const currentPostId: number = 0; // show first post by default
-  const post = spaceData[0]?.Post[currentPostId];
+  const post = spaceData[0]?.Post[props.clickedPost];
   const username = spaceData[0]?.User_Space_Role[0]?.user?.username;
   const picture_url = spaceData[0]?.User_Space_Role[0]?.user?.picture_url;
   let date = '';
@@ -60,7 +63,7 @@ function EntryDetail() {
       <div className="entry-detail-comments">
         <div className="entry-detail-comments-title">Comments</div>
         <div className="entry-detail-comments-wrapper">
-          <CommentSection />
+          <CommentSection clickedPost={props.clickedPost} />
         </div>
       </div>
     </div>

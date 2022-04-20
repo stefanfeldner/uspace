@@ -7,17 +7,19 @@ import { SpaceDataType } from '../../interfaces/Interfaces';
 import DOMPurify from 'dompurify';
 import Comment from '../Comment/Comment';
 
-function CommentSection() {
+interface Incoming {
+  clickedPost: number;
+}
+
+function CommentSection(props: Incoming) {
   const [comment, setComment] = useState('');
   const spaceData = useContext<SpaceDataType[]>(SpaceContext);
-  const comments = spaceData[0]?.Post[0].Comment;
-  console.log(comments);
+  const comments = spaceData[0]?.Post[props.clickedPost].Comment;
   
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     if (!comment.length) return; // prevent empty submits
     setComment('');
-    console.log(comment);
   };
 
   const handleInput = (event: React.FormEvent<HTMLInputElement>) => {
@@ -27,7 +29,7 @@ function CommentSection() {
   return (
     <div className="comments">
       <div className="comments-wrapper">
-        {comments && comments.map(comment => <Comment key={comment.id} data={comment} />)}
+        {comments && comments.map(comment => <Comment key={comment.id} comment={comment} />)}
       </div>
       <div className="comments-form">
         <form onSubmit={handleSubmit}>
