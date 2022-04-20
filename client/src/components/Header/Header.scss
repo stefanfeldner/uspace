@@ -1,0 +1,101 @@
+@import '../../custom-styles.scss';
+
+.header {
+  padding: 27px 15px;
+  background-color: $color-light-grey;
+  margin-bottom: 35px;
+
+  .header-wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+
+    .header-left {
+      img {
+        width: 155px;
+      }
+    }
+
+    .header-right {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      button {
+        font-size: 0.875em;
+        font-family: $font-medium;
+        background-color: $color-purple;
+        border: none;
+        border-radius: 8px;
+        line-height: 1em;
+        padding: 13px 16px;
+        color: #fff;
+        margin-right: 24px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+
+        &:hover {
+          background-color: darken($color-purple, 5);
+          transition: all 0.3s ease;
+        }
+      }
+
+      img {
+        width: 40px;
+        height: 40px;
+        border-radius: 100%;
+        object-fit: cover;
+        cursor: pointer;
+      }
+    }
+
+    .header-menu {
+      position: absolute;
+      right: 0;
+      top: calc(100% + 10px);
+      background-color: #fff;
+      border-radius: 8px;
+      box-shadow: $shadow-default;
+      visibility: hidden;
+      opacity: 0;
+      transition: all 0.3s ease;
+      padding: 5px 10px;
+
+      a,
+      button {
+        font-size: 0.875em;
+        font-family: $font-medium;
+        padding: 10px 10px;
+        transition: all 0.3s ease;
+        color: $color-purple;
+
+        &:hover {
+          color: $color-light-green !important;
+          transition: all 0.3s ease;
+        }
+      }
+
+      &.visible {
+        visibility: visible;
+        opacity: 1;
+        transition: all 0.3s ease;
+      }
+
+      .header-menu-log-buttons button {
+        border: none;
+        margin: 0;
+        background-color: #fff;
+        cursor: pointer;
+        display: block;
+      }
+
+      .header-menu-profile a {
+        display: block;
+        color: $color-purple;
+        text-decoration: none;
+        border-bottom: 1px solid $color-border-grey;
+      }
+    }
+  }
+}

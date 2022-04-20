@@ -1,0 +1,42 @@
+// FONTS
+@font-face {
+  font-family: InterMedium;
+  src: url(./assets/fonts/Inter-Medium.ttf);
+}
+@font-face {
+  font-family: InterSemiBold;
+  src: url(./assets/fonts/Inter-SemiBold.ttf);
+}
+@font-face {
+  font-family: InterRegular;
+  src: url(./assets/fonts/Inter-Regular.ttf);
+}
+
+$font-medium: InterMedium;
+$font-semiBold: InterSemiBold;
+$font-regular: InterRegular;
+
+// FONT COLORS
+$color-headings: #000;
+$color-text: #475467;
+
+// BADGE COLORS
+$color-light-cyan: #8CBBC2;
+$color-light-blue: #78acb4;
+$color-dark-blue: #4A536B;
+$color-purple: #667085;
+$color-salmon: #FF9A8D;
+$color-light-green: #8dab88;
+$color-red: #b05d55;
+$color-violet: #a478bf;
+$color-yellow: #E8C95E;
+$color-marine: #49659F;
+
+// BACKGROUND COLORS
+$color-light-grey: #F9FAFB;
+
+// BORDER COLORS
+$color-border-grey: #E4E7EC;
+
+// BOX SHADOWS
+$shadow-default: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;

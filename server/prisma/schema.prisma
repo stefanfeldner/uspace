@@ -1,0 +1,75 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly//d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = "postgresql://postgres:password@localhost:5432/wepanion?schema=public"
+}
+
+// TODO: ADD type attributes: https://www.prisma.io/docs/concepts/components/prisma-schema/data-model#defining-attributes
+// and define optional fields
+
+model User {
+  id              Int               @id @default(autoincrement())
+  email           String            @unique
+  email_verified  Boolean
+  username        String
+  picture_url     String
+  sub             String
+  created_at      DateTime          @default(now())
+  Comment         Comment[]
+  Post            Post[]
+  User_Space_Role User_Space_Role[]
+}
+
+model Post {
+  id         Int       @id @default(autoincrement())
+  title      String
+  tags       String
+  created_at DateTime  @default(now())
+  content    String
+  user       User      @relation(fields: [user_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  user_id    Int
+  space      Space     @relation(fields: [space_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  space_id   Int
+  Comment    Comment[]
+}
+
+model Space {
+  id              Int               @id @default(autoincrement())
+  name            String
+  description     String
+  created_at      DateTime          @default(now())
+  Post            Post[]
+  User_Space_Role User_Space_Role[]
+}
+
+model User_Space_Role {
+  id       Int   @id @default(autoincrement())
+  user     User  @relation(fields: [user_id], references: [id])
+  user_id  Int
+  space    Space @relation(fields: [space_id], references: [id])
+  space_id Int
+  role     Role  @relation(fields: [role_id], references: [id])
+  role_id  Int
+}
+
+model Comment {
+  id         Int      @id @default(autoincrement())
+  content    String
+  created_at DateTime @default(now())
+  user       User     @relation(fields: [user_id], references: [id])
+  user_id    Int
+  post       Post     @relation(fields: [post_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  post_id    Int
+}
+
+model Role {
+  id              Int               @id @default(autoincrement())
+  name            String
+  User_Space_Role User_Space_Role[]
+}

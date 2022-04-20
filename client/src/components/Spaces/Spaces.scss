@@ -1,0 +1,28 @@
+@import '../../custom-styles.scss';
+
+.spaces {
+  margin-top: 80px;
+
+  .spaces-row {
+    margin-bottom: 20px;
+
+    &:first-child {
+      margin-bottom: 50px;
+    }
+    
+    .spaces-row-title {
+      font-size: 1.375em;
+      color: $color-headings;
+      line-height: 1em;
+      margin-bottom: 30px;
+    }
+    .spaces-wrapper {
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      flex-wrap: wrap;
+      margin: 0 -10px;
+    }
+  }
+
+}

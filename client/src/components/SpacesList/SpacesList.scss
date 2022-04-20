@@ -1,0 +1,43 @@
+@import '../../custom-styles.scss';
+
+.spaces-item {
+  position: relative;
+  text-align: center;
+  color: #fff;
+  margin: 10px;
+  padding: 40px 15px;
+  min-width: calc(100% / 5 - 20px); // 5 items per row
+  flex-wrap: wrap;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  box-shadow: $shadow-default;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  text-decoration: none;
+  background-color: $color-light-green;
+
+  &:hover {
+    transform: scale(1.01);
+    transition: all 0.3s ease;
+  }
+
+  img {
+    width: 20px;
+    margin-bottom: 8px;
+  }
+
+  .spaces-item-name {
+    font-size: 1em;
+    line-height: 1em;
+    margin-bottom: 10px;
+  }
+
+  .spaces-item-creator {
+    font-size: 0.8em;
+    font-family: $font-regular;
+    line-height: 1em;
+  }
+}

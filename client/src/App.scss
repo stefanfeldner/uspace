@@ -1,0 +1,17 @@
+@import './custom-styles.scss';
+
+.main {
+  .main-wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+
+    .main-left {
+      width: 45%;
+    }
+    
+    .main-right {
+      width: 55%;
+    }
+  }
+}
