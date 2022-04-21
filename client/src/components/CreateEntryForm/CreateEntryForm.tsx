@@ -3,12 +3,17 @@ import './CreateEntryForm.scss';
 import { RichTextEditor } from '@mantine/rte';
 import { TextInput, MultiSelect } from '@mantine/core';
 import DOMPurify from 'dompurify';
+import { CreatePostType, PostType } from '../../interfaces/Interfaces';
 
 interface Incoming {
   setOpened: Function;
+  space_id?: number;
+  user_id?: number;
+  setPosts: Function;
 }
 
 function CreateEntryForm(props: Incoming) {
+  const URL = process.env.REACT_APP_API + '/posts';
   const [richTextValue, setRichTextValue] = useState('');
   const [title, setTitle] = useState('');
   const [tags, setTags] = useState<string[]>([
@@ -21,26 +26,46 @@ function CreateEntryForm(props: Incoming) {
   ]);
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
 
+  const tagsArrToStr = (tags: string[]) => {
+    let tagsString: string = '';
+    tags.forEach((tag: string) => {
+      tagsString += tag + ',';
+    });
+    return tagsString;
+  };
+
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>): void => {
     event.preventDefault();
-    // setTitle('');
-    // setRichTextValue('');
-    // setTags([]);
-    // setSelectedTags([]);
 
     console.log(title);
     console.log(richTextValue);
     console.log(selectedTags);
 
-    // post_id?,
-    // created_at?,
-    // user?,
-
-    // title,
-    // content,
-    // tags,
-
+    if (props.user_id && props.space_id) {
+      const postData = {
+        title: DOMPurify.sanitize(title),
+        content: DOMPurify.sanitize(richTextValue),
+        created_at: new Date(),
+        tags: DOMPurify.sanitize(tagsArrToStr(selectedTags)),
+        user_id: props.user_id,
+        space_id: props.space_id,
+      };
+      createPost(postData);
+    }
     props.setOpened(false);
+  };
+
+  const createPost = async (data: CreatePostType) => {
+    const res = await fetch(URL, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data),
+    });
+    const post = await res.json();
+
+    props.setPosts((prevState: PostType[]) => [...prevState, post]);
   };
 
   // TODO: Fix Rich Text Editor Bugs

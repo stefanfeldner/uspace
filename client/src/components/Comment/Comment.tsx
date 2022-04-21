@@ -1,20 +1,17 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './Comment.scss';
-import AvatarGirl from '../../assets/img/avatar-girl.jpg';
 import { CommentType, UserType } from '../../interfaces/Interfaces';
-import { SpaceContext } from '../../pages/Space';
-import { SpaceDataType } from '../../interfaces/Interfaces';
 
 interface Incoming {
   comment: CommentType;
+  spaceOwnerId?: number;
 }
 
 function Comment(props: Incoming) {
   const { comment } = props;
   const [user, setUser] = useState<UserType>();
-  const spaceData = useContext<SpaceDataType[]>(SpaceContext);
-  const spaceOwnerId = spaceData[0]?.User_Space_Role[0]?.user?.id;
-  const URL = `http://localhost:3001/users/${comment.user_id}`;
+  const spaceOwnerId = props.spaceOwnerId || 0;
+  const URL = `${process.env.REACT_APP_API}/users/${comment.user_id}`;
 
   const date = new Date(comment.created_at).toLocaleTimeString('en-EN', {
     weekday: 'long',

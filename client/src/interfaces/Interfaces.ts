@@ -25,12 +25,21 @@ export interface CommentType {
 export interface PostType {
   id: number;
   content: string;
-  space_id: 2;
   tags: string;
   title: string;
-  user_id: string;
+  user_id: number;
+  space_id: number
   created_at: Date;
   Comment: CommentType[];
+}
+
+export interface CreatePostType {
+  content: string;
+  tags: string;
+  title: string;
+  user_id: number;
+  space_id: number
+  created_at: Date;
 }
 
 export interface SpaceDataType {

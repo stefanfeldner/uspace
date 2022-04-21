@@ -7,7 +7,7 @@ import SpaceWithCreatorType from '../../interfaces/Interfaces';
 
 function Spaces() {
   const { isLoading, user } = useAuth0();
-  const url = 'http://localhost:3001/spacesAndCreators';
+  const url = process.env.REACT_APP_API + '/spacesAndCreators';
   const [allSpaces, setAllSpaces] = useState<SpaceWithCreatorType[]>([]);
   const [mySpaces, setMySpaces] = useState<SpaceWithCreatorType[]>([]);
 
@@ -18,7 +18,7 @@ function Spaces() {
   const fetchSpaces = async () => {
     const spaces = await fetch(url);
     const data: SpaceWithCreatorType[] = await spaces.json();
-    console.log(data);
+    // console.log(data);
     
     setAllSpaces(data);
 

@@ -1,41 +1,44 @@
-import React, { useContext, useState } from 'react';
+import React, { useState } from 'react';
 import './CommentSection.scss';
-import AvatarGirl from '../../assets/img/avatar-girl.jpg';
-import AvatarDude from '../../assets/img/avatar-dude.jpg';
-import { SpaceContext } from '../../pages/Space';
-import { SpaceDataType } from '../../interfaces/Interfaces';
+import { CommentType } from '../../interfaces/Interfaces';
 import DOMPurify from 'dompurify';
 import Comment from '../Comment/Comment';
 
 interface Incoming {
   clickedPost: number;
+  comments: CommentType[];
+  spaceOwnerId?: number;
 }
 
 function CommentSection(props: Incoming) {
-  const [comment, setComment] = useState('');
-  const spaceData = useContext<SpaceDataType[]>(SpaceContext);
-  const comments = spaceData[0]?.Post[props.clickedPost].Comment;
-  
+  const [newComment, setNewComment] = useState('');
+  const comments = props.comments;
+
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    if (!comment.length) return; // prevent empty submits
-    setComment('');
+    if (!newComment.length) return; // prevent empty submits
+    setNewComment('');
+    const saveComment = DOMPurify.sanitize(newComment);
+    // TODO: Post comment to DB
   };
 
   const handleInput = (event: React.FormEvent<HTMLInputElement>) => {
-    setComment(event.currentTarget.value);
+    setNewComment(event.currentTarget.value);
   };
 
   return (
     <div className="comments">
       <div className="comments-wrapper">
-        {comments && comments.map(comment => <Comment key={comment.id} comment={comment} />)}
+        {comments &&
+          comments.map((comment) => (
+            <Comment key={comment.id} comment={comment} spaceOwnerId={props.spaceOwnerId} />
+          ))}
       </div>
       <div className="comments-form">
         <form onSubmit={handleSubmit}>
           <input
             type="text"
-            value={comment}
+            value={newComment}
             onChange={handleInput}
             name="comment"
           />

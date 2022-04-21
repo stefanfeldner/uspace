@@ -81,9 +81,9 @@ const createPost = async (req) => {
     const post = await prisma.post.create({
       data: {
         title,
-        tags,
-        created_at,
         content,
+        created_at,
+        tags,
         user_id,
         space_id,
       },
