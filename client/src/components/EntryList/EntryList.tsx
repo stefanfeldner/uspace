@@ -5,7 +5,7 @@ import { SpaceContext } from '../../pages/Space';
 import { SpaceDataType } from '../../interfaces/Interfaces';
 
 interface Incoming {
-  setClickedPost: Function
+  setClickedPost: Function;
 }
 
 function EntryList(props: Incoming) {
@@ -14,8 +14,20 @@ function EntryList(props: Incoming) {
 
   return (
     <div className="entry-list">
-      {posts && posts.map(post => <Entry key={post.id} post={post} setClickedPost={props.setClickedPost} />)}
-      {posts && posts.length === 0 ? <h1>No posts yet! :(</h1> : null}
+      {posts &&
+        posts.map((post) => (
+          <Entry
+            key={post.id}
+            post={post}
+            setClickedPost={props.setClickedPost}
+          />
+        ))}
+      {posts && posts.length === 0 ? (
+        <div>
+          <h1>Share your thoughts with the world!</h1>
+          <p>By clicking on the <strong>"Post an Update"</strong> Button on the top right.</p>
+        </div>
+      ) : null}
     </div>
   );
 }

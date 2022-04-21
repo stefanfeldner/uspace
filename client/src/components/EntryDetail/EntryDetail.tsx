@@ -16,12 +16,17 @@ function EntryDetail(props: Incoming) {
   const username = spaceData[0]?.User_Space_Role[0]?.user?.username;
   const picture_url = spaceData[0]?.User_Space_Role[0]?.user?.picture_url;
   let date = '';
-  
+
   if (post) {
     date = new Date(post.created_at).toLocaleTimeString('en-EN', {
       hour: '2-digit',
       minute: '2-digit',
     });
+  }
+
+  // return empty if no posts exist
+  if (!post) {
+    return <></>;
   }
 
   return (
@@ -52,7 +57,12 @@ function EntryDetail(props: Incoming) {
       <div className="entry-detail-tags">
         <div className="entry-detail-tags-title">Tags</div>
         <div className="entry-detail-tags-wrapper">
-          {post && post.tags.split(',').map(tag => <div key={tag} className='tag done'>{tag}</div>) }
+          {post &&
+            post.tags.split(',').map((tag) => (
+              <div key={tag} className="tag done">
+                {tag}
+              </div>
+            ))}
           {/* <div className="tag waiting">Waiting for Support</div>
           <div className="tag not-assigned">Not assigned</div>
           <div className="tag done">Done</div>

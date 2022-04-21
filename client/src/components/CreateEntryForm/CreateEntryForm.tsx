@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import './CreateEntryForm.scss';
 import { RichTextEditor } from '@mantine/rte';
 import { TextInput, MultiSelect } from '@mantine/core';
+import DOMPurify from 'dompurify';
 
 interface Incoming {
   setOpened: Function;
@@ -10,26 +11,26 @@ interface Incoming {
 function CreateEntryForm(props: Incoming) {
   const [richTextValue, setRichTextValue] = useState('');
   const [title, setTitle] = useState('');
-  const [tags, setTags] = useState<string[]>([]);
-
-  const data = [
-    { value: 'bug', label: 'Bug' },
-    { value: 'waiting', label: 'Waiting for Support' },
-    { value: 'not-assigned', label: 'Not assigned' },
-    { value: 'done', label: 'Done' },
-    { value: 'important', label: 'Important' },
-    { value: 'assigned', label: 'Assigned' },
-  ];
+  const [tags, setTags] = useState<string[]>([
+    'Travel',
+    'News',
+    'Bug',
+    'Important',
+    'Diary',
+    'Notes',
+  ]);
+  const [selectedTags, setSelectedTags] = useState<string[]>([]);
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>): void => {
     event.preventDefault();
-    setTitle('');
-    setRichTextValue('');
-    setTags([]);
+    // setTitle('');
+    // setRichTextValue('');
+    // setTags([]);
+    // setSelectedTags([]);
 
     console.log(title);
     console.log(richTextValue);
-    console.log(tags);
+    console.log(selectedTags);
 
     // post_id?,
     // created_at?,
@@ -46,13 +47,13 @@ function CreateEntryForm(props: Incoming) {
   return (
     <div className="create-entry-form">
       <form onSubmit={handleSubmit}>
-        <label>Title</label>
+        <label>Title:</label>
         <TextInput
           required
           value={title}
           onChange={(event) => setTitle(event.currentTarget.value)}
         />
-        <label>Text</label>
+        <label>Text:</label>
         <RichTextEditor
           value={richTextValue}
           onChange={setRichTextValue}
@@ -63,8 +64,15 @@ function CreateEntryForm(props: Incoming) {
             ['alignLeft', 'alignCenter', 'alignRight'],
           ]}
         />
-        <label>Tags</label>
-        <MultiSelect clearable value={tags} onChange={setTags} data={data} />
+        <label>Select tags or create your own:</label>
+        <MultiSelect
+          data={tags}
+          searchable
+          creatable
+          onChange={setSelectedTags}
+          getCreateLabel={(query) => `+ Create ${query}`}
+          onCreate={(query) => setTags((current) => [...current, query])}
+        />
         <button className="create-entry-form-submit">Submit</button>
       </form>
     </div>
