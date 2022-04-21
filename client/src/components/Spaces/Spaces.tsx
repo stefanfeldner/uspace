@@ -1,5 +1,5 @@
 import './Spaces.scss';
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import Loading from '../Loading/Loading';
 import { useAuth0, withAuthenticationRequired } from '@auth0/auth0-react';
 import SpacesList from '../SpacesList/SpacesList';

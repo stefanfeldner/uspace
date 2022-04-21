@@ -1,4 +1,3 @@
-import React from 'react';
 import LoginButton from '../LoginButton/LoginButton';
 import LogOutButton from '../LogOutButton/LogOutButton';
 import { useAuth0 } from '@auth0/auth0-react';

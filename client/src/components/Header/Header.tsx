@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import './Header.scss';
 import logo from '../../assets/img/logo-uspace.svg';
 import avatarDude from '../../assets/img/avatar-dude.jpg';

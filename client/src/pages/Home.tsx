@@ -2,8 +2,7 @@ import Header from '../components/Header/Header';
 import Loading from '../components/Loading/Loading';
 import { useAuth0 } from '@auth0/auth0-react';
 import Spaces from '../components/Spaces/Spaces';
-import { useEffect } from 'react';
-import { CreateUserType, UserType } from '../interfaces/Interfaces';
+import { CreateUserType } from '../interfaces/Interfaces';
 
 function Home() {
   const { isLoading, isAuthenticated, user } = useAuth0();

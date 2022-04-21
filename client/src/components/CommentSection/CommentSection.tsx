@@ -64,16 +64,15 @@ function CommentSection(props: Incoming) {
     });
     const comment = await res.json();
     
-    // deep clone posts
+    // deep clone all posts
     const clonedPosts = _.cloneDeep(props.posts);
+    // find post to add the new comment to
     const postToAddCommentTo = clonedPosts.find(post => post.id === data.post_id);
+    // push comment to right post
     postToAddCommentTo?.Comment.push(comment);
-    console.log(postToAddCommentTo);
     
-    console.log('cloned: ', clonedPosts);
-    
-    // add new comment to state
-    props.setPosts((prevState: PostType[]) => clonedPosts)
+    // overwrite posts state with the cloned posts incl. the new comment
+    props.setPosts(clonedPosts)
   };
 
   return (

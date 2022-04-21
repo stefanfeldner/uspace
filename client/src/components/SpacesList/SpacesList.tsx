@@ -1,7 +1,6 @@
-import React, { useEffect, useState } from 'react';
 import Loading from '../Loading/Loading';
 import './SpacesList.scss';
-import { useAuth0, withAuthenticationRequired } from '@auth0/auth0-react';
+import { withAuthenticationRequired } from '@auth0/auth0-react';
 import SpaceWithCreatorType from '../../interfaces/Interfaces';
 import IconAttachment from '../../assets/img/icon-attachment-white.svg';
 import { Link } from 'react-router-dom';
