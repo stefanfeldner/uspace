@@ -1,4 +1,3 @@
-import React, { useState } from 'react';
 import './Entry.scss';
 import { PostType } from '../../interfaces/Interfaces';
 
@@ -6,15 +5,16 @@ interface Incoming {
   post: PostType;
   setClickedPost: Function;
   index: number;
+  activePostId: number;
+  setActivePostId: Function
 }
 
 function Entry(props: Incoming) {
   const { post } = props;
-  const [clicked, setClicked] = useState<boolean>(false);
 
   const changeDetails = () => {
     props.setClickedPost(props.index);
-    setClicked((prev) => !prev); // TODO: only show one as active not two
+    props.setActivePostId(props.index);
   };
 
   // format date to show MONTH DAY
@@ -27,9 +27,15 @@ function Entry(props: Incoming) {
   const content =
     post.content.replace(/(<([^>]+)>)/gi, '').slice(0, 90) + '...';
 
+  // cut title if too long
+  const shapeTitle = (title: string) => {
+    if (title.length > 35) return title.slice(0, 35) + '...'
+    return title;
+  }
+
   return (
     <div
-      className={clicked ? 'entry active' : 'entry'}
+      className={props.activePostId === props.index ? 'entry active' : 'entry'}
       onClick={changeDetails}
     >
       <div className="entry-left">
@@ -37,7 +43,7 @@ function Entry(props: Incoming) {
       </div>
       <div className="entry-right">
         <div className="entry-right-title">
-          {post.title}
+          {shapeTitle(post.title)} id {post.id}
         </div>
         <div className="entry-right-text">{content}</div>
         {(post.Comment && post.Comment.length > 0) && (

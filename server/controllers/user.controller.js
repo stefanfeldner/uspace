@@ -7,7 +7,8 @@ const {
   createComment,
   createUserSpaceRole,
   returnSpacesAndCreators,
-  returnSpaceData
+  returnSpaceData,
+  returnUserBySub
 } = require('../models/prisma.model');
 
 // modular route: returns all entries in a table
@@ -118,7 +119,19 @@ const getSpaceData = async (req, res) => {
     res.send(error);
     res.status(404);
   }
-}
+};
+
+// get a user by sub
+const getUserBySub = async (req, res) => {
+  try {
+    const user = await returnUserBySub(req.params.sub);
+    res.send(user);
+    res.status(200);
+  } catch (error) {
+    res.send(error);
+    res.status(404);
+  }
+};
 
 module.exports = {
   postUser,
@@ -129,5 +142,6 @@ module.exports = {
   postComment,
   postUserSpaceRole,
   getSpacesAndCreators,
-  getSpaceData
+  getSpaceData,
+  getUserBySub
 };

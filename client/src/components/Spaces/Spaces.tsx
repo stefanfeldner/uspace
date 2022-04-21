@@ -18,7 +18,6 @@ function Spaces() {
   const fetchSpaces = async () => {
     const spaces = await fetch(url);
     const data: SpaceWithCreatorType[] = await spaces.json();
-    // console.log(data);
     
     setAllSpaces(data);
 
@@ -41,10 +40,14 @@ function Spaces() {
     <div className="spaces">
       <div className="container">
         <div className="spaces-row">
-          <div className='spaces-row-title'>Your Spaces</div>
-          <div className="spaces-wrapper">
-            <SpacesList spaces={mySpaces} />
-          </div>
+          {mySpaces.length > 0 &&
+            <>
+              <div className='spaces-row-title'>Your Spaces</div>
+              <div className="spaces-wrapper">
+                <SpacesList spaces={mySpaces} />
+              </div>
+            </>
+          }
         </div>
         <div className="spaces-row">
           <div className='spaces-row-title'>All Spaces</div>

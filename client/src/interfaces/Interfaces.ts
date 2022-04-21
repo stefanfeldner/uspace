@@ -22,6 +22,12 @@ export interface CommentType {
   user_id: number;
 }
 
+export interface CreateCommentType {
+  content: string;
+  post_id: number;
+  user_id: number;
+}
+
 export interface PostType {
   id: number;
   content: string;
@@ -59,4 +65,12 @@ export interface UserType {
   picture_url: string;
   sub: string;
   created_at: Date;
+}
+
+export interface CreateUserType {
+  email: string;
+  email_verified: boolean;
+  username: string;
+  picture_url: string;
+  sub: string;
 }

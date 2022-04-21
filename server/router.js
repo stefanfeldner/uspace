@@ -8,7 +8,8 @@ const {
   postComment,
   postUserSpaceRole,
   getSpacesAndCreators,
-  getSpaceData
+  getSpaceData,
+  getUserBySub
 } = require('./controllers/user.controller');
 
 // '/:table' routes are dynamic and return all entries of a given table
@@ -33,6 +34,9 @@ router.post('/comments', postComment);
 
 // COMMENTS
 router.post('/User_Space_Roles', postUserSpaceRole);
+
+// GET USER BY SUB
+router.get('/usersBySub/:sub', getUserBySub)
 
 // MODULAR ROUTES
 router.get('/:table', getAllEntries);

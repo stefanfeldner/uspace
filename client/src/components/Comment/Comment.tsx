@@ -21,8 +21,8 @@ function Comment(props: Incoming) {
 
   // get comment creator / user
   const fetchUser = async () => {
-    const user = await fetch(URL);
-    const data = await user.json();
+    const fetchedUser = await fetch(URL);
+    const data = await fetchedUser.json();
     setUser(data);
   }
 

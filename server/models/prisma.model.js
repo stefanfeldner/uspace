@@ -98,12 +98,11 @@ const createPost = async (req) => {
 // creates a single comment
 const createComment = async (req) => {
   try {
-    const { content, created_at, user_id, post_id } = req;
+    const { content, user_id, post_id } = req;
 
     const comment = await prisma.comment.create({
       data: {
         content,
-        created_at,
         user_id,
         post_id,
       },
@@ -186,6 +185,21 @@ const returnSpaceData = async (id) => {
   return spaceData;
 };
 
+const returnUserBySub = async (sub) => {
+  console.log(sub);
+
+  try {
+    const user = await prisma.user.findFirst({
+      where: {
+        sub: sub,
+      },
+    });
+    return user;
+  } catch (error) {
+    return error;
+  }
+}
+
 module.exports = {
   createUser,
   createSpace,
@@ -196,4 +210,5 @@ module.exports = {
   createUserSpaceRole,
   returnSpacesAndCreators,
   returnSpaceData,
+  returnUserBySub
 };

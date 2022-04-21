@@ -44,7 +44,7 @@ function Space() {
     );
   }
 
-  // console.log(spaceData);
+  // console.log(posts);
 
   return (
     <>
@@ -53,7 +53,7 @@ function Space() {
         <div className="container">
           <div className="main-wrapper">
             <div className="main-left">
-              {posts && posts.length > 0 && (
+              {posts && (
                 <EntryList posts={posts} setClickedPost={setClickedPost} />
               )}
             </div>
@@ -61,6 +61,7 @@ function Space() {
               {spaceData && (
                 <EntryDetail
                   posts={posts}
+                  setPosts={setPosts}
                   spaceData={spaceData}
                   clickedPost={clickedPost}
                   spaceOwnerId={spaceOwnerId}

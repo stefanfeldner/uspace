@@ -8,6 +8,7 @@ interface Incoming {
   spaceData: SpaceDataType[];
   spaceOwnerId?: number;
   posts: PostType[];
+  setPosts: Function
 }
 
 function EntryDetail(props: Incoming) {
@@ -55,28 +56,33 @@ function EntryDetail(props: Incoming) {
           )}
         </div>
       </div>
-      <div className="entry-detail-tags">
-        <div className="entry-detail-tags-title">Tags</div>
-        <div className="entry-detail-tags-wrapper">
-          {post &&
-            // slice off last whitespace and split tags into array
-            post.tags
-              .slice(0, -1)
-              .split(',')
-              .map((tag) => {
-                return (
-                  <div key={tag} className="tag done">
-                    {tag}
-                  </div>
-                );
-              })}
+      { (post && post.tags.length > 1) && // if tags are empty, hide this
+        <div className="entry-detail-tags">
+          <div className="entry-detail-tags-title">Tags</div>
+          <div className="entry-detail-tags-wrapper">
+            {post &&
+              // slice off last whitespace and split tags into array
+              post.tags
+                .slice(0, -1)
+                .split(',')
+                .map((tag) => {
+                  return (
+                    <div key={tag} className="tag done">
+                      {tag}
+                    </div>
+                  );
+                })}
+          </div>
         </div>
-      </div>
+      }
       <div className="entry-detail-comments">
         <div className="entry-detail-comments-title">Comments</div>
         <div className="entry-detail-comments-wrapper">
           <CommentSection
             comments={comments}
+            postId={post.id}
+            posts={props.posts}
+            setPosts={props.setPosts}
             clickedPost={props.clickedPost}
             spaceOwnerId={props.spaceOwnerId}
           />

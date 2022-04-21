@@ -1,6 +1,7 @@
 import './EntryList.scss';
 import Entry from '../Entry/Entry';
 import { PostType } from '../../interfaces/Interfaces';
+import { useState } from 'react';
 
 interface Incoming {
   setClickedPost: Function;
@@ -9,6 +10,7 @@ interface Incoming {
 
 function EntryList(props: Incoming) {
   const posts = props.posts;
+  const [activePostId, setActivePostId] = useState<number>(0);
 
   // console.log(posts);
 
@@ -23,6 +25,8 @@ function EntryList(props: Incoming) {
               key={post.id}
               post={post}
               setClickedPost={props.setClickedPost}
+              activePostId={activePostId}
+              setActivePostId={setActivePostId}
             />
           );
         })}
