@@ -1,0 +1,102 @@
+@import '../../custom-styles.scss';
+
+.welcome {
+  .welcome-heading {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 200px;
+    margin-top: 100px;
+
+    .welcome-heading-left {
+      padding-right: 50px;
+
+      h1 {
+        font-size: 3em;
+        color: $color-headings;
+        line-height: 1.3em;
+        margin-bottom: 20px;
+      }
+
+      p {
+        font-size: 1.3em;
+        margin-bottom: 50px;
+        line-height: 1.3em;
+      }
+
+      button {
+        border: none;
+        border-radius: 8px;
+        background-color: $color-dark-green;
+        padding: 15px 20px;
+        color: #fff;
+        line-height: 1em;
+        font-size: 1.1em;
+        cursor: pointer;
+        transition: all 0.3s ease;
+
+        &:hover {
+          background-color: lighten($color-dark-green, 5);
+          transition: all 0.3s ease;
+        }
+
+        &:first-of-type {
+          margin-right: 15px;
+        }
+      }
+    }
+
+    .welcome-heading-right {
+      img {
+        border-radius: 8px;
+        max-width: 600px;
+      }
+    }
+  }
+
+  .welcome-content {
+    margin-bottom: 100px;
+
+    .welcome-content-wrapper {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      .welcome-content-info-left {
+        width: 50%;
+        margin-left: -20px;
+
+        img {
+          max-width: 600px;
+        }
+      }
+
+      .welcome-content-info-right {
+        width: 50%;
+        max-width: 600px;
+
+        .welcome-content-spaces {
+          margin-bottom: 20px;
+          display: flex;
+          justify-content: flex-start;
+          align-items: center;
+          font-size: 2em;
+
+          .title-right {
+            background-color: $color-dark-green;
+            color: #fff;
+            padding: 5px 10px;
+            border-radius: 8px;
+            margin-left: 10px;
+          }
+        }
+
+        .welcome-content-info {
+          font-size: 1.3em;
+          line-height: 1.3em;
+          text-align: justify;
+        }
+      }
+    }
+  }
+}

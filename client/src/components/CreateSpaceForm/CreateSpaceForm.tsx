@@ -3,9 +3,7 @@ import '../CreateEntryForm/CreateEntryForm.scss';
 import { TextInput, Textarea } from '@mantine/core';
 import DOMPurify from 'dompurify';
 import SpaceWithCreatorType, {
-  CreateSpaceDataType,
   SpaceDataType,
-  UserSpaceRoleType,
 } from '../../interfaces/Interfaces';
 import { useAuth0 } from '@auth0/auth0-react';
 import API_SERVICE from '../../Api-Service';
@@ -20,7 +18,6 @@ interface Incoming {
 }
 
 function CreateSpaceForm(props: Incoming) {
-  const URL = process.env.REACT_APP_API + '/spaces';
   const [name, setName] = useState<string>('');
   const [description, setDescription] = useState<string>('');
   const { user } = useAuth0();
@@ -44,7 +41,7 @@ function CreateSpaceForm(props: Incoming) {
       await API_SERVICE.createUserSpaceRole(foundUser.id, newSpace.id, 2);
       // add new userSpaceRole array and input new user
       newSpace.User_Space_Role = [
-        { user: { email: foundUser.email, username: foundUser.username } },
+        { user: { email: foundUser.email, username: foundUser.username, picture_url: foundUser.picture_url } },
       ];
 
       // overwrite posts state with the cloned posts incl. the new comment
@@ -52,6 +49,7 @@ function CreateSpaceForm(props: Incoming) {
       props.setMySpaces(cloneSpacesAndAddNewSpace(props.mySpaces, newSpace));
     }
 
+    // hide modal
     props.setOpened(false);
   };
 

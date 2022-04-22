@@ -144,6 +144,7 @@ const returnSpacesAndCreators = async () => {
             select: {
               username: true,
               email: true,
+              picture_url: true,
             },
           },
         },

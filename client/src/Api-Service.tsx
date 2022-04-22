@@ -38,6 +38,11 @@ const API_SERVICE = {
     });
     const newSpace: SpaceDataType = await res.json();
     return newSpace;
+  },
+  findSpaceById: async (id: string) => {
+    const res = await fetch(URL + `/spaces/${id}`);
+    const foundSpace = await res.json();
+    return foundSpace;
   }
 };
 

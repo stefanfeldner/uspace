@@ -16,9 +16,6 @@ function Space() {
   const spaceId = useParams().id; // returns id of current space
   const [posts, setPosts] = useState<PostType[]>([]);
   const [spaceOwnerId, setSpaceOwnerId] = useState<number>();
-  const {user} = useAuth0();
-
-  // console.log(user);
 
   const { isLoading } = useAuth0();
   const url = process.env.REACT_APP_API + `/spaceData/${spaceId}`;
@@ -47,11 +44,9 @@ function Space() {
     );
   }
 
-  // console.log(posts);
-
   return (
     <>
-      <Header setOpened={setOpened} />
+      <Header setOpened={setOpened} spaceOwnerId={spaceOwnerId} />
       <main className="main">
         <div className="container">
           <div className="main-wrapper">

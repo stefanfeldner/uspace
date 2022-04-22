@@ -78,9 +78,9 @@ function Spaces(props: Incoming) {
         title="Create a Space"
       >
         <CreateSpaceForm
-          setAllSpaces={setAllSpaces}
           setOpened={props.setOpened}
           allSpaces={allSpaces}
+          setAllSpaces={setAllSpaces}
           mySpaces={mySpaces}
           setMySpaces={setMySpaces}
         />

@@ -35,6 +35,10 @@
         cursor: pointer;
         transition: all 0.3s ease;
 
+        &:last-child {
+          margin-right: 0;
+        }
+
         &:hover {
           background-color: darken($color-purple, 5);
           transition: all 0.3s ease;

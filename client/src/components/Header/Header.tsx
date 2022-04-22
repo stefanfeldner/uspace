@@ -7,16 +7,31 @@ import { useAuth0 } from '@auth0/auth0-react';
 import LoginButton from '../LoginButton/LoginButton';
 import SignupButton from '../SignupButton/SignupButton';
 import { useLocation } from 'react-router';
+import API_SERVICE from '../../Api-Service';
 
 interface Incoming {
   setOpened?: Function;
+  spaceOwnerId?: number;
 }
 
 function Header(props: Incoming) {
   const [menuVisibility, setMenuVisibility] = useState(false);
-  const { user, isAuthenticated } = useAuth0();
+  const { user, isAuthenticated, isLoading } = useAuth0();
   const path = useLocation().pathname;
-  
+  const [isOwner, setIsOwner] = useState<boolean>(false);
+
+  // check if current user is owner of current space
+  const getUser = async () => {
+    if (user) {
+      // get user by sub
+      const foundUser = await API_SERVICE.findUserBySub(user.sub!);
+      // check if user is owner
+      if (props.spaceOwnerId === foundUser.id) setIsOwner(true);
+    }
+  };
+
+  if (!isLoading) getUser();
+
   const showMenu = (): void => {
     setMenuVisibility((prev) => !prev);
   };
@@ -34,13 +49,16 @@ function Header(props: Incoming) {
               Create a Space
             </button>
           ) : (
-            <button
-              onClick={() => {
-                if (props.setOpened) props.setOpened(true);
-              }}
-            >
-              Post an Update
-            </button>
+            isOwner && (
+              // if user is not creator of space, hide button
+              <button
+                onClick={() => {
+                  if (props.setOpened) props.setOpened(true);
+                }}
+              >
+                Post an Update
+              </button>
+            )
           )}
           <img
             onClick={showMenu}

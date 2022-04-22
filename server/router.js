@@ -12,13 +12,9 @@ const {
   getUserBySub
 } = require('./controllers/user.controller');
 
+//
 // '/:table' routes are dynamic and return all entries of a given table
-
-// SPACES + CREATORS
-router.get('/spacesAndCreators', getSpacesAndCreators);
-
-// SPACE + POSTS
-router.get('/spaceData/:id', getSpaceData);
+//
 
 // USERS
 router.post('/users', postUser);
@@ -34,6 +30,12 @@ router.post('/comments', postComment);
 
 // USER_SPACE_ROLE
 router.post('/User_Space_Roles', postUserSpaceRole);
+
+// SPACES + CREATORS
+router.get('/spacesAndCreators', getSpacesAndCreators);
+
+// SPACE + POSTS
+router.get('/spaceData/:id', getSpaceData);
 
 // GET USER BY SUB
 router.get('/usersBySub/:sub', getUserBySub)
