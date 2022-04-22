@@ -8,6 +8,7 @@ import SpaceWithCreatorType, {
 import { useAuth0 } from '@auth0/auth0-react';
 import API_SERVICE from '../../Api-Service';
 import _ from 'lodash';
+import { useNavigate } from 'react-router';
 
 interface Incoming {
   setOpened: Function;
@@ -21,6 +22,7 @@ function CreateSpaceForm(props: Incoming) {
   const [name, setName] = useState<string>('');
   const [description, setDescription] = useState<string>('');
   const { user } = useAuth0();
+  const navigate = useNavigate();
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -29,7 +31,7 @@ function CreateSpaceForm(props: Incoming) {
       name: DOMPurify.sanitize(name),
       description: DOMPurify.sanitize(description),
     };
-    
+
     // create new space
     const newSpace: SpaceDataType = await API_SERVICE.createSpace(spaceData);
 
@@ -41,12 +43,21 @@ function CreateSpaceForm(props: Incoming) {
       await API_SERVICE.createUserSpaceRole(foundUser.id, newSpace.id, 2);
       // add new userSpaceRole array and input new user
       newSpace.User_Space_Role = [
-        { user: { email: foundUser.email, username: foundUser.username, picture_url: foundUser.picture_url } },
+        {
+          user: {
+            email: foundUser.email,
+            username: foundUser.username,
+            picture_url: foundUser.picture_url,
+          },
+        },
       ];
 
       // overwrite posts state with the cloned posts incl. the new comment
       props.setAllSpaces(cloneSpacesAndAddNewSpace(props.allSpaces, newSpace));
       props.setMySpaces(cloneSpacesAndAddNewSpace(props.mySpaces, newSpace));
+
+      // direct to new space
+      navigate(`/spaces/${newSpace.id}`);
     }
 
     // hide modal

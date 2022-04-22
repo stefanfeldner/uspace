@@ -12,8 +12,6 @@ function EntryList(props: Incoming) {
   const posts = props.posts;
   const [activePostId, setActivePostId] = useState<number>(0);
 
-  // console.log(posts);
-
   return (
     <div className="entry-list">
       {posts &&

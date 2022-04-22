@@ -1,12 +1,13 @@
 import './Entry.scss';
 import { PostType } from '../../interfaces/Interfaces';
+import DOMPurify from 'dompurify';
 
 interface Incoming {
   post: PostType;
   setClickedPost: Function;
   index: number;
   activePostId: number;
-  setActivePostId: Function
+  setActivePostId: Function;
 }
 
 function Entry(props: Incoming) {
@@ -29,9 +30,9 @@ function Entry(props: Incoming) {
 
   // cut title if too long
   const shapeTitle = (title: string) => {
-    if (title.length > 35) return title.slice(0, 35) + '...'
+    if (title.length > 35) return title.slice(0, 35) + '...';
     return title;
-  }
+  };
 
   return (
     <div
@@ -42,11 +43,14 @@ function Entry(props: Incoming) {
         <div className="entry-left-date">{date}</div>
       </div>
       <div className="entry-right">
-        <div className="entry-right-title">
-          {shapeTitle(post.title)}
-        </div>
+        <div
+          className="entry-right-title"
+          dangerouslySetInnerHTML={{
+            __html: DOMPurify.sanitize(shapeTitle(post.title)),
+          }}
+        ></div>
         <div className="entry-right-text">{content}</div>
-        {(post.Comment && post.Comment.length > 0) && (
+        {post.Comment && post.Comment.length > 0 && (
           <div className="entry-right-tags">
             <div className="comment-tag">{post.Comment.length} comments</div>
             {/* <div className="attachment-tag">1 attachment</div> */}

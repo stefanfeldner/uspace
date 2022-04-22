@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import './Comment.scss';
 import { CommentType, UserType } from '../../interfaces/Interfaces';
+import DOMPurify from 'dompurify';
 
 interface Incoming {
   comment: CommentType;
@@ -14,7 +15,9 @@ function Comment(props: Incoming) {
   const URL = `${process.env.REACT_APP_API}/users/${comment.user_id}`;
 
   const date = new Date(comment.created_at).toLocaleTimeString('en-EN', {
-    weekday: 'long',
+    // weekday: 'short',
+    year: '2-digit',
+    month: 'short',
     hour: '2-digit',
     minute: '2-digit',
   });
@@ -24,14 +27,16 @@ function Comment(props: Incoming) {
     const fetchedUser = await fetch(URL);
     const data = await fetchedUser.json();
     setUser(data);
-  }
+  };
 
   useEffect(() => {
     fetchUser();
-  }, [])
+  }, []);
 
   return (
-    <div className={spaceOwnerId === comment.user_id ? 'comment right' : 'comment'}>
+    <div
+      className={spaceOwnerId === comment.user_id ? 'comment right' : 'comment'}
+    >
       <div className="comment-avatar">
         <img src={user && user.picture_url} alt="User Avatar" />
         <div className="comment-online">&nbsp;</div>
@@ -41,7 +46,12 @@ function Comment(props: Incoming) {
           <div className="comment-user">{user && user.username}</div>
           <div className="comment-time">{date}</div>
         </div>
-        <div className="comment-message">{comment.content}</div>
+        <div
+          className="comment-message"
+          dangerouslySetInnerHTML={{
+            __html: DOMPurify.sanitize(comment.content),
+          }}
+        ></div>
       </div>
     </div>
   );

@@ -37,9 +37,9 @@ function CreateEntryForm(props: Incoming) {
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>): void => {
     event.preventDefault();
 
-    console.log(title);
-    console.log(richTextValue);
-    console.log(selectedTags);
+    // console.log(title);
+    // console.log(richTextValue);
+    // console.log(selectedTags);
 
     if (props.user_id && props.space_id) {
       const postData = {
@@ -49,6 +49,7 @@ function CreateEntryForm(props: Incoming) {
         tags: DOMPurify.sanitize(tagsArrToStr(selectedTags)),
         user_id: props.user_id,
         space_id: props.space_id,
+        Comment: [],
       };
       createPost(postData);
     }
@@ -64,8 +65,19 @@ function CreateEntryForm(props: Incoming) {
       body: JSON.stringify(data),
     });
     const post = await res.json();
+    // add comment property to post obj to prevent undefined objects
+    post.Comment = [];
 
-    props.setPosts((prevState: PostType[]) => [...prevState, post]);
+
+    props.setPosts((prevState: PostType[]) => {
+      // sort posts before adding new one
+      prevState.sort((a, b) => {
+        return (
+          new Date(b.created_at).valueOf() - new Date(a.created_at).valueOf()
+        );
+      });
+      return [post, ...prevState];
+    });
   };
 
   // TODO: Fix Rich Text Editor Bugs

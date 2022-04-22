@@ -28,8 +28,18 @@ function Space() {
     try {
       const data = await fetch(url);
       const spaces: SpaceDataType[] = await data.json();
+      const posts = spaces[0].Post;
+
+      // sort posts by date before inserting into state
+      posts.sort((a, b) => {
+        // compare milliseconds
+        return (
+          new Date(b.created_at).valueOf() - new Date(a.created_at).valueOf()
+        );
+      });
+
       setSpaceData(spaces);
-      setPosts(spaces[0].Post);
+      setPosts(posts);
       setSpaceOwnerId(spaces[0].User_Space_Role[0].user.id);
     } catch (error) {
       console.error(error);
@@ -43,6 +53,8 @@ function Space() {
       </div>
     );
   }
+
+  console.log(spaceData[0].description);
 
   return (
     <>

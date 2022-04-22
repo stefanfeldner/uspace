@@ -8,7 +8,7 @@ interface Incoming {
   spaceData: SpaceDataType[];
   spaceOwnerId?: number;
   posts: PostType[];
-  setPosts: Function
+  setPosts: Function;
 }
 
 function EntryDetail(props: Incoming) {
@@ -22,6 +22,9 @@ function EntryDetail(props: Incoming) {
     date = new Date(post.created_at).toLocaleTimeString('en-EN', {
       hour: '2-digit',
       minute: '2-digit',
+      year: 'numeric',
+      day: '2-digit',
+      month: 'short',
     });
   }
 
@@ -44,7 +47,12 @@ function EntryDetail(props: Incoming) {
         </div>
       </div>
       <div className="entry-detail-content">
-        <div className="entry-detail-title">{post && post.title}</div>
+        <div
+          className="entry-detail-title"
+          dangerouslySetInnerHTML={{
+            __html: DOMPurify.sanitize(post && post.title),
+          }}
+        ></div>
         <div className="entry-detail-text">
           {post && (
             // insert rich text content
@@ -56,25 +64,26 @@ function EntryDetail(props: Incoming) {
           )}
         </div>
       </div>
-      { (post && post.tags.length > 1) && // if tags are empty, hide this
-        <div className="entry-detail-tags">
-          <div className="entry-detail-tags-title">Tags</div>
-          <div className="entry-detail-tags-wrapper">
-            {post &&
-              // slice off last whitespace and split tags into array
-              post.tags
-                .slice(0, -1)
-                .split(',')
-                .map((tag) => {
-                  return (
-                    <div key={tag} className="tag done">
-                      {tag}
-                    </div>
-                  );
-                })}
+      {post &&
+        post.tags.length > 1 && ( // if tags are empty, hide this
+          <div className="entry-detail-tags">
+            <div className="entry-detail-tags-title">Tags</div>
+            <div className="entry-detail-tags-wrapper">
+              {post &&
+                // slice off last whitespace and split tags into array
+                post.tags
+                  .slice(0, -1)
+                  .split(',')
+                  .map((tag) => {
+                    return (
+                      <div key={tag} className="tag done">
+                        {tag}
+                      </div>
+                    );
+                  })}
+            </div>
           </div>
-        </div>
-      }
+        )}
       <div className="entry-detail-comments">
         <div className="entry-detail-comments-title">Comments</div>
         <div className="entry-detail-comments-wrapper">

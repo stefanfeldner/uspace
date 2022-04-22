@@ -43,6 +43,8 @@ function Spaces(props: Incoming) {
     );
   }
 
+  console.log(allSpaces);
+
   return (
     <>
       <div className="spaces">

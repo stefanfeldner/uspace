@@ -74,7 +74,8 @@ function CommentSection(props: Incoming) {
     const postToAddCommentTo = clonedPosts.find(
       (post) => post.id === data.post_id
     );
-    // push comment to right post // TODO: Fix undefined on space creation - post creation - comment creation
+
+    // push comment to right post
     postToAddCommentTo?.Comment.push(comment);
     // overwrite posts state with the cloned posts incl. the new comment
     props.setPosts(clonedPosts);

@@ -5,7 +5,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 200px;
+    margin-bottom: 150px;
     margin-top: 100px;
 
     .welcome-heading-left {
@@ -81,6 +81,7 @@
           justify-content: flex-start;
           align-items: center;
           font-size: 2em;
+          color: $color-headings;
 
           .title-right {
             background-color: $color-dark-green;
