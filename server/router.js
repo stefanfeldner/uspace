@@ -32,7 +32,7 @@ router.post('/posts', postPost);
 // COMMENTS
 router.post('/comments', postComment);
 
-// COMMENTS
+// USER_SPACE_ROLE
 router.post('/User_Space_Roles', postUserSpaceRole);
 
 // GET USER BY SUB

@@ -10,7 +10,7 @@ import { useParams } from 'react-router-dom';
 import { PostType, SpaceDataType } from '../interfaces/Interfaces';
 
 function Space() {
-  const [opened, setOpened] = useState(false);
+  const [opened, setOpened] = useState<boolean>(false);
   const [spaceData, setSpaceData] = useState<SpaceDataType[]>([]);
   const [clickedPost, setClickedPost] = useState<number>(0);
   const spaceId = useParams().id; // returns id of current space
@@ -18,7 +18,7 @@ function Space() {
   const [spaceOwnerId, setSpaceOwnerId] = useState<number>();
   const {user} = useAuth0();
 
-  console.log(user);
+  // console.log(user);
 
   const { isLoading } = useAuth0();
   const url = process.env.REACT_APP_API + `/spaceData/${spaceId}`;

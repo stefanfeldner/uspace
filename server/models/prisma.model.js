@@ -57,12 +57,11 @@ const createUser = async (req) => {
 // creates a single space
 const createSpace = async (req) => {
   try {
-    const { name, created_at, description } = req;
+    const { name, description } = req;
 
     const space = await prisma.space.create({
       data: {
         name,
-        created_at,
         description,
       },
     });

@@ -1,6 +1,10 @@
 import React, { useState } from 'react';
 import './CommentSection.scss';
-import { CommentType, CreateCommentType, PostType } from '../../interfaces/Interfaces';
+import {
+  CommentType,
+  CreateCommentType,
+  PostType,
+} from '../../interfaces/Interfaces';
 import DOMPurify from 'dompurify';
 import Comment from '../Comment/Comment';
 import { useAuth0 } from '@auth0/auth0-react';
@@ -28,12 +32,12 @@ function CommentSection(props: Incoming) {
   };
 
   const fetchUser = async () => {
-    if ( user ) {
+    if (user) {
       const fetchedUser = await fetch(URL_SUB + `/${user.sub}`);
       const data = await fetchedUser.json();
       return data.id;
     }
-  }
+  };
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -49,7 +53,7 @@ function CommentSection(props: Incoming) {
         user_id: await fetchUser(),
         post_id: props.postId,
       };
-      
+
       createComment(commentData);
     }
   };
@@ -63,16 +67,17 @@ function CommentSection(props: Incoming) {
       body: JSON.stringify(data),
     });
     const comment = await res.json();
-    
+
     // deep clone all posts
     const clonedPosts = _.cloneDeep(props.posts);
     // find post to add the new comment to
-    const postToAddCommentTo = clonedPosts.find(post => post.id === data.post_id);
-    // push comment to right post
+    const postToAddCommentTo = clonedPosts.find(
+      (post) => post.id === data.post_id
+    );
+    // push comment to right post // TODO: Fix undefined on space creation - post creation - comment creation
     postToAddCommentTo?.Comment.push(comment);
-    
     // overwrite posts state with the cloned posts incl. the new comment
-    props.setPosts(clonedPosts)
+    props.setPosts(clonedPosts);
   };
 
   return (

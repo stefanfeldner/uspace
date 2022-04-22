@@ -98,7 +98,7 @@ function CreateEntryForm(props: Incoming) {
           getCreateLabel={(query) => `+ Create ${query}`}
           onCreate={(query) => setTags((current) => [...current, query])}
         />
-        <button className="create-entry-form-submit">Submit</button>
+        <button className="create-entry-form-submit">Create</button>
       </form>
     </div>
   );

@@ -6,6 +6,7 @@ import AuthenticationButton from '../AuthenticationButton/AuthenticationButton';
 import { useAuth0 } from '@auth0/auth0-react';
 import LoginButton from '../LoginButton/LoginButton';
 import SignupButton from '../SignupButton/SignupButton';
+import { useLocation } from 'react-router';
 
 interface Incoming {
   setOpened?: Function;
@@ -14,7 +15,8 @@ interface Incoming {
 function Header(props: Incoming) {
   const [menuVisibility, setMenuVisibility] = useState(false);
   const { user, isAuthenticated } = useAuth0();
-
+  const path = useLocation().pathname;
+  
   const showMenu = (): void => {
     setMenuVisibility((prev) => !prev);
   };
@@ -23,13 +25,23 @@ function Header(props: Incoming) {
     if (isAuthenticated) {
       return (
         <>
-          <button
-            onClick={() => {
-              if (props.setOpened) props.setOpened(true);
-            }}
-          >
-            Post an Update
-          </button>
+          {path === '/' || path === '/spaces' ? (
+            <button
+              onClick={() => {
+                if (props.setOpened) props.setOpened(true);
+              }}
+            >
+              Create a Space
+            </button>
+          ) : (
+            <button
+              onClick={() => {
+                if (props.setOpened) props.setOpened(true);
+              }}
+            >
+              Post an Update
+            </button>
+          )}
           <img
             onClick={showMenu}
             src={user ? user.picture : avatarDude}

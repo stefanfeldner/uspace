@@ -57,6 +57,11 @@ export interface SpaceDataType {
   User_Space_Role: UserSpaceRoleType[];
 }
 
+export interface CreateSpaceDataType {
+  description: string;
+  name: string;
+}
+
 export interface UserType {
   id: number;
   email: string;

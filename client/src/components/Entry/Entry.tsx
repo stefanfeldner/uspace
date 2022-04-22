@@ -43,7 +43,7 @@ function Entry(props: Incoming) {
       </div>
       <div className="entry-right">
         <div className="entry-right-title">
-          {shapeTitle(post.title)} id {post.id}
+          {shapeTitle(post.title)}
         </div>
         <div className="entry-right-text">{content}</div>
         {(post.Comment && post.Comment.length > 0) && (
