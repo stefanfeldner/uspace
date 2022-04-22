@@ -53,9 +53,7 @@ function Space() {
       </div>
     );
   }
-
-  console.log(spaceData[0].description);
-
+  
   return (
     <>
       <Header setOpened={setOpened} spaceOwnerId={spaceOwnerId} />

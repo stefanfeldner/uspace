@@ -1,7 +1,6 @@
 import './Welcome.scss';
 import placeholderSpaces from '../../assets/img/placeholder-spaces.png';
 import placeholderNotes from '../../assets/img/placeholder-notes.png';
-import placeholderPost from '../../assets/img/placeholder-post.png';
 import LoginButton from '../LoginButton/LoginButton';
 import SignupButton from '../SignupButton/SignupButton';
 

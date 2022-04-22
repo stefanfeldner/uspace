@@ -2,12 +2,14 @@ import { useState } from 'react';
 import './Header.scss';
 import logo from '../../assets/img/logo-uspace.svg';
 import avatarDude from '../../assets/img/avatar-dude.jpg';
-import AuthenticationButton from '../AuthenticationButton/AuthenticationButton';
 import { useAuth0 } from '@auth0/auth0-react';
 import LoginButton from '../LoginButton/LoginButton';
 import SignupButton from '../SignupButton/SignupButton';
 import { useLocation } from 'react-router';
 import API_SERVICE from '../../Api-Service';
+import { Menu } from '@mantine/core';
+import { Logout, User } from 'tabler-icons-react';
+import { useNavigate } from "react-router-dom";
 
 interface Incoming {
   setOpened?: Function;
@@ -15,10 +17,11 @@ interface Incoming {
 }
 
 function Header(props: Incoming) {
-  const [menuVisibility, setMenuVisibility] = useState(false);
   const { user, isAuthenticated, isLoading } = useAuth0();
   const path = useLocation().pathname;
   const [isOwner, setIsOwner] = useState<boolean>(false);
+  const { logout } = useAuth0();
+  const navigate = useNavigate();
 
   // check if current user is owner of current space
   const getUser = async () => {
@@ -32,8 +35,10 @@ function Header(props: Incoming) {
 
   if (!isLoading) getUser();
 
-  const showMenu = (): void => {
-    setMenuVisibility((prev) => !prev);
+  const logOut = () => {
+    logout({
+      returnTo: window.location.origin,
+    });
   };
 
   const renderButton = () => {
@@ -60,11 +65,20 @@ function Header(props: Incoming) {
               </button>
             )
           )}
-          <img
-            onClick={showMenu}
-            src={user ? user.picture : avatarDude}
-            alt="Username"
-          />
+          <Menu
+            placement="end"
+            control={
+              <img src={user ? user.picture : avatarDude} alt="Username" />
+            }
+          >
+            <Menu.Label>Settings</Menu.Label>
+            <Menu.Item icon={<User size={16} />} onClick={() => navigate('/profile')}>
+              Profile
+            </Menu.Item>
+            <Menu.Item color="red" icon={<Logout size={16} />} onClick={(logOut)}>
+              Log Out
+            </Menu.Item>
+          </Menu>
         </>
       );
     } else {
@@ -87,16 +101,6 @@ function Header(props: Incoming) {
             </a>
           </div>
           <div className="header-right">{renderButton()}</div>
-          <div
-            className={menuVisibility ? 'header-menu visible' : 'header-menu'}
-          >
-            <div className="header-menu-profile">
-              <a href="#profile">Profile</a>
-            </div>
-            <div className="header-menu-log-buttons">
-              <AuthenticationButton />
-            </div>
-          </div>
         </div>
       </div>
     </header>

@@ -2,6 +2,8 @@ import './EntryDetail.scss';
 import CommentSection from '../CommentSection/CommentSection';
 import { PostType, SpaceDataType } from '../../interfaces/Interfaces';
 import DOMPurify from 'dompurify';
+import { Menu } from '@mantine/core';
+import { Trash, Edit } from 'tabler-icons-react';
 
 interface Incoming {
   clickedPost: number;
@@ -33,18 +35,36 @@ function EntryDetail(props: Incoming) {
     return <></>;
   }
 
+  const deletePost = () => {
+    console.log('post deleted', post);
+  };
+  const editPost = () => {
+    console.log('post edited', post);
+  };
+
   return (
     <div className="entry-detail">
-      <div className="entry-detail-creator">
-        <img
-          className="entry-detail-creator-avatar"
-          src={picture_url}
-          alt="Avatar User"
-        />
-        <div className="entry-detail-creator-info">
-          <div className="name">{username}</div>
-          <div className="time">{date}</div>
+      <div className="entry-detail-top">
+        <div className="entry-detail-creator">
+          <img
+            className="entry-detail-creator-avatar"
+            src={picture_url}
+            alt="Avatar User"
+          />
+          <div className="entry-detail-creator-info">
+            <div className="name">{username}</div>
+            <div className="time">{date}</div>
+          </div>
         </div>
+        <Menu placement="end">
+          <Menu.Label>Settings</Menu.Label>
+          <Menu.Item icon={<Edit size={14} />} onClick={editPost}>
+            Edit this post
+          </Menu.Item>
+          <Menu.Item color="red" icon={<Trash size={14} />} onClick={deletePost}>
+            Delete this post
+          </Menu.Item>
+        </Menu>
       </div>
       <div className="entry-detail-content">
         <div

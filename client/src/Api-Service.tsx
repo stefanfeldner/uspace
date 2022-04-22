@@ -3,6 +3,7 @@ import { CreateSpaceDataType, SpaceDataType } from "./interfaces/Interfaces";
 const URL = process.env.REACT_APP_API;
 
 const API_SERVICE = {
+  // creates a new user_space_role and returns it
   createUserSpaceRole: async (
     user_id: number,
     space_id: number,
@@ -23,11 +24,13 @@ const API_SERVICE = {
     const userSpaceRole = await res.json();
     return userSpaceRole;
   },
+  // finds a user by given sub and returns it
   findUserBySub: async (sub: string) => {
     const res = await fetch(URL + `/usersBySub/${sub}`);
     const fetchedUser = await res.json();
     return fetchedUser;
   },
+  // creates a new space and returns it
   createSpace: async (spaceData: CreateSpaceDataType) => {
     const res = await fetch(URL + '/spaces', {
       method: 'POST',
@@ -39,6 +42,7 @@ const API_SERVICE = {
     const newSpace: SpaceDataType = await res.json();
     return newSpace;
   },
+  // finds a space by id and returns it
   findSpaceById: async (id: string) => {
     const res = await fetch(URL + `/spaces/${id}`);
     const foundSpace = await res.json();
