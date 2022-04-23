@@ -14,8 +14,6 @@ interface Incoming {
   setOpened: Function;
   allSpaces: SpaceWithCreatorType[];
   setAllSpaces: Function;
-  mySpaces: SpaceWithCreatorType[];
-  setMySpaces: Function;
 }
 
 function CreateSpaceForm(props: Incoming) {
@@ -54,10 +52,9 @@ function CreateSpaceForm(props: Incoming) {
 
       // overwrite posts state with the cloned posts incl. the new comment
       props.setAllSpaces(cloneSpacesAndAddNewSpace(props.allSpaces, newSpace));
-      props.setMySpaces(cloneSpacesAndAddNewSpace(props.mySpaces, newSpace));
 
       // direct to new space
-      navigate(`/spaces/${newSpace.id}`);
+      navigate(`/spaces/${newSpace.id}`); //TODO: add this back
     }
 
     // hide modal

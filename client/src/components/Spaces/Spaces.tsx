@@ -16,7 +16,6 @@ function Spaces(props: Incoming) {
   const { isLoading, user } = useAuth0();
   const url = process.env.REACT_APP_API + '/spacesAndCreators';
   const [allSpaces, setAllSpaces] = useState<SpaceWithCreatorType[]>([]);
-  const [mySpaces, setMySpaces] = useState<SpaceWithCreatorType[]>([]);
 
   useEffect(() => {
     fetchSpaces();
@@ -27,12 +26,13 @@ function Spaces(props: Incoming) {
     const data: SpaceWithCreatorType[] = await spaces.json();
 
     setAllSpaces(data);
+  };
 
-    const mySpaces = data.filter((space) => {
+  // filter out my spaces
+  const mySpaces = (data: SpaceWithCreatorType[]) => {
+    return data.filter((space) => {
       return space.User_Space_Role[0].user.email === user?.email;
     });
-
-    setMySpaces(mySpaces);
   };
 
   if (isLoading) {
@@ -47,25 +47,52 @@ function Spaces(props: Incoming) {
     <>
       <div className="spaces">
         <div className="container">
+    reee
           <div className="spaces-row">
-            {mySpaces.length > 0 && (
-              <>
-                <div className="spaces-row-title">Your Spaces</div>
-                <div className="spaces-wrapper">
-                  <SpacesList spaces={mySpaces} setAllSpaces={setAllSpaces} />
-                </div>
-              </>
-            )}
+            <>
+              <div className="spaces-row-title">Your Spaces</div>
+              <div className="spaces-wrapper">
+                <SpacesList
+                  spaces={allSpaces && mySpaces(allSpaces)}
+                  allSpaces={allSpaces}
+                  setAllSpaces={setAllSpaces}
+                />
+              </div>
+            </>
           </div>
           <div className="spaces-row">
             <div className="spaces-row-title">All Spaces</div>
             <div className="spaces-wrapper">
-              <SpacesList spaces={allSpaces} setAllSpaces={setAllSpaces} />
-              <SpacesList spaces={allSpaces} setAllSpaces={setAllSpaces} />
-              <SpacesList spaces={allSpaces} setAllSpaces={setAllSpaces} />
-              <SpacesList spaces={allSpaces} setAllSpaces={setAllSpaces} />
-              <SpacesList spaces={allSpaces} setAllSpaces={setAllSpaces} />
-              <SpacesList spaces={allSpaces} setAllSpaces={setAllSpaces} />
+              <SpacesList
+                spaces={allSpaces}
+                allSpaces={allSpaces}
+                setAllSpaces={setAllSpaces}
+              />
+              <SpacesList
+                spaces={allSpaces}
+                allSpaces={allSpaces}
+                setAllSpaces={setAllSpaces}
+              />
+              <SpacesList
+                spaces={allSpaces}
+                allSpaces={allSpaces}
+                setAllSpaces={setAllSpaces}
+              />
+              <SpacesList
+                spaces={allSpaces}
+                allSpaces={allSpaces}
+                setAllSpaces={setAllSpaces}
+              />
+              <SpacesList
+                spaces={allSpaces}
+                allSpaces={allSpaces}
+                setAllSpaces={setAllSpaces}
+              />
+              <SpacesList
+                spaces={allSpaces}
+                allSpaces={allSpaces}
+                setAllSpaces={setAllSpaces}
+              />
             </div>
           </div>
         </div>
@@ -81,8 +108,6 @@ function Spaces(props: Incoming) {
           setOpened={props.setOpened}
           allSpaces={allSpaces}
           setAllSpaces={setAllSpaces}
-          mySpaces={mySpaces}
-          setMySpaces={setMySpaces}
         />
       </Modal>
     </>

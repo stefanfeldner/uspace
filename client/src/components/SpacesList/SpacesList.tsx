@@ -11,20 +11,18 @@ import _ from 'lodash';
 interface Incoming {
   spaces: SpaceWithCreatorType[];
   setAllSpaces: Function;
+  allSpaces: SpaceWithCreatorType[];
 }
 
 function SpacesList(props: Incoming) {
   const { user, isLoading } = useAuth0();
 
-  // console.log(props.spaces);
-
   const deleteSpace = async (id: number) => {
-    console.log('deleted space', id);
     await API_SERVICE.deleteUserSpaceRoleBySpaceId(id);
     await API_SERVICE.deleteSpaceById(id);
 
     // deep clone spaces
-    const clonedSpaces = _.cloneDeep(props.spaces);
+    const clonedSpaces = _.cloneDeep(props.allSpaces);
     // find index of deleted space in state
     const indexOfDeletedSpace = clonedSpaces.findIndex(
       (arrSpace) => arrSpace.id === id
