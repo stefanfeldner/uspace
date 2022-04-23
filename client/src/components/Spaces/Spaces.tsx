@@ -47,7 +47,6 @@ function Spaces(props: Incoming) {
     <>
       <div className="spaces">
         <div className="container">
-    reee
           <div className="spaces-row">
             <>
               <div className="spaces-row-title">Your Spaces</div>
