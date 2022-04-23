@@ -8,7 +8,10 @@ const {
   createUserSpaceRole,
   returnSpacesAndCreators,
   returnSpaceData,
-  returnUserBySub
+  returnUserBySub,
+  deleteSinglePost,
+  deleteSingleSpace,
+  deleteSingleUserSpaceRole
 } = require('../models/prisma.model');
 
 // modular route: returns all entries in a table
@@ -133,6 +136,42 @@ const getUserBySub = async (req, res) => {
   }
 };
 
+// delete a single post by id
+const deletePost = async (req, res) => {
+  try {
+    const deletedPost = await deleteSinglePost(req.params.id);
+    res.send(deletedPost);
+    res.status(200);
+  } catch (error) {
+    res.send(error);
+    res.status(404);
+  }
+};
+
+// delete a single post by id
+const deleteSpace = async (req, res) => {
+  try {
+    const deletedSpace = await deleteSingleSpace(req.params.id);
+    res.send(deletedSpace);
+    res.status(200);
+  } catch (error) {
+    res.send(error);
+    res.status(404);
+  }
+};
+
+// delete single User_Space_role by space_id
+const deleteUserSpaceRole = async (req, res) => {
+  try {
+    const deletedRow = await deleteSingleUserSpaceRole(req.params.spaceId);
+    res.send(deletedRow);
+    res.status(200);
+  } catch (error) {
+    res.send(error);
+    res.status(404);
+  }
+};
+
 module.exports = {
   postUser,
   postSpace,
@@ -143,5 +182,8 @@ module.exports = {
   postUserSpaceRole,
   getSpacesAndCreators,
   getSpaceData,
-  getUserBySub
+  getUserBySub,
+  deletePost,
+  deleteSpace,
+  deleteUserSpaceRole
 };

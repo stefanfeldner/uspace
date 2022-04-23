@@ -9,7 +9,10 @@ const {
   postUserSpaceRole,
   getSpacesAndCreators,
   getSpaceData,
-  getUserBySub
+  getUserBySub,
+  deletePost,
+  deleteSpace,
+  deleteUserSpaceRole,
 } = require('./controllers/user.controller');
 
 //
@@ -38,10 +41,19 @@ router.get('/spacesAndCreators', getSpacesAndCreators);
 router.get('/spaceData/:id', getSpaceData);
 
 // GET USER BY SUB
-router.get('/usersBySub/:sub', getUserBySub)
+router.get('/usersBySub/:sub', getUserBySub);
 
 // MODULAR ROUTES
 router.get('/:table', getAllEntries);
 router.get('/:table/:id', getSingleEntryById);
+
+// DELETE POST
+router.delete('/posts/:id', deletePost);
+
+// DELETE SPACE
+router.delete('/spaces/:id', deleteSpace);
+
+// DELETE SPACE BY SPACE ID
+router.delete('/User_Space_Roles/:spaceId', deleteUserSpaceRole);
 
 module.exports = router;

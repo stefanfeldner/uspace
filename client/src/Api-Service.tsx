@@ -1,4 +1,4 @@
-import { CreateSpaceDataType, SpaceDataType } from "./interfaces/Interfaces";
+import { CreateSpaceDataType, SpaceDataType } from './interfaces/Interfaces';
 
 const URL = process.env.REACT_APP_API;
 
@@ -47,7 +47,33 @@ const API_SERVICE = {
     const res = await fetch(URL + `/spaces/${id}`);
     const foundSpace = await res.json();
     return foundSpace;
-  }
+  },
+  //delete single post and comments inside
+  deletePostById: async (id: number) => {
+    const res = await fetch(URL + `/posts/${id}`, {
+      method: 'DELETE',
+    });
+    const deletedPost = await res.json();
+    return deletedPost;
+  },
+  //delete single space and posts/comments inside
+  deleteSpaceById: async (id: number) => {
+    const res = await fetch(URL + `/spaces/${id}`, {
+      method: 'DELETE',
+    });
+    const deletedSpace = await res.json();
+    return deletedSpace;
+  },
+  //delete single User_Space_role by space_id
+  deleteUserSpaceRoleBySpaceId: async (space_id: number) => {
+    console.log('space_id', space_id);
+    
+    const res = await fetch(URL + `/User_Space_Roles/${space_id}`, {
+      method: 'DELETE',
+    });
+    const deletedUserSpaceRole = await res.json();
+    return deletedUserSpaceRole;
+  },
 };
 
 export default API_SERVICE;

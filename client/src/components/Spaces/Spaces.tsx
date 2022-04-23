@@ -52,7 +52,7 @@ function Spaces(props: Incoming) {
               <>
                 <div className="spaces-row-title">Your Spaces</div>
                 <div className="spaces-wrapper">
-                  <SpacesList spaces={mySpaces} />
+                  <SpacesList spaces={mySpaces} setAllSpaces={setAllSpaces} />
                 </div>
               </>
             )}
@@ -60,12 +60,12 @@ function Spaces(props: Incoming) {
           <div className="spaces-row">
             <div className="spaces-row-title">All Spaces</div>
             <div className="spaces-wrapper">
-              <SpacesList spaces={allSpaces} />
-              <SpacesList spaces={allSpaces} />
-              <SpacesList spaces={allSpaces} />
-              <SpacesList spaces={allSpaces} />
-              <SpacesList spaces={allSpaces} />
-              <SpacesList spaces={allSpaces} />
+              <SpacesList spaces={allSpaces} setAllSpaces={setAllSpaces} />
+              <SpacesList spaces={allSpaces} setAllSpaces={setAllSpaces} />
+              <SpacesList spaces={allSpaces} setAllSpaces={setAllSpaces} />
+              <SpacesList spaces={allSpaces} setAllSpaces={setAllSpaces} />
+              <SpacesList spaces={allSpaces} setAllSpaces={setAllSpaces} />
+              <SpacesList spaces={allSpaces} setAllSpaces={setAllSpaces} />
             </div>
           </div>
         </div>

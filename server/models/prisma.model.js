@@ -185,6 +185,7 @@ const returnSpaceData = async (id) => {
   return spaceData;
 };
 
+// find user by sub and return
 const returnUserBySub = async (sub) => {
   console.log(sub);
 
@@ -200,6 +201,48 @@ const returnUserBySub = async (sub) => {
   }
 }
 
+// delete single post and comments inside
+const deleteSinglePost = async (id) => {
+  try {
+    const deletedPost = await prisma.post.delete({
+      where: {
+        id: +id, // parse id to int
+      },
+    })
+    return deletedPost;
+  } catch (error) {
+    return error
+  }
+}
+
+// delete single space and posts/comments inside
+const deleteSingleSpace = async (id) => {
+  try {
+    const deletedSpace = await prisma.space.delete({
+      where: {
+        id: +id, // parse id to int
+      },
+    })
+    return deletedSpace;
+  } catch (error) {
+    return error
+  }
+}
+
+// delete single User_Space_role by space_id
+const deleteSingleUserSpaceRole = async (spaceId) => {
+  try {
+    const deletedRowCount = await prisma.User_Space_Role.deleteMany({
+      where: {
+        space_id: +spaceId, // parse id to int
+      },
+    })
+    return deletedRowCount; // returns count of deleted rows
+  } catch (error) {
+    return error
+  }
+}
+
 module.exports = {
   createUser,
   createSpace,
@@ -210,5 +253,8 @@ module.exports = {
   createUserSpaceRole,
   returnSpacesAndCreators,
   returnSpaceData,
-  returnUserBySub
+  returnUserBySub,
+  deleteSinglePost,
+  deleteSingleSpace,
+  deleteSingleUserSpaceRole
 };

@@ -4,6 +4,10 @@ import { PostType, SpaceDataType } from '../../interfaces/Interfaces';
 import DOMPurify from 'dompurify';
 import { Menu } from '@mantine/core';
 import { Trash, Edit } from 'tabler-icons-react';
+import API_SERVICE from '../../Api-Service';
+import _ from 'lodash';
+import { useState } from 'react';
+import { useAuth0 } from '@auth0/auth0-react';
 
 interface Incoming {
   clickedPost: number;
@@ -18,8 +22,22 @@ function EntryDetail(props: Incoming) {
   const username = props.spaceData[0]?.User_Space_Role[0]?.user?.username;
   const picture_url = props.spaceData[0]?.User_Space_Role[0]?.user?.picture_url;
   const comments = props.posts[props.clickedPost]?.Comment;
-  let date = '';
+  const { user, isLoading } = useAuth0();
+  const [isOwner, setIsOwner] = useState<boolean>(false);
 
+  // check if current user is owner of current space
+  const getUser = async () => {
+    if (user) {
+      // get user by sub
+      const foundUser = await API_SERVICE.findUserBySub(user.sub!);
+      // check if user is owner
+      if (props.spaceOwnerId === foundUser.id) setIsOwner(true);
+    }
+  };
+
+  if (!isLoading) getUser();
+
+  let date = '';
   if (post) {
     date = new Date(post.created_at).toLocaleTimeString('en-EN', {
       hour: '2-digit',
@@ -35,9 +53,21 @@ function EntryDetail(props: Incoming) {
     return <></>;
   }
 
-  const deletePost = () => {
-    console.log('post deleted', post);
+  const deletePost = async () => {
+    // delete post from db
+    await API_SERVICE.deletePostById(post.id);
+    // deep clone posts of space
+    const clonedPosts = _.cloneDeep(props.posts);
+    // find index of deleted post in state
+    const indexOfDeletedPost = clonedPosts.findIndex(
+      (arrPost) => arrPost.id === post.id
+    );
+    // delete post from state
+    clonedPosts.splice(indexOfDeletedPost, 1);
+    // set posts without deleted one to state
+    props.setPosts(clonedPosts);
   };
+
   const editPost = () => {
     console.log('post edited', post);
   };
@@ -56,15 +86,21 @@ function EntryDetail(props: Incoming) {
             <div className="time">{date}</div>
           </div>
         </div>
-        <Menu placement="end">
-          <Menu.Label>Settings</Menu.Label>
-          <Menu.Item icon={<Edit size={14} />} onClick={editPost}>
-            Edit this post
-          </Menu.Item>
-          <Menu.Item color="red" icon={<Trash size={14} />} onClick={deletePost}>
-            Delete this post
-          </Menu.Item>
-        </Menu>
+        {isOwner && (
+          <Menu placement="end">
+            <Menu.Label>Settings</Menu.Label>
+            <Menu.Item icon={<Edit size={14} />} onClick={editPost}>
+              Edit this Post
+            </Menu.Item>
+            <Menu.Item
+              color="red"
+              icon={<Trash size={14} />}
+              onClick={deletePost}
+            >
+              Delete this Post
+            </Menu.Item>
+          </Menu>
+        )}
       </div>
       <div className="entry-detail-content">
         <div
