@@ -7,7 +7,7 @@ generator client {
 
 datasource db {
   provider = "postgresql"
-  url      = "postgresql://postgres:password@localhost:5432/wepanion?schema=public"
+  url      = env("DATABASE_URL")
 }
 
 // TODO: ADD type attributes: https://www.prisma.io/docs/concepts/components/prisma-schema/data-model#defining-attributes
@@ -41,7 +41,7 @@ model Post {
 
 model Space {
   id              Int               @id @default(autoincrement())
-  name            String
+  name            String            @unique
   description     String
   created_at      DateTime          @default(now())
   Post            Post[]

@@ -19,11 +19,11 @@ const getAllEntries = async (req, res) => {
   try {
     // pass route (table name) and remove '/' in the end
     const entries = await returnAllEntries(req.path.slice(1, -1));
-    res.send(entries);
     res.status(200);
+    res.send(entries);
   } catch (error) {
-    res.send(error);
-    res.status(404);
+    res.status(500);
+    res.send(JSON.stringify(error));
   }
 };
 
@@ -32,11 +32,11 @@ const getSingleEntryById = async (req, res) => {
   try {
     // pass route param, cut off plural and '/' on front and beginning
     const entry = await returnEntryById(req.path, req.params.id);
-    res.send(entry);
     res.status(200);
+    res.send(entry);
   } catch (error) {
-    res.send(error);
-    res.status(404);
+    res.status(500);
+    res.send(JSON.stringify(error));
   }
 };
 
@@ -44,11 +44,11 @@ const getSingleEntryById = async (req, res) => {
 const postUser = async (req, res) => {
   try {
     const user = await createUser(req.body);
-    res.send(user);
     res.status(201);
+    res.send(user);
   } catch (error) {
-    res.send(error);
     res.status(500);
+    res.send(JSON.stringify(error));
   }
 };
 
@@ -56,11 +56,11 @@ const postUser = async (req, res) => {
 const postSpace = async (req, res) => {
   try {
     const space = await createSpace(req.body);
+    res.status(201);
     res.send(space);
-    res.status(200);
   } catch (error) {
-    res.send(error);
-    res.status(404);
+    res.status(500);
+    res.send(JSON.stringify(error));
   }
 };
 
@@ -68,11 +68,11 @@ const postSpace = async (req, res) => {
 const postPost = async (req, res) => {
   try {
     const post = await createPost(req.body);
+    res.status(201);
     res.send(post);
-    res.status(200);
   } catch (error) {
-    res.send(error);
-    res.status(404);
+    res.status(500);
+    res.send(JSON.stringify(error));
   }
 };
 
@@ -80,11 +80,11 @@ const postPost = async (req, res) => {
 const postComment = async (req, res) => {
   try {
     const comment = await createComment(req.body);
+    res.status(201);
     res.send(comment);
-    res.status(200);
   } catch (error) {
-    res.send(error);
-    res.status(404);
+    res.status(500);
+    res.send(JSON.stringify(error));
   }
 };
 
@@ -92,11 +92,11 @@ const postComment = async (req, res) => {
 const postUserSpaceRole = async (req, res) => {
   try {
     const userSpaceRole = await createUserSpaceRole(req.body);
+    res.status(201);
     res.send(userSpaceRole);
-    res.status(200);
   } catch (error) {
-    res.send(error);
-    res.status(404);
+    res.status(500);
+    res.send(JSON.stringify(error));
   }
 };
 
@@ -104,11 +104,11 @@ const postUserSpaceRole = async (req, res) => {
 const getSpacesAndCreators = async (req, res) => {
   try {
     const spacesAndCreators = await returnSpacesAndCreators();
-    res.send(spacesAndCreators);
     res.status(200);
+    res.send(spacesAndCreators);
   } catch (error) {
-    res.send(error);
-    res.status(404);
+    res.status(500);
+    res.send(JSON.stringify(error));
   }
 };
 
@@ -116,11 +116,11 @@ const getSpacesAndCreators = async (req, res) => {
 const getSpaceData = async (req, res) => {
   try {
     const spaceData = await returnSpaceData(req.params.id);
-    res.send(spaceData);
     res.status(200);
+    res.send(spaceData);
   } catch (error) {
-    res.send(error);
-    res.status(404);
+    res.status(500);
+    res.send(JSON.stringify(error));
   }
 };
 
@@ -128,11 +128,11 @@ const getSpaceData = async (req, res) => {
 const getUserBySub = async (req, res) => {
   try {
     const user = await returnUserBySub(req.params.sub);
-    res.send(user);
     res.status(200);
+    res.send(user);
   } catch (error) {
-    res.send(error);
-    res.status(404);
+    res.status(500);
+    res.send(JSON.stringify(error));
   }
 };
 
@@ -140,11 +140,11 @@ const getUserBySub = async (req, res) => {
 const deletePost = async (req, res) => {
   try {
     const deletedPost = await deleteSinglePost(req.params.id);
+    res.status(202);
     res.send(deletedPost);
-    res.status(200);
   } catch (error) {
-    res.send(error);
-    res.status(404);
+    res.status(500);
+    res.send(JSON.stringify(error));
   }
 };
 
@@ -152,11 +152,11 @@ const deletePost = async (req, res) => {
 const deleteSpace = async (req, res) => {
   try {
     const deletedSpace = await deleteSingleSpace(req.params.id);
+    res.status(202);
     res.send(deletedSpace);
-    res.status(200);
   } catch (error) {
-    res.send(error);
-    res.status(404);
+    res.status(500);
+    res.send(JSON.stringify(error));
   }
 };
 
@@ -164,11 +164,11 @@ const deleteSpace = async (req, res) => {
 const deleteUserSpaceRole = async (req, res) => {
   try {
     const deletedRow = await deleteSingleUserSpaceRole(req.params.spaceId);
+    res.status(202);
     res.send(deletedRow);
-    res.status(200);
   } catch (error) {
-    res.send(error);
-    res.status(404);
+    res.status(500);
+    res.send(JSON.stringify(error));
   }
 };
 

@@ -41,6 +41,7 @@ function Spaces(props: Incoming) {
   };
 
   // filter found spaces
+  // TODO: Fix filter with same name spaces
   const foundSpaces = (data: SpaceWithCreatorType[]) => {
     return data.filter((space) => {
       return space.name.includes(filterValue);

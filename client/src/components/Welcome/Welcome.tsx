@@ -6,7 +6,7 @@ import SignupButton from '../SignupButton/SignupButton';
 
 function Welcome() {
   return (
-    <div className="welcome">
+    <main className="welcome">
       <div className="container">
         <div className="welcome-heading">
           <div className="welcome-heading-left">
@@ -50,7 +50,7 @@ function Welcome() {
           </div>
         </div>
       </div>
-    </div>
+    </main>
   );
 }
 

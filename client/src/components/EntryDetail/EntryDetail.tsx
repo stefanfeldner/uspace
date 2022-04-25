@@ -112,9 +112,10 @@ function EntryDetail(props: Incoming) {
         <div className="entry-detail-text">
           {post && (
             // insert rich text content
+            // TODO: Check how to insert rich text safely without sanitizing here
             <div
               dangerouslySetInnerHTML={{
-                __html: DOMPurify.sanitize(post.content),
+                __html: post.content,
               }}
             ></div>
           )}

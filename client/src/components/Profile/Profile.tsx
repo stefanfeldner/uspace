@@ -29,6 +29,7 @@ const Profile = () => {
     );
   }
 
+  // TODO: Send put requests to db
   return (
     <>
       <Header />

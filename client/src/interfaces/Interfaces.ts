@@ -34,7 +34,7 @@ export interface PostType {
   tags: string;
   title: string;
   user_id: number;
-  space_id: number
+  space_id: number;
   created_at: Date;
   Comment: CommentType[];
 }
@@ -44,7 +44,7 @@ export interface CreatePostType {
   tags: string;
   title: string;
   user_id: number;
-  space_id: number
+  space_id: number;
   created_at: Date;
 }
 
@@ -78,4 +78,10 @@ export interface CreateUserType {
   username: string;
   picture_url: string;
   sub: string;
+}
+
+export interface PrismaError {
+  code: string;
+  clientVersion: string;
+  meta: object;
 }

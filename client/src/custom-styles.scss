@@ -1,15 +1,18 @@
 // FONTS
 @font-face {
   font-family: InterMedium;
-  src: url(./assets/fonts/Inter-Medium.ttf);
+  src: url(./assets/fonts/Inter-Medium.woff2) format('woff2');
+  font-weight: 500;
 }
 @font-face {
   font-family: InterSemiBold;
-  src: url(./assets/fonts/Inter-SemiBold.ttf);
+  src: url(./assets/fonts/Inter-SemiBold.woff2) format('woff2');
+  font-weight: 600;
 }
 @font-face {
   font-family: InterRegular;
-  src: url(./assets/fonts/Inter-Regular.ttf);
+  font-weight: 400;
+  src: url(./assets/fonts/Inter-Regular.woff2) format('woff2');
 }
 
 $font-medium: InterMedium;

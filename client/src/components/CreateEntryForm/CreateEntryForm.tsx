@@ -4,6 +4,12 @@ import { RichTextEditor } from '@mantine/rte';
 import { TextInput, MultiSelect } from '@mantine/core';
 import DOMPurify from 'dompurify';
 import { CreatePostType, PostType } from '../../interfaces/Interfaces';
+import {
+  ref,
+  uploadBytes,
+  getDownloadURL,
+} from 'firebase/storage';
+import { storage } from '../../Firebase/config';
 
 interface Incoming {
   setOpened: Function;
@@ -37,20 +43,17 @@ function CreateEntryForm(props: Incoming) {
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>): void => {
     event.preventDefault();
 
-    // console.log(title);
-    // console.log(richTextValue);
-    // console.log(selectedTags);
-
     if (props.user_id && props.space_id) {
       const postData = {
         title: DOMPurify.sanitize(title),
-        content: DOMPurify.sanitize(richTextValue),
+        content: richTextValue, // TODO: Check how to insert rich text safely without sanitizing here
         created_at: new Date(),
         tags: DOMPurify.sanitize(tagsArrToStr(selectedTags)),
         user_id: props.user_id,
         space_id: props.space_id,
         Comment: [],
       };
+
       createPost(postData);
     }
     props.setOpened(false);
@@ -68,7 +71,6 @@ function CreateEntryForm(props: Incoming) {
     // add comment property to post obj to prevent undefined objects
     post.Comment = [];
 
-
     props.setPosts((prevState: PostType[]) => {
       // sort posts before adding new one
       prevState.sort((a, b) => {
@@ -78,6 +80,18 @@ function CreateEntryForm(props: Incoming) {
       });
       return [post, ...prevState];
     });
+  };
+
+  const handleImageUpload = async (file: File): Promise<string> => {
+    // create a reference to the place I want to store the file
+    const storageRef = ref(storage, `space${props.space_id}/${file.name}`);
+
+    // upload the file
+    await uploadBytes(storageRef, file);
+    // get the download link
+    const url = await getDownloadURL(storageRef);
+    // return url to the rich text editor
+    return url;
   };
 
   // TODO: Fix Rich Text Editor Bugs
@@ -94,8 +108,9 @@ function CreateEntryForm(props: Incoming) {
         <RichTextEditor
           value={richTextValue}
           onChange={setRichTextValue}
+          onImageUpload={handleImageUpload}
           controls={[
-            ['bold', 'italic', 'underline', 'link' /*, 'image'*/],
+            ['bold', 'italic', 'underline', 'link', 'image', 'video'],
             ['unorderedList', 'h1', 'h2', 'h3'],
             ['sup', 'sub'],
             ['alignLeft', 'alignCenter', 'alignRight'],

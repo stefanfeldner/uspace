@@ -3,6 +3,7 @@ import '../CreateEntryForm/CreateEntryForm.scss';
 import { TextInput, Textarea } from '@mantine/core';
 import DOMPurify from 'dompurify';
 import SpaceWithCreatorType, {
+  PrismaError,
   SpaceDataType,
 } from '../../interfaces/Interfaces';
 import { useAuth0 } from '@auth0/auth0-react';
@@ -21,6 +22,7 @@ function CreateSpaceForm(props: Incoming) {
   const [description, setDescription] = useState<string>('');
   const { user } = useAuth0();
   const navigate = useNavigate();
+  const [spaceNameTakenError, setSpaceNameTakenError] = useState<string>();
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -31,30 +33,44 @@ function CreateSpaceForm(props: Incoming) {
     };
 
     // create new space
-    const newSpace: SpaceDataType = await API_SERVICE.createSpace(spaceData);
+    const newSpace: SpaceDataType | PrismaError = await API_SERVICE.createSpace(
+      spaceData
+    );
 
-    // check if user exists
-    if (user) {
-      // fetch user from db to get id
-      const foundUser = await API_SERVICE.findUserBySub(user.sub!);
-      // create a m-m relationship using the user id, space id and 2 for creator
-      await API_SERVICE.createUserSpaceRole(foundUser.id, newSpace.id, 2);
-      // add new userSpaceRole array and input new user
-      newSpace.User_Space_Role = [
-        {
-          user: {
-            email: foundUser.email,
-            username: foundUser.username,
-            picture_url: foundUser.picture_url,
+    // check for unique space name constraint
+    if ('code' in newSpace) {
+      console.log(newSpace);
+      setSpaceNameTakenError(
+        'This Space name is already taken, please choose a different one!'
+      );
+      return;
+    }
+
+    if ('id' in newSpace) {
+      // check if user exists
+      if (user) {
+        // fetch user from db to get id
+        const foundUser = await API_SERVICE.findUserBySub(user.sub!);
+        // create a m-m relationship using the user id, space id and 2 for creator
+        await API_SERVICE.createUserSpaceRole(foundUser.id, newSpace.id, 2);
+        // add new userSpaceRole array and input new user
+        newSpace.User_Space_Role = [
+          {
+            user: {
+              email: foundUser.email,
+              username: foundUser.username,
+              picture_url: foundUser.picture_url,
+            },
           },
-        },
-      ];
+        ];
 
-      // overwrite posts state with the cloned posts incl. the new comment
-      props.setAllSpaces(cloneSpacesAndAddNewSpace(props.allSpaces, newSpace));
-
+        // overwrite posts state with the cloned posts incl. the new comment
+        props.setAllSpaces(
+          cloneSpacesAndAddNewSpace(props.allSpaces, newSpace)
+        );
+      }
       // direct to new space
-      navigate(`/spaces/${newSpace.id}`); //TODO: add this back
+      navigate(`/spaces/${newSpace.id}`);
     }
 
     // hide modal
@@ -80,6 +96,7 @@ function CreateSpaceForm(props: Incoming) {
         <TextInput
           required
           value={name}
+          error={spaceNameTakenError && spaceNameTakenError}
           onChange={(event) => setName(event.currentTarget.value)}
         />
         <label>Description:</label>
