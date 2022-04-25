@@ -3,11 +3,12 @@ import Header from '../components/Header/Header';
 import EntryList from '../components/EntryList/EntryList';
 import EntryDetail from '../components/EntryDetail/EntryDetail';
 import CreateEntryForm from '../components/CreateEntryForm/CreateEntryForm';
-import { Modal } from '@mantine/core';
+import { Modal, MultiSelect } from '@mantine/core';
 import Loading from '../components/Loading/Loading';
 import { useAuth0, withAuthenticationRequired } from '@auth0/auth0-react';
 import { useParams } from 'react-router-dom';
 import { PostType, SpaceDataType } from '../interfaces/Interfaces';
+import { Tag } from 'tabler-icons-react';
 
 function Space() {
   const [opened, setOpened] = useState<boolean>(false);
@@ -16,6 +17,8 @@ function Space() {
   const spaceId = useParams().id; // returns id of current space
   const [posts, setPosts] = useState<PostType[]>([]);
   const [spaceOwnerId, setSpaceOwnerId] = useState<number>();
+  const [tags, setTags] = useState<string[]>();
+  const [selectedTags, setSelectedTags] = useState<string[]>([]);
 
   const { isLoading } = useAuth0();
   const url = process.env.REACT_APP_API + `/spaceData/${spaceId}`;
@@ -29,6 +32,21 @@ function Space() {
       const data = await fetch(url);
       const spaces: SpaceDataType[] = await data.json();
       const posts = spaces[0].Post;
+
+      // filter out duplicates with a set
+      const tagsSet: Set<string> = new Set();
+
+      // loop through posts O(n²) // TODO: improve this
+      posts.forEach((post) => {
+        // loop through post tags
+        post.tags.split(',').forEach((tag) => {
+          // add tag to set if not empty
+          if (tag !== '') tagsSet.add(tag.trim());
+        });
+      });
+
+      // save tags set to state as an array
+      setTags(Array.from(tagsSet));
 
       // sort posts by date before inserting into state
       posts.sort((a, b) => {
@@ -53,12 +71,24 @@ function Space() {
       </div>
     );
   }
-  
+
   return (
     <>
       <Header setOpened={setOpened} spaceOwnerId={spaceOwnerId} />
       <main className="main">
         <div className="container">
+          {tags && tags.length > 0 && (
+            <div className="main-filter">
+              <MultiSelect
+                icon={<Tag size={14} />}
+                label="Filter by Tags"
+                data={tags}
+                placeholder="Pick a tag"
+                searchable
+                onChange={setSelectedTags}
+              />
+            </div>
+          )}
           <div className="main-wrapper">
             <div className="main-left">
               {posts && (

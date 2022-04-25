@@ -8,19 +8,26 @@ import './Profile.scss';
 
 const Profile = () => {
   const { user, isLoading } = useAuth0();
-  const [userEmail, setUserEmail] = useState<string>();
-  const [userPicture, setUserPicture] = useState<string>();
-  const [userName, setUserName] = useState<string>();
+  const [userEmail, setUserEmail] = useState<string>('');
+  const [userPicture, setUserPicture] = useState<string>('');
+  const [userName, setUserName] = useState<string>('');
 
   const fetchUser = async () => {
     const fetchedUser: UserType = await API_SERVICE.findUserBySub(user?.sub!);
-    console.log(fetchedUser);
     setUserEmail(fetchedUser.email);
     setUserPicture(fetchedUser.picture_url);
     setUserName(fetchedUser.username);
   };
 
   if (!isLoading && user) fetchUser();
+
+  if (isLoading) {
+    return (
+      <div className="main-loading">
+        <Loading />
+      </div>
+    );
+  }
 
   return (
     <>
@@ -34,11 +41,11 @@ const Profile = () => {
           <div className="profile-data">
             <form>
               <label>E-Mail:</label>
-              <input type="text" value={userEmail} />
+              <input type="text" defaultValue={userEmail} />
               <label>Profile Picture URL:</label>
-              <input type="text" value={userPicture} />
+              <input type="text" defaultValue={userPicture} />
               <label>Username:</label>
-              <input type="text" value={userName} />
+              <input type="text" defaultValue={userName} />
               <button type="submit">Update</button>
             </form>
           </div>
