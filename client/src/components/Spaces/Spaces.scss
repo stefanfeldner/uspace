@@ -3,13 +3,33 @@
 .spaces {
   margin-top: 80px;
 
+  .spaces-search {
+    margin-bottom: 30px;
+
+    input {
+      max-width: 500px;
+    }
+  }
+
+  .spaces-not-found {
+    margin-top: -30px;
+    margin-bottom: 50px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+
+    p {
+      margin-bottom: 0;
+    }
+  }
+
   .spaces-row {
     margin-bottom: 20px;
 
     &:first-child {
       margin-bottom: 50px;
     }
-    
+
     .spaces-row-title {
       font-size: 1.375em;
       color: $color-headings;
@@ -24,5 +44,4 @@
       margin: 0 -10px;
     }
   }
-
 }
