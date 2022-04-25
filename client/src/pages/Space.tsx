@@ -16,6 +16,7 @@ function Space() {
   const [clickedPost, setClickedPost] = useState<number>(0);
   const spaceId = useParams().id; // returns id of current space
   const [posts, setPosts] = useState<PostType[]>([]);
+  const [filteredPosts, setFilteredPosts] = useState<PostType[]>([]);
   const [spaceOwnerId, setSpaceOwnerId] = useState<number>();
   const [tags, setTags] = useState<string[]>();
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
@@ -25,7 +26,8 @@ function Space() {
 
   useEffect(() => {
     fetchSpaceData();
-  }, []);
+    if (selectedTags.length > 0) filterPostsByTags();
+  }, [selectedTags]);
 
   const fetchSpaceData = async () => {
     try {
@@ -72,6 +74,17 @@ function Space() {
     );
   }
 
+  // return an array of posts filtered by tags
+  const filterPostsByTags = () => {
+    const filteredPosts = posts.filter((post) => {
+      // check if tags are included in posts tags array and add it to return
+      return selectedTags.some((tag) => post.tags.includes(tag));
+    });
+    console.log(filteredPosts);
+
+    setFilteredPosts(filteredPosts);
+  };
+
   return (
     <>
       <Header setOpened={setOpened} spaceOwnerId={spaceOwnerId} />
@@ -92,13 +105,24 @@ function Space() {
           <div className="main-wrapper">
             <div className="main-left">
               {posts && (
-                <EntryList posts={posts} setClickedPost={setClickedPost} />
+                <EntryList
+                  posts={
+                    filteredPosts.length > 0 && selectedTags.length > 0
+                      ? filteredPosts
+                      : posts
+                  }
+                  setClickedPost={setClickedPost}
+                />
               )}
             </div>
             <div className="main-right">
               {spaceData && (
                 <EntryDetail
-                  posts={posts}
+                  posts={
+                    filteredPosts.length > 0 && selectedTags.length > 0
+                      ? filteredPosts
+                      : posts
+                  }
                   setPosts={setPosts}
                   spaceData={spaceData}
                   clickedPost={clickedPost}
