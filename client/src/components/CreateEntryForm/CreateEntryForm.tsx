@@ -9,7 +9,7 @@ import {
   uploadBytes,
   getDownloadURL,
 } from 'firebase/storage';
-import { storage } from '../../Firebase/config';
+import { storage } from '../../firebase/config';
 
 interface Incoming {
   setOpened: Function;

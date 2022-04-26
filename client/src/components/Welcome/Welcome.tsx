@@ -21,13 +21,13 @@ function Welcome() {
             <SignupButton />
           </div>
           <div className="welcome-heading-right">
-            <img src={placeholderSpaces} alt="uspace Spaces" />
+            <img src={placeholderNotes} alt="uspace Spaces" />
           </div>
         </div>
         <div className="welcome-content">
           <div className="welcome-content-wrapper">
             <div className="welcome-content-info-left">
-              <img src={placeholderNotes} alt="uspace Notes" />
+              <img src={placeholderSpaces} alt="uspace Notes" />
             </div>
             <div className="welcome-content-info-right">
               <div className="welcome-content-spaces">
