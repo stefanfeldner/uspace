@@ -1,7 +1,6 @@
 # uspace - your source of updates, information, and memories!
 
 #### Full-Stack Web Application
-Product Demo for Codeworks: https://youtu.be/-VePr2Qz3lY
 
 Imagine a place where everyone can share news on what's going on in their lives, notes on the latest class, or, if you're a company, share the progress, on a new product or service.
 
@@ -36,3 +35,5 @@ Once you have found the space you want to visit, click on it, and you'll see all
 - Node.js with Express.js for the Server
 
 - Prisma with PostgreSQL as the Database
+
+Product Demo for Codeworks: https://youtu.be/-VePr2Qz3lY
