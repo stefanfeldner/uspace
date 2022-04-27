@@ -20,19 +20,19 @@ Once you have found the space you want to visit, click on it, and you'll see all
 
 ### Frontend
 
-React with TypeScript
+- React with TypeScript
 
-SCSS for styling
+- SCSS for styling
 
-Mantine for the Rich Text Editor
+- Mantine for the Rich Text Editor
 
-Firebase Storage to store pictures
+- Firebase Storage to store pictures
 
 ### Backend
 
-Node.js with Express.js for the Server
+- Node.js with Express.js for the Server
 
-Prisma with PostgreSQL as the Database
+- Prisma with PostgreSQL as the Database
 
 ## Local Usage
 
