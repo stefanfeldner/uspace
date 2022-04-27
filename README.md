@@ -51,7 +51,7 @@ npx prisma studio --> open prisma database tool
 
 ## Environmental Variables
 
-Backend:
+Backend (.env in server folder):
 
 ```
 # Server port
@@ -61,7 +61,7 @@ PORT=3001
 DATABASE_URL=postgresql://janedoe:mypassword@localhost:5432/mydb?schema=sample
 ```
 
-Frontend:
+Frontend (.env in client folder):
 
 ```
 # Auth0 configuration
