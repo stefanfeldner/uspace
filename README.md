@@ -33,9 +33,28 @@ Once you have found the space you want to visit, click on it, and you'll see all
 
 ### Backend
 
+
 - Node.js with Express.js for the Server
 
 - Prisma with PostgreSQL as the Database
+ 
+
+In server folder:
+
+
+```
+$ npx prisma migrate dev --name init
+```
+
+```
+$ npx prisma generate
+```
+
+In your DB, navigate to your Role table:
+1. Add a row with id ```1``` and name ```viewer```
+2. Add a row with id ```2``` and name ```creator```
+
+Prisma will set up the storage for you!
 
 ## Local Usage
 

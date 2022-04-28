@@ -104,52 +104,13 @@ function Spaces(props: Incoming) {
           <div className="spaces-row">
             <div className="spaces-row-title">All Spaces</div>
             <div className="spaces-wrapper">
-              <SpacesList
-                spaces={allSpaces}
-                allSpaces={allSpaces}
-                setAllSpaces={setAllSpaces}
-              />
-              <SpacesList
-                spaces={allSpaces}
-                allSpaces={allSpaces}
-                setAllSpaces={setAllSpaces}
-              />
-              <SpacesList
-                spaces={allSpaces}
-                allSpaces={allSpaces}
-                setAllSpaces={setAllSpaces}
-              />
-              <SpacesList
-                spaces={allSpaces}
-                allSpaces={allSpaces}
-                setAllSpaces={setAllSpaces}
-              />
-              <SpacesList
-                spaces={allSpaces}
-                allSpaces={allSpaces}
-                setAllSpaces={setAllSpaces}
-              />
-              <SpacesList
-                spaces={allSpaces}
-                allSpaces={allSpaces}
-                setAllSpaces={setAllSpaces}
-              />
+              <SpacesList spaces={allSpaces} allSpaces={allSpaces} setAllSpaces={setAllSpaces} />
             </div>
           </div>
         </div>
       </div>
-      <Modal
-        centered
-        size="lg"
-        opened={props.opened}
-        onClose={() => props.setOpened(false)}
-        title="Create a Space"
-      >
-        <CreateSpaceForm
-          setOpened={props.setOpened}
-          allSpaces={allSpaces}
-          setAllSpaces={setAllSpaces}
-        />
+      <Modal centered size="lg" opened={props.opened} onClose={() => props.setOpened(false)} title="Create a Space">
+        <CreateSpaceForm setOpened={props.setOpened} allSpaces={allSpaces} setAllSpaces={setAllSpaces} />
       </Modal>
     </>
   );
