@@ -1,4 +1,5 @@
 test
+testing branch view in git kraken
 
 # uspace - your source of updates, information, and memories!
 
