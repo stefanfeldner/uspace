@@ -1,5 +1,5 @@
-test
-testing branch view in git kraken
+Adding text here for Alex
+
 
 # uspace - your source of updates, information, and memories!
 
