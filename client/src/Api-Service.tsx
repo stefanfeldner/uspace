@@ -1,94 +1,94 @@
 import {
-  CreateSpaceDataType,
-  CreateUserType,
-  PrismaError,
-  SpaceDataType,
+    CreateSpaceDataType,
+    CreateUserType,
+    PrismaError,
+    SpaceDataType,
 } from './interfaces/Interfaces';
 
 const URL = process.env.REACT_APP_API;
 
 const API_SERVICE = {
-  // creates a new user_space_role and returns it
-  createUserSpaceRole: async (
-    user_id: number,
-    space_id: number,
-    role_id: number
-  ) => {
-    const data = {
-      user_id,
-      space_id,
-      role_id,
-    };
-    const res = await fetch(URL + '/User_Space_Roles', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(data),
-    });
-    const userSpaceRole = await res.json();
-    return userSpaceRole;
-  },
-  // finds a user by given sub and returns it
-  findUserBySub: async (sub: string) => {
-    const res = await fetch(URL + `/usersBySub/${sub}`);
-    const fetchedUser = await res.json();
-    return fetchedUser;
-  },
-  // creates a new space and returns it
-  createSpace: async (spaceData: CreateSpaceDataType) => {
-    const res = await fetch(URL + '/spaces', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(spaceData),
-    });
-    const newSpace: SpaceDataType | PrismaError = await res.json();
-    return newSpace;
-  },
-  // finds a space by id and returns it
-  findSpaceById: async (id: string) => {
-    const res = await fetch(URL + `/spaces/${id}`);
-    const foundSpace = await res.json();
-    return foundSpace;
-  },
-  //delete single post and comments inside
-  deletePostById: async (id: number) => {
-    const res = await fetch(URL + `/posts/${id}`, {
-      method: 'DELETE',
-    });
-    const deletedPost = await res.json();
-    return deletedPost;
-  },
-  //delete single space and posts/comments inside
-  deleteSpaceById: async (id: number) => {
-    const res = await fetch(URL + `/spaces/${id}`, {
-      method: 'DELETE',
-    });
-    const deletedSpace = await res.json();
-    return deletedSpace;
-  },
-  //delete single User_Space_role by space_id
-  deleteUserSpaceRoleBySpaceId: async (space_id: number) => {
-    console.log('space_id', space_id);
+    // creates a new user_space_role and returns it
+    createUserSpaceRole: async (
+        user_id: number,
+        space_id: number,
+        role_id: number
+    ) => {
+        const data = {
+            user_id,
+            space_id,
+            role_id,
+        };
+        const res = await fetch(URL + '/User_Space_Roles', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(data),
+        });
+        const userSpaceRole = await res.json();
+        return userSpaceRole;
+    },
+    // finds a user by given sub and returns it
+    findUserBySub: async (sub: string) => {
+        const res = await fetch(URL + `/usersBySub/${sub}`);
+        const fetchedUser = await res.json();
+        return fetchedUser;
+    },
+    // creates a new space and returns it
+    createSpace: async (spaceData: CreateSpaceDataType) => {
+        const res = await fetch(URL + '/spaces', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(spaceData),
+        });
+        const newSpace: SpaceDataType | PrismaError = await res.json();
+        return newSpace;
+    },
+    // finds a space by id and returns it
+    findSpaceById: async (id: string) => {
+        const res = await fetch(URL + `/spaces/${id}`);
+        const foundSpace = await res.json();
+        return foundSpace;
+    },
+    //delete single post and comments inside
+    deletePostById: async (id: number) => {
+        const res = await fetch(URL + `/posts/${id}`, {
+            method: 'DELETE',
+        });
+        const deletedPost = await res.json();
+        return deletedPost;
+    },
+    //delete single space and posts/comments inside
+    deleteSpaceById: async (id: number) => {
+        const res = await fetch(URL + `/spaces/${id}`, {
+            method: 'DELETE',
+        });
+        const deletedSpace = await res.json();
+        return deletedSpace;
+    },
+    //delete single User_Space_role by space_id
+    deleteUserSpaceRoleBySpaceId: async (space_id: number) => {
+        console.log('space_id', space_id);
 
-    const res = await fetch(URL + `/User_Space_Roles/${space_id}`, {
-      method: 'DELETE',
-    });
-    const deletedUserSpaceRole = await res.json();
-    return deletedUserSpaceRole;
-  },
-  // creates a single user
-  createUser: async (data: CreateUserType) => {
-    await fetch(URL + '/users', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(data),
-    });
-  },
+        const res = await fetch(URL + `/User_Space_Roles/${space_id}`, {
+            method: 'DELETE',
+        });
+        const deletedUserSpaceRole = await res.json();
+        return deletedUserSpaceRole;
+    },
+    // creates a single user
+    createUser: async (data: CreateUserType) => {
+        await fetch(URL + '/users', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(data),
+        });
+    },
 };
 
 export default API_SERVICE;
