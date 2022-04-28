@@ -46,7 +46,22 @@ For the backend, to start the server, run:
 
 ```
 npm start --> starts the node express server
-npx prisma studio --> open prisma database tool
+```
+
+For the database
+- start up your local postgres
+```bash
+#linux
+sudo service postgresql start
+```
+- sync your db with prisma schema (your user needs to have correct permissions)
+```bash
+npx prisma studio db push
+```
+
+- open prisma database tool in your browser
+```bash
+npx prisma studio
 ```
 
 ## Environmental Variables
