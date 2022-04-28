@@ -51,4 +51,4 @@ router.delete('/spaces/:id', deleteSpace);
 // DELETE SPACE BY SPACE ID
 router.delete('/User_Space_Roles/:spaceId', deleteUserSpaceRole);
 
-module.exports = router;
+export default router

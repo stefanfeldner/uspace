@@ -1,9 +1,9 @@
-require('dotenv').config();
-
-const express = require('express');
-const cors = require('cors');
-const logger = require('morgan');
-const router = require('./router');
+import dotenv from 'dotenv';
+dotenv.config();
+import express from 'express';
+import cors from 'cors';
+import logger from 'morgan';
+import router from './router';
 const PORT = process.env.PORT;
 
 const app = express();
@@ -14,7 +14,3 @@ app.use(logger('dev'));
 app.use(router);
 
 app.listen(PORT, () => console.log(`🚀 Server running on http://localhost:${PORT} 🚀`));
-
-// const testfunction = (input: string): string => {
-//   return 0;
-// }
