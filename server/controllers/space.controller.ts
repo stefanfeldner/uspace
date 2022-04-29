@@ -1,16 +1,13 @@
 import { Request, Response } from 'express';
-// @ts-ignore
-import { createSpace, returnSpaceData, deleteSingleSpace } from '../models/prisma.model';
+import { createSpace, returnSpaceData, deleteSingleSpace } from '../models/space.model';
 
 // creates a single space
-const postSpace = async (req: Request, res:Response): Promise<void> => {
+const postSpace = async (req: Request, res: Response): Promise<void> => {
   try {
     const space = await createSpace(req.body);
-    res.status(201);
-    res.send(space);
+    res.status(201).send(space);
   } catch (error) {
-    res.status(500);
-    res.send(JSON.stringify(error));
+    res.status(500).send({ error: 'An unknown server error has occurred.' });
   }
 };
 
@@ -18,11 +15,13 @@ const postSpace = async (req: Request, res:Response): Promise<void> => {
 const getSpaceData = async (req:Request, res: Response): Promise<void> => {
   try {
     const spaceData = await returnSpaceData(req.params.id);
-    res.status(200);
-    res.send(spaceData);
+    if (!spaceData) {
+      res.status(404).send({ error: 'Space has not been found.' });
+      return;
+    }
+    res.status(200).send(spaceData);
   } catch (error) {
-    res.status(500);
-    res.send(JSON.stringify(error));
+    res.status(500).send({ error: 'An unknown server error has occurred.' });
   }
 };
 
@@ -30,11 +29,9 @@ const getSpaceData = async (req:Request, res: Response): Promise<void> => {
 const deleteSpace = async (req: Request, res: Response): Promise<void> => {
   try {
     const deletedSpace = await deleteSingleSpace(req.params.id);
-    res.status(202);
-    res.send(deletedSpace);
+    res.status(202).send(deletedSpace);
   } catch (error) {
-    res.status(500);
-    res.send(JSON.stringify(error));
+    res.status(500).send({ error: 'An unknown server error has occurred.' });
   }
 };
 

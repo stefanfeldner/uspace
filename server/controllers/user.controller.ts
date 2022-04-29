@@ -1,5 +1,5 @@
 import { createUser, returnUserBySub } from '../models/user.model';
-import { Request, Response } from 'express'
+import { Request, Response } from 'express';
 // creates a single user
 export const postUser = async (req: Request, res: Response): Promise<void> => {
   try {

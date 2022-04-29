@@ -6,7 +6,7 @@ import { ISpace } from '../interfaces/space.interface';
 const prisma = new PrismaClient();
 
 // creates a single space
-const createSpace = async (newSpaceDetails: Space): Promise<ISpace> => {
+export const createSpace = async (newSpaceDetails: Space): Promise<ISpace> => {
   try {
     const space = await prisma.space.create({
       data: newSpaceDetails
@@ -18,7 +18,7 @@ const createSpace = async (newSpaceDetails: Space): Promise<ISpace> => {
   }
 };
 
-const returnSpaceData = async (id: number): Promise<ISpaceData | null> => {
+export const returnSpaceData = async (id: string): Promise<ISpaceData | null> => {
   try {
     const spaceData = await prisma.space.findUnique({
       where: {
@@ -47,6 +47,7 @@ const returnSpaceData = async (id: number): Promise<ISpaceData | null> => {
         }
       }
     });
+
     if (!spaceData) {
       return null;
     }
@@ -90,21 +91,16 @@ const returnSpaceData = async (id: number): Promise<ISpaceData | null> => {
 };
 
 // delete single space and posts/comments inside
-const deleteSingleSpace = async (id: number): Promise<any> => {
+export const deleteSingleSpace = async (id: string): Promise<number> => {
   try {
     const deletedSpace = await prisma.space.delete({
       where: {
         id: +id // parse id to int
       }
     });
-    return deletedSpace;
+    return deletedSpace.id;
   } catch (error) {
-    return error;
+    console.log(error);
+    throw new Error('A database error has occurred.');
   }
-};
-
-export default {
-  createSpace,
-  returnSpaceData,
-  deleteSingleSpace
 };
