@@ -8,7 +8,7 @@ export const createUser = async (newUserDetails: User): Promise<IUser> => {
     const user = await prisma.user.create(
       { data: newUserDetails }
     );
-    console.log(user)
+    console.log(user);
     return {
       id: user.id,
       email: user.email,
@@ -19,7 +19,7 @@ export const createUser = async (newUserDetails: User): Promise<IUser> => {
       sub: user.sub
     };
   } catch (error) {
-    console.log(error)
+    console.log(error);
     throw Error('A database error has occurred.');
   }
 };
@@ -49,4 +49,4 @@ export const returnUserBySub = async (sub: string): Promise<IUser| null> => {
     console.log(error);
     throw new Error('A database error has occurred.');
   }
-}
+};
