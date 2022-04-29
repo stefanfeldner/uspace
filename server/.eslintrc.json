@@ -1,7 +1,8 @@
 {
   "env": {
     "node": true,
-    "es2021": true
+    "es2021": true,
+    "jest": true
   },
   "extends": ["standard"],
   "parser": "@typescript-eslint/parser",
@@ -14,5 +15,10 @@
     "semi": "off",
     "quotes": ["error", "single"],
     "@typescript-eslint/explicit-function-return-type": ["error"]
-  }
+  },
+  // "ignorePatterns": ["**/*.test.js"]
+  "overrides":[{
+    "files": ["*.js"],
+    "rules": {"@typescript-eslint/explicit-function-return-type": ["off"]}
+  }]
 }
