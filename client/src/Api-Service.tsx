@@ -1,6 +1,5 @@
 import {
     CreateSpaceDataType,
-    CreateUserType,
     PrismaError,
     SpaceDataType,
 } from './interfaces/Interfaces';
@@ -28,12 +27,6 @@ const API_SERVICE = {
         });
         const userSpaceRole = await res.json();
         return userSpaceRole;
-    },
-    // finds a user by given sub and returns it
-    findUserBySub: async (sub: string) => {
-        const res = await fetch(URL + `/usersBySub/${sub}`);
-        const fetchedUser = await res.json();
-        return fetchedUser;
     },
     // creates a new space and returns it
     createSpace: async (spaceData: CreateSpaceDataType) => {
@@ -78,16 +71,6 @@ const API_SERVICE = {
         });
         const deletedUserSpaceRole = await res.json();
         return deletedUserSpaceRole;
-    },
-    // creates a single user
-    createUser: async (data: CreateUserType) => {
-        await fetch(URL + '/users', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(data),
-        });
     },
 };
 

@@ -10,6 +10,7 @@ import { useAuth0 } from '@auth0/auth0-react';
 import API_SERVICE from '../../../../Api-Service';
 import _ from 'lodash';
 import { useNavigate } from 'react-router';
+import API_USER_SERVICE from '../../../../services/apiUserService';
 
 interface Incoming {
   setOpened: Function;
@@ -50,7 +51,7 @@ function CreateSpaceForm(props: Incoming) {
       //todo add type on user
       if (user) {
         // fetch user from db to get id //todo no need if ID = email
-        const foundUser = await API_SERVICE.findUserBySub(user.sub!);
+        const foundUser = await API_USER_SERVICE.findUserBySub(user.sub!);
         // create a m-m relationship using the user id, space id and 2 for creator
         //todo not necessary for owner
         await API_SERVICE.createUserSpaceRole(foundUser.id, newSpace.id, 2);

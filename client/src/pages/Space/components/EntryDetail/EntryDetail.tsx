@@ -8,6 +8,7 @@ import API_SERVICE from '../../../../Api-Service';
 import _ from 'lodash';
 import { useState } from 'react';
 import { useAuth0 } from '@auth0/auth0-react';
+import API_USER_SERVICE from '../../../../services/apiUserService';
 
 interface Incoming {
   clickedPost: number;
@@ -29,7 +30,7 @@ function EntryDetail(props: Incoming) {
   const getUser = async () => {
     if (user) {
       // get user by sub
-      const foundUser = await API_SERVICE.findUserBySub(user.sub!);
+      const foundUser = await API_USER_SERVICE.findUserBySub(user.sub!);
       // check if user is owner
       if (props.spaceOwnerId === foundUser.id) setIsOwner(true);
     }
