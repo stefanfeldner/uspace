@@ -8,9 +8,15 @@ const URL = process.env.REACT_APP_API;
 
 const API_SPACE_SERVICE = {
     // get all spaces
-    getSpacesAndCreators: async ():Promise<SpaceWithCreatorType[]> => {
+    // todo handle errors in api calls? throw error?
+    getSpacesAndCreators: async (): Promise<SpaceWithCreatorType[]> => {
         const spaces = await fetch(URL + '/spacesAndCreators');
         return await spaces.json();
+    },
+
+    getSpaceData: async (spaceId: string): Promise<SpaceDataType[]> => {
+        const space = await fetch(URL + `/spaceData/${spaceId}`);
+        return await space.json();
     },
 
     // creates a new space and returns it

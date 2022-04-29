@@ -9,6 +9,7 @@ import { useAuth0, withAuthenticationRequired } from '@auth0/auth0-react';
 import { useParams } from 'react-router-dom';
 import { PostType, SpaceDataType } from '../../interfaces/Interfaces';
 import { Tag } from 'tabler-icons-react';
+import API_SPACE_SERVICE from '../../services/apiSpaceService';
 
 function Space() {
   const [opened, setOpened] = useState<boolean>(false);
@@ -22,24 +23,15 @@ function Space() {
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
 
   const { isLoading } = useAuth0();
-  const url = process.env.REACT_APP_API + `/spaceData/${spaceId}`;
 
-  useEffect(() => {
-    fetchSpaceData();
-    if (selectedTags.length > 0) filterPostsByTags();
-  }, [selectedTags]);
-
-  const fetchSpaceData = async () => {
-    try {
-      const data = await fetch(url);
-      const spaces: SpaceDataType[] = await data.json();
-      const posts = spaces[0].Post;
-
-      // filter out duplicates with a set
+  function getUniqueTags(posts: PostType[]) {
+    // filter out duplicates with a set
       const tagsSet: Set<string> = new Set();
 
-      // loop through posts O(n²) // TODO: improve this
+      // loop through posts O(n²)
       posts.forEach((post) => {
+
+        if (post.tags === '') return []
         // loop through post tags
         post.tags.split(',').forEach((tag) => {
           // add tag to set if not empty
@@ -47,24 +39,36 @@ function Space() {
         });
       });
 
-      // save tags set to state as an array
-      setTags(Array.from(tagsSet));
+      return Array.from(tagsSet)
+  }
 
-      // sort posts by date before inserting into state
-      posts.sort((a, b) => {
-        // compare milliseconds
-        return (
-          new Date(b.created_at).valueOf() - new Date(a.created_at).valueOf()
-        );
-      });
+  useEffect(() => {
+    spaceId && API_SPACE_SERVICE.getSpaceData(spaceId)
+        .then((spacesData) => {
+          const space = spacesData[0];
+          const posts = space.Post;
+          setTags(getUniqueTags(posts));
 
-      setSpaceData(spaces);
-      setPosts(posts);
-      setSpaceOwnerId(spaces[0].User_Space_Role[0].user.id);
-    } catch (error) {
-      console.error(error);
-    }
-  };
+          // sort posts by date before inserting into state
+          posts.sort((a, b) => {
+            // compare milliseconds
+            return (
+              new Date(b.created_at).valueOf() - new Date(a.created_at).valueOf()
+            );
+          });
+
+          setSpaceData(spacesData);
+          setPosts(posts);
+          // todo change with new models
+          setSpaceOwnerId(space.User_Space_Role[0].user.id);
+        })
+  }, [spaceId])
+
+
+  useEffect(() => {
+    if (selectedTags.length > 0) filterPostsByTags();
+  }, [selectedTags]);
+
 
   if (isLoading) {
     return (
