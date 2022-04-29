@@ -7,6 +7,7 @@ import SpaceWithCreatorType from '../../../../interfaces/Interfaces';
 import { Autocomplete, Modal } from '@mantine/core';
 import CreateSpaceForm from '../../forms/CreateSpaceForm/CreateSpaceForm';
 import { MoodSad, Search } from 'tabler-icons-react';
+import API_SPACE_SERVICE from '../../../../services/apiSpaceService';
 
 interface Incoming {
   opened: boolean;
@@ -15,24 +16,17 @@ interface Incoming {
 
 function Spaces(props: Incoming) {
   const { isLoading, user } = useAuth0();
-  const url = process.env.REACT_APP_API + '/spacesAndCreators';
   const [allSpaces, setAllSpaces] = useState<SpaceWithCreatorType[]>([]);
   const [filterValue, setFilterValue] = useState<string>('');
   const [spaceNames, setSpaceNames] = useState<string[]>([]);
 
   useEffect(() => {
-    fetchSpaces();
+    API_SPACE_SERVICE.getSpacesAndCreators()
+    .then((data) =>{
+      setAllSpaces(data);
+        setSpaceNames(data.map((space) => space.name));
+    })
   }, []);
-
-  const fetchSpaces = async () => {
-    // todo move to api calls
-    const spaces = await fetch(url);
-    const data: SpaceWithCreatorType[] = await spaces.json();
-
-    setAllSpaces(data);
-
-    setSpaceNames(data.map((space) => space.name));
-  };
 
   // filter out my spaces
   const mySpaces = (data: SpaceWithCreatorType[]) => {
