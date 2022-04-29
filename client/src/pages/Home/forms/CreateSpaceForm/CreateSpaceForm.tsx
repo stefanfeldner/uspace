@@ -7,10 +7,10 @@ import SpaceWithCreatorType, {
   SpaceDataType,
 } from '../../../../interfaces/Interfaces';
 import { useAuth0 } from '@auth0/auth0-react';
-import API_SERVICE from '../../../../Api-Service';
 import _ from 'lodash';
 import { useNavigate } from 'react-router';
 import API_USER_SERVICE from '../../../../services/apiUserService';
+import API_SPACE_SERVICE from '../../../../services/apiSpaceService';
 
 interface Incoming {
   setOpened: Function;
@@ -34,7 +34,7 @@ function CreateSpaceForm(props: Incoming) {
     };
 
     // create new space
-    const newSpace: SpaceDataType | PrismaError = await API_SERVICE.createSpace(
+    const newSpace: SpaceDataType | PrismaError = await API_SPACE_SERVICE.createSpace(
       spaceData
     );
 
@@ -54,7 +54,7 @@ function CreateSpaceForm(props: Incoming) {
         const foundUser = await API_USER_SERVICE.findUserBySub(user.sub!);
         // create a m-m relationship using the user id, space id and 2 for creator
         //todo not necessary for owner
-        await API_SERVICE.createUserSpaceRole(foundUser.id, newSpace.id, 2);
+        await API_SPACE_SERVICE.createUserSpaceRole(foundUser.id, newSpace.id, 2);
         // add new userSpaceRole array and input new user
         newSpace.User_Space_Role = [
           {
