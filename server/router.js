@@ -20,28 +20,28 @@ const {
 //
 
 // USERS
-router.post('/users', postUser);
+router.post('/users', postUser);  // USER
 
 // SPACES
-router.post('/spaces', postSpace);
+router.post('/spaces', postSpace);  // SPACE
 
 // POSTS
-router.post('/posts', postPost);
+router.post('/posts', postPost);  // POST
 
 // COMMENTS
-router.post('/comments', postComment);
+router.post('/comments', postComment);  // COMMENT
 
 // USER_SPACE_ROLE
-router.post('/User_Space_Roles', postUserSpaceRole);
+router.post('/User_Space_Roles', postUserSpaceRole);  // who knows
 
 // SPACES + CREATORS
-router.get('/spacesAndCreators', getSpacesAndCreators);
+router.get('/spacesAndCreators', getSpacesAndCreators);  // SPACE
 
 // SPACE + POSTS
-router.get('/spaceData/:id', getSpaceData);
+router.get('/spaceData/:id', getSpaceData);  // SPACE
 
 // GET USER BY SUB
-router.get('/usersBySub/:sub', getUserBySub);
+router.get('/usersBySub/:sub', getUserBySub); // USER
 
 // MODULAR ROUTES
 router.get('/:table', getAllEntries);

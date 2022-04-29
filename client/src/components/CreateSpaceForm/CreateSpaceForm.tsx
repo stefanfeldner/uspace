@@ -39,7 +39,6 @@ function CreateSpaceForm(props: Incoming) {
 
     // check for unique space name constraint
     if ('code' in newSpace) {
-      console.log(newSpace);
       setSpaceNameTakenError(
         'This Space name is already taken, please choose a different one!'
       );
@@ -48,10 +47,12 @@ function CreateSpaceForm(props: Incoming) {
 
     if ('id' in newSpace) {
       // check if user exists
+      //todo add type on user
       if (user) {
-        // fetch user from db to get id
+        // fetch user from db to get id //todo no need if ID = email
         const foundUser = await API_SERVICE.findUserBySub(user.sub!);
         // create a m-m relationship using the user id, space id and 2 for creator
+        //todo not necessary for owner
         await API_SERVICE.createUserSpaceRole(foundUser.id, newSpace.id, 2);
         // add new userSpaceRole array and input new user
         newSpace.User_Space_Role = [
@@ -66,6 +67,7 @@ function CreateSpaceForm(props: Incoming) {
 
         // overwrite posts state with the cloned posts incl. the new comment
         props.setAllSpaces(
+            //TODO can be using a callback
           cloneSpacesAndAddNewSpace(props.allSpaces, newSpace)
         );
       }

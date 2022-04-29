@@ -25,6 +25,7 @@ function Spaces(props: Incoming) {
   }, []);
 
   const fetchSpaces = async () => {
+    // todo move to api calls
     const spaces = await fetch(url);
     const data: SpaceWithCreatorType[] = await spaces.json();
 
@@ -104,31 +105,6 @@ function Spaces(props: Incoming) {
           <div className="spaces-row">
             <div className="spaces-row-title">All Spaces</div>
             <div className="spaces-wrapper">
-              <SpacesList
-                spaces={allSpaces}
-                allSpaces={allSpaces}
-                setAllSpaces={setAllSpaces}
-              />
-              <SpacesList
-                spaces={allSpaces}
-                allSpaces={allSpaces}
-                setAllSpaces={setAllSpaces}
-              />
-              <SpacesList
-                spaces={allSpaces}
-                allSpaces={allSpaces}
-                setAllSpaces={setAllSpaces}
-              />
-              <SpacesList
-                spaces={allSpaces}
-                allSpaces={allSpaces}
-                setAllSpaces={setAllSpaces}
-              />
-              <SpacesList
-                spaces={allSpaces}
-                allSpaces={allSpaces}
-                setAllSpaces={setAllSpaces}
-              />
               <SpacesList
                 spaces={allSpaces}
                 allSpaces={allSpaces}

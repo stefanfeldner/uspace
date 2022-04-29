@@ -18,6 +18,7 @@ const {
 const getAllEntries = async (req, res) => {
   try {
     // pass route (table name) and remove '/' in the end
+    // todo use params
     const entries = await returnAllEntries(req.path.slice(1, -1));
     res.status(200);
     res.send(entries);

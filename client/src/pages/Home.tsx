@@ -11,7 +11,7 @@ function Home() {
   const { isLoading, isAuthenticated, user } = useAuth0();
   const [opened, setOpened] = useState<boolean>(false);
 
-  // create a user if he doesn't exist
+  // create a user if he doesn't exist //todo where does it check??
   const createUser = async (data: CreateUserType) => {
     await API_SERVICE.createUser(data);
   };
@@ -24,10 +24,11 @@ function Home() {
       picture_url: user!.picture!,
       sub: user!.sub!,
     };
-
+    //todo call API service here directly?
     createUser(userData);
   }
 
+  //todo can be done using ? with one return
   if (isLoading) {
     return (
       <div className="main-loading">
