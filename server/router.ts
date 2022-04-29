@@ -1,14 +1,18 @@
-const router = require('express').Router();
-const { postUser, getUserBySub } = require('./controllers/user.controller');
-const {
-  postUserSpaceRole,
-  getSpacesAndCreators,
-  deleteUserSpaceRole,
-} = require('./controllers/user-space-role.controller');
-const { postPost, deletePost } = require('./controllers/post.controller');
-const { postComment } = require('./controllers/comment.controller');
-const { postSpace, getSpaceData, deleteSpace } = require('./controllers/space.controller');
-const { getAllEntries, getSingleEntryById } = require('./controllers/modular-routes.controller');
+import { postUser, getUserBySub } from './controllers/user.controller';
+// @ts-ignore
+import { postUserSpaceRole, getSpacesAndCreators, deleteUserSpaceRole } from './controllers/user-space-role.controller';
+// @ts-ignore
+import { postPost, deletePost } from './controllers/post.controller';
+// @ts-ignore
+import { postComment } from './controllers/comment.controller';
+// @ts-ignore
+import { postSpace, getSpaceData, deleteSpace } from './controllers/space.controller';
+// @ts-ignore
+import { getAllEntries, getSingleEntryById } from './controllers/modular-routes.controller';
+
+import { Router } from 'express';
+
+const router = Router();
 
 //
 // '/:table' routes are dynamic and return all entries of a given table
@@ -51,4 +55,4 @@ router.delete('/spaces/:id', deleteSpace);
 // DELETE SPACE BY SPACE ID
 router.delete('/User_Space_Roles/:spaceId', deleteUserSpaceRole);
 
-export default router
+export = router
