@@ -11,7 +11,6 @@ CREATE TABLE legacy.user (
     created_at TIMESTAMP NOT NULL
 );
 
-
 -- CreateTable
 CREATE TABLE legacy.space (
     space_id SERIAL PRIMARY KEY NOT NULL,    
