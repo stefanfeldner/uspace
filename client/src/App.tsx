@@ -1,8 +1,8 @@
 import './App.scss';
 import { Route, Routes } from 'react-router-dom';
-import Space from './pages/Space';
-import Home from './pages/Home';
-import Profile from './components/Profile/Profile';
+import Space from './pages/Space/Space';
+import Home from './pages/Home/Home';
+import Profile from './pages/Profile/Profile';
 
 function App() {
   return (
