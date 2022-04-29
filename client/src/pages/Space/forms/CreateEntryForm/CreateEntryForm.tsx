@@ -15,7 +15,7 @@ interface Incoming {
   setPosts: Function;
 }
 
-function CreateEntryForm(props: Incoming) {
+function CreateEntryForm({setOpened, space_id, user_id, setPosts}: Incoming) {
   const [richTextValue, setRichTextValue] = useState('');
   const [title, setTitle] = useState('');
   // todo what about the tags that I created?
@@ -32,14 +32,14 @@ function CreateEntryForm(props: Incoming) {
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>): void => {
     event.preventDefault();
 
-    if (props.user_id && props.space_id) {
+    if (user_id && space_id) {
       const postData = {
         title: DOMPurify.sanitize(title),
         content: richTextValue, // TODO: Check how to insert rich text safely without sanitizing here
         created_at: new Date(),
         tags: DOMPurify.sanitize(selectedTags.join(',')),
-        user_id: props.user_id,
-        space_id: props.space_id,
+        user_id: user_id,
+        space_id: space_id,
         Comment: [],
       };
 
@@ -48,17 +48,17 @@ function CreateEntryForm(props: Incoming) {
             // todo check with DB and models
             // add comment property to post obj to prevent undefined objects
             post.Comment = [];
-            props.setPosts((prevState: PostType[]) => {
+            setPosts((prevState: PostType[]) => {
               return [post, ...prevState];
             });
           })
     }
-    props.setOpened(false);
+    setOpened(false);
   };
 
   const handleImageUpload = async (file: File): Promise<string> => {
     // create a reference to the place I want to store the file
-    const storageRef = ref(storage, `space${props.space_id}/${file.name}`);
+    const storageRef = ref(storage, `space${space_id}/${file.name}`);
 
     // upload the file
     await uploadBytes(storageRef, file);
