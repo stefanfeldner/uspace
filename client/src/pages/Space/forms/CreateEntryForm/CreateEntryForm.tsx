@@ -1,15 +1,12 @@
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 import './CreateEntryForm.scss';
-import { RichTextEditor } from '@mantine/rte';
-import { TextInput, MultiSelect } from '@mantine/core';
+import {RichTextEditor} from '@mantine/rte';
+import {MultiSelect, TextInput} from '@mantine/core';
 import DOMPurify from 'dompurify';
-import { CreatePostType, PostType } from '../../../../interfaces/Interfaces';
-import {
-  ref,
-  uploadBytes,
-  getDownloadURL,
-} from 'firebase/storage';
-import { storage } from '../../../../Firebase/config';
+import { PostType} from '../../../../interfaces/Interfaces';
+import {getDownloadURL, ref, uploadBytes,} from 'firebase/storage';
+import {storage} from '../../../../Firebase/config';
+import API_POST_SERVICE from '../../../../services/apiPostService';
 
 interface Incoming {
   setOpened: Function;
@@ -19,10 +16,9 @@ interface Incoming {
 }
 
 function CreateEntryForm(props: Incoming) {
-  const URL = process.env.REACT_APP_API + '/posts';
   const [richTextValue, setRichTextValue] = useState('');
   const [title, setTitle] = useState('');
-  // to do what about the tags that I created?
+  // todo what about the tags that I created?
   const [tags, setTags] = useState<string[]>([
     'Travel',
     'News',
@@ -47,32 +43,17 @@ function CreateEntryForm(props: Incoming) {
         Comment: [],
       };
 
-      createPost(postData);
+      API_POST_SERVICE.createPost(postData)
+          .then((post) => {
+            // todo check with DB and models
+            // add comment property to post obj to prevent undefined objects
+            post.Comment = [];
+            props.setPosts((prevState: PostType[]) => {
+              return [post, ...prevState];
+            });
+          })
     }
     props.setOpened(false);
-  };
-
-  const createPost = async (data: CreatePostType) => {
-    const res = await fetch(URL, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(data),
-    });
-    const post = await res.json();
-    // add comment property to post obj to prevent undefined objects
-    post.Comment = [];
-
-    props.setPosts((prevState: PostType[]) => {
-      // sort posts before adding new one
-      prevState.sort((a, b) => {
-        return (
-          new Date(b.created_at).valueOf() - new Date(a.created_at).valueOf()
-        );
-      });
-      return [post, ...prevState];
-    });
   };
 
   const handleImageUpload = async (file: File): Promise<string> => {
@@ -82,9 +63,8 @@ function CreateEntryForm(props: Incoming) {
     // upload the file
     await uploadBytes(storageRef, file);
     // get the download link
-    const url = await getDownloadURL(storageRef);
     // return url to the rich text editor
-    return url;
+    return await getDownloadURL(storageRef);
   };
 
   // TODO: Fix Rich Text Editor Bugs
