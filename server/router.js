@@ -20,6 +20,62 @@ const {
 //
 
 // USERS
+
+/**
+ * @swagger
+ * tags:
+ *   name: Users
+ *   description: User management and retrieval
+ */
+
+/**
+ * @swagger
+ *  /users:
+ *   post:
+ *     summary: creates new user
+ *     description: Takes the user data and creates a new user.
+ *     tags: [Users]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - email
+ *               - email_verified
+ *               - username
+ *               - picture_url
+ *               - sub
+ *               - created_at
+ *             properties:
+ *               email:
+ *                 type: string
+ *                 format: email
+ *               email_verified:
+ *                 type: boolean
+ *               username:
+ *                 type: string
+ *               picture_url:
+ *                 type: string
+ *               sub:
+ *                 type: string
+ *                 description: must be unique
+ *               created_at:
+ *                 type: string
+ *                 format: date-time
+ *             example:
+ *               email: fake@example.com
+ *               email_verified: true
+ *               username: myCoolUsername
+ *               picture_url: https://avatoon.me/wp-content/uploads/2021/09/Cartoon-Pic-Ideas-for-DP-Profile-02-768x768.png
+ *               sub: google-oauth2|123456789
+ *               created_at: 2022-04-28T15:12:00.956Z
+ *     responses:
+ *       "201":
+ *         description: Created
+ */
+
 router.post('/users', postUser);  // USER
 
 // SPACES
