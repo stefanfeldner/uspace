@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import '../../../Space/components/CreateEntryForm/CreateEntryForm.scss';
+import '../../../Space/forms/CreateEntryForm/CreateEntryForm.scss';
 import { TextInput, Textarea } from '@mantine/core';
 import DOMPurify from 'dompurify';
 import SpaceWithCreatorType, {

@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import Header from '../../components/Header/Header';
 import EntryList from './components/EntryList/EntryList';
 import EntryDetail from './components/EntryDetail/EntryDetail';
-import CreateEntryForm from './components/CreateEntryForm/CreateEntryForm';
+import CreateEntryForm from './forms/CreateEntryForm/CreateEntryForm';
 import { Modal, MultiSelect } from '@mantine/core';
 import Loading from '../../components/Loading/Loading';
 import { useAuth0, withAuthenticationRequired } from '@auth0/auth0-react';
