@@ -20,12 +20,11 @@ interface Incoming {
   setPosts: Function;
 }
 
-function CommentSection(props: Incoming) {
+// todo remove unused props
+function CommentSection({clickedPost, comments, spaceOwnerId, postId, posts, setPosts}: Incoming) {
   const [newComment, setNewComment] = useState('');
-  const comments = props.comments;
   // todo move to state
   const { user } = useAuth0();
-  const URL = process.env.REACT_APP_API + '/comments';
 
   const handleInput = (event: React.FormEvent<HTMLInputElement>) => {
     setNewComment(event.currentTarget.value);
@@ -47,18 +46,18 @@ function CommentSection(props: Incoming) {
     // prevent users from submitting whitespace and empty forms
     if (!saveComment.length || saveComment.trim() === '') return; // prevent empty submits
 
-    if (props.postId) {
+    if (postId) {
       const commentData = {
         content: saveComment,
         user_id: await fetchUser(),
-        post_id: props.postId,
+        post_id: postId,
       };
 
       // post comment to DB
       API_COMMENT_SERVICE.createComment(commentData)
           .then((comment) => {
               // deep clone all posts
-              const clonedPosts = _.cloneDeep(props.posts);
+              const clonedPosts = _.cloneDeep(posts);
               // find post to add the new comment to
               const postToAddCommentTo = clonedPosts.find(
                 (post) => post.id === commentData.post_id
@@ -67,7 +66,7 @@ function CommentSection(props: Incoming) {
               // push comment to right post
               postToAddCommentTo?.Comment.push(comment);
               // overwrite posts state with the cloned posts incl. the new comment
-              props.setPosts(clonedPosts);
+              setPosts(clonedPosts);
           })
           .catch((error) => console.error(error))
     }
@@ -81,7 +80,7 @@ function CommentSection(props: Incoming) {
             <Comment
               key={comment.id}
               comment={comment}
-              spaceOwnerId={props.spaceOwnerId}
+              spaceOwnerId={spaceOwnerId}
             />
           ))}
       </div>
