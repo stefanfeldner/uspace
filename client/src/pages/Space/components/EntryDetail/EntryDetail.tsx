@@ -4,7 +4,7 @@ import { PostType, SpaceDataType } from '../../../../interfaces/Interfaces';
 import DOMPurify from 'dompurify';
 import { Menu } from '@mantine/core';
 import { Trash, Edit } from 'tabler-icons-react';
-import API_SERVICE from '../../../../Api-Service';
+import API_POST_SERVICE from '../../../../services/apiPostService';
 import _ from 'lodash';
 import { useState } from 'react';
 import { useAuth0 } from '@auth0/auth0-react';
@@ -56,7 +56,7 @@ function EntryDetail(props: Incoming) {
 
   const deletePost = async () => {
     // delete post from db
-    await API_SERVICE.deletePostById(post.id);
+    await API_POST_SERVICE.deletePostById(post.id);
     // deep clone posts of space
     const clonedPosts = _.cloneDeep(props.posts);
     // find index of deleted post in state
