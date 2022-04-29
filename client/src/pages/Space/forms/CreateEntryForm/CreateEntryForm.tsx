@@ -22,6 +22,7 @@ function CreateEntryForm(props: Incoming) {
   const URL = process.env.REACT_APP_API + '/posts';
   const [richTextValue, setRichTextValue] = useState('');
   const [title, setTitle] = useState('');
+  // to do what about the tags that I created?
   const [tags, setTags] = useState<string[]>([
     'Travel',
     'News',
@@ -32,14 +33,6 @@ function CreateEntryForm(props: Incoming) {
   ]);
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
 
-  const tagsArrToStr = (tags: string[]) => {
-    let tagsString: string = '';
-    tags.forEach((tag: string) => {
-      tagsString += tag + ',';
-    });
-    return tagsString;
-  };
-
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>): void => {
     event.preventDefault();
 
@@ -48,7 +41,7 @@ function CreateEntryForm(props: Incoming) {
         title: DOMPurify.sanitize(title),
         content: richTextValue, // TODO: Check how to insert rich text safely without sanitizing here
         created_at: new Date(),
-        tags: DOMPurify.sanitize(tagsArrToStr(selectedTags)),
+        tags: DOMPurify.sanitize(selectedTags.join(',')),
         user_id: props.user_id,
         space_id: props.space_id,
         Comment: [],
