@@ -2,13 +2,14 @@ import React, { useState } from 'react';
 import './CommentSection.scss';
 import {
   CommentType,
-  CreateCommentType,
   PostType,
 } from '../../../../interfaces/Interfaces';
 import DOMPurify from 'dompurify';
 import Comment from '../Comment/Comment';
 import { useAuth0 } from '@auth0/auth0-react';
 import _ from 'lodash';
+import API_USER_SERVICE from '../../../../services/apiUserService';
+import API_COMMENT_SERVICE from '../../../../services/apiCommentService';
 
 interface Incoming {
   clickedPost: number;
@@ -22,19 +23,18 @@ interface Incoming {
 function CommentSection(props: Incoming) {
   const [newComment, setNewComment] = useState('');
   const comments = props.comments;
-
+  // todo move to state
   const { user } = useAuth0();
   const URL = process.env.REACT_APP_API + '/comments';
-  const URL_SUB = process.env.REACT_APP_API + '/usersBySub';
 
   const handleInput = (event: React.FormEvent<HTMLInputElement>) => {
     setNewComment(event.currentTarget.value);
   };
 
+  // todo probably not needed as we will be using the user sub for id
   const fetchUser = async () => {
     if (user) {
-      const fetchedUser = await fetch(URL_SUB + `/${user.sub}`);
-      const data = await fetchedUser.json();
+      const data = await API_USER_SERVICE.findUserBySub(user.sub!);
       return data.id;
     }
   };
@@ -54,31 +54,23 @@ function CommentSection(props: Incoming) {
         post_id: props.postId,
       };
 
-      createComment(commentData);
+      // post comment to DB
+      API_COMMENT_SERVICE.createComment(commentData)
+          .then((comment) => {
+              // deep clone all posts
+              const clonedPosts = _.cloneDeep(props.posts);
+              // find post to add the new comment to
+              const postToAddCommentTo = clonedPosts.find(
+                (post) => post.id === commentData.post_id
+              );
+
+              // push comment to right post
+              postToAddCommentTo?.Comment.push(comment);
+              // overwrite posts state with the cloned posts incl. the new comment
+              props.setPosts(clonedPosts);
+          })
+          .catch((error) => console.error(error))
     }
-  };
-  // post comment to DB
-  const createComment = async (data: CreateCommentType) => {
-    const res = await fetch(URL, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(data),
-    });
-    const comment = await res.json();
-
-    // deep clone all posts
-    const clonedPosts = _.cloneDeep(props.posts);
-    // find post to add the new comment to
-    const postToAddCommentTo = clonedPosts.find(
-      (post) => post.id === data.post_id
-    );
-
-    // push comment to right post
-    postToAddCommentTo?.Comment.push(comment);
-    // overwrite posts state with the cloned posts incl. the new comment
-    props.setPosts(clonedPosts);
   };
 
   return (
@@ -101,7 +93,7 @@ function CommentSection(props: Incoming) {
             onChange={handleInput}
             name="comment"
           />
-          <button type="submit"></button>
+          <button type="submit"/>
         </form>
       </div>
     </div>
