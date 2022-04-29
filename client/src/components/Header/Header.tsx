@@ -97,7 +97,7 @@ function Header(props: Incoming) {
         <div className="header-wrapper">
           <div className="header-left">
             <a href="/">
-              <img src={logo} alt="Wepanion Logo" />
+              <img src={logo} alt="uspace Logo" />
             </a>
           </div>
           <div className="header-right">{renderButton()}</div>

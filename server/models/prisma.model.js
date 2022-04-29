@@ -20,6 +20,7 @@ const returnEntryById = async (route, id) => {
   const tableName = route.match(/(\/\w+\/)/g)[0].slice(1, -2);
 
   try {
+    // TODO: careful gotta save the SUB into ID
     const user = await prisma[tableName].findUnique({
       where: {
         id: +id, // parsed string

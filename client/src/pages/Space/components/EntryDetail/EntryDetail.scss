@@ -1,0 +1,122 @@
+@import '../../../../custom-styles';
+
+.entry-detail {
+  padding: 0 35px;
+  position: relative;
+
+  .entry-detail-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    .entry-detail-creator {
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      margin-bottom: 20px;
+
+      .entry-detail-creator-avatar {
+        margin-right: 12px;
+        width: 48px;
+        height: 48px;
+        object-fit: cover;
+        border-radius: 100%;
+      }
+
+      .entry-detail-creator-info {
+        .name {
+          line-height: 1em;
+          margin-bottom: 8px;
+          font-family: $font-semiBold;
+        }
+        .time {
+          line-height: 1em;
+          font-size: 0.875em;
+        }
+      }
+    }
+
+    .mantine-Menu-root {
+      svg {
+        width: 30px;
+      }
+    }
+  }
+
+  .entry-detail-content {
+    margin-bottom: 40px;
+
+    .entry-detail-title {
+      font-family: $font-semiBold;
+      font-size: 1.375em;
+      line-height: 1.5em;
+      margin-bottom: 12px;
+      color: $color-headings;
+    }
+    .entry-detail-text {
+      line-height: 1.5em;
+    }
+  }
+
+  .entry-detail-tags {
+    margin-bottom: 40px;
+
+    .entry-detail-tags-title {
+      font-size: 1.125em;
+      line-height: 1em;
+      font-family: $font-semiBold;
+      margin-bottom: 20px;
+      color: #000;
+    }
+    .entry-detail-tags-wrapper {
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      flex-wrap: wrap;
+
+      .tag {
+        font-size: 0.875em;
+        font-family: $font-medium;
+        background-color: $color-purple;
+        border: none;
+        border-radius: 8px;
+        line-height: 1em;
+        padding: 13px 16px;
+        color: #fff;
+        margin-right: 10px;
+        margin-bottom: 10px;
+
+        &:last-child {
+          margin-right: 0;
+        }
+      }
+      .bug {
+        background-color: $color-salmon;
+      }
+      .waiting {
+        background-color: $color-light-green;
+      }
+      .not-assigned {
+        background-color: $color-light-blue;
+      }
+      .done {
+        background-color: $color-light-green;
+      }
+      .important {
+        background-color: $color-red;
+      }
+      .assigned {
+        background-color: $color-violet;
+      }
+    }
+  }
+  .entry-detail-comments {
+    .entry-detail-comments-title {
+      font-size: 1.125em;
+      line-height: 1em;
+      font-family: $font-semiBold;
+      margin-bottom: 20px;
+      color: #000;
+    }
+  }
+}
