@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import './Comment.scss';
 import { CommentType, UserType } from '../../../../interfaces/Interfaces';
 import DOMPurify from 'dompurify';
+import API_USER_SERVICE from '../../../../services/apiUserService';
 
 interface Incoming {
   comment: CommentType;
@@ -11,8 +12,8 @@ interface Incoming {
 function Comment(props: Incoming) {
   const { comment } = props;
   const [user, setUser] = useState<UserType>();
+  // todo wtf is this 0?
   const spaceOwnerId = props.spaceOwnerId || 0;
-  const URL = `${process.env.REACT_APP_API}/users/${comment.user_id}`;
 
   const date = new Date(comment.created_at).toLocaleTimeString('en-EN', {
     // weekday: 'short',
@@ -23,16 +24,12 @@ function Comment(props: Incoming) {
   });
 
   // get comment creator / user
-  const fetchUser = async () => {
-    // TODO change to API service
-    const fetchedUser = await fetch(URL);
-    const data = await fetchedUser.json();
-    setUser(data);
-  };
-
   useEffect(() => {
-    fetchUser();
-  }, []);
+    API_USER_SERVICE.getUserById(comment.user_id)
+        .then((userData) => {
+           setUser(userData);
+        })
+  }, [comment]);
 
   return (
     <div
@@ -52,7 +49,7 @@ function Comment(props: Incoming) {
           dangerouslySetInnerHTML={{
             __html: DOMPurify.sanitize(comment.content),
           }}
-        ></div>
+        />
       </div>
     </div>
   );
