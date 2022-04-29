@@ -1,7 +1,8 @@
-const { createUser, returnUserBySub } = require('../models/prisma.model');
-
+// @ts-ignore
+import { createUser, returnUserBySub } from '../models/prisma.model';
+import { Request, Response } from 'express'
 // creates a single user
-const postUser = async (req, res) => {
+const postUser = async (req: Request, res: Response): Promise<void> => {
   try {
     const user = await createUser(req.body);
     res.status(201);
@@ -13,7 +14,7 @@ const postUser = async (req, res) => {
 };
 
 // get a user by sub
-const getUserBySub = async (req, res) => {
+const getUserBySub = async (req: Request, res:Response): Promise<void> => {
   try {
     const user = await returnUserBySub(req.params.sub);
     res.status(200);
@@ -26,5 +27,5 @@ const getUserBySub = async (req, res) => {
 
 module.exports = {
   postUser,
-  getUserBySub,
+  getUserBySub
 };
