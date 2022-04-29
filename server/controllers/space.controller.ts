@@ -1,7 +1,9 @@
-const { createSpace, returnSpaceData, deleteSingleSpace } = require('../models/prisma.model');
+import { Request, Response } from 'express';
+// @ts-ignore
+import { createSpace, returnSpaceData, deleteSingleSpace } from '../models/prisma.model';
 
 // creates a single space
-const postSpace = async (req, res) => {
+const postSpace = async (req: Request, res:Response): Promise<void> => {
   try {
     const space = await createSpace(req.body);
     res.status(201);
@@ -13,7 +15,7 @@ const postSpace = async (req, res) => {
 };
 
 // return a space and it's posts
-const getSpaceData = async (req, res) => {
+const getSpaceData = async (req:Request, res: Response): Promise<void> => {
   try {
     const spaceData = await returnSpaceData(req.params.id);
     res.status(200);
@@ -25,7 +27,7 @@ const getSpaceData = async (req, res) => {
 };
 
 // delete a single post by id
-const deleteSpace = async (req, res) => {
+const deleteSpace = async (req: Request, res: Response): Promise<void> => {
   try {
     const deletedSpace = await deleteSingleSpace(req.params.id);
     res.status(202);
