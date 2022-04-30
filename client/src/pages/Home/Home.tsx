@@ -5,7 +5,7 @@ import Spaces from './components/Spaces/Spaces';
 import { CreateUserType } from '../../interfaces/Interfaces';
 import { useState } from 'react';
 import Welcome from './components/Welcome/Welcome';
-import API_SERVICE from '../../Api-Service';
+import API_USER_SERVICE from '../../services/apiUserService';
 
 function Home() {
   const { isLoading, isAuthenticated, user } = useAuth0();
@@ -21,7 +21,7 @@ function Home() {
       sub: user!.sub!,
     };
     //todo creates user EVERYTIME
-    API_SERVICE.createUser(userData)
+    API_USER_SERVICE.createUser(userData)
         .then((data) => {console.log(data)})
         .catch((err) => {console.error(err)})
   }

@@ -1,15 +1,12 @@
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 import './CreateEntryForm.scss';
-import { RichTextEditor } from '@mantine/rte';
-import { TextInput, MultiSelect } from '@mantine/core';
+import {RichTextEditor} from '@mantine/rte';
+import {MultiSelect, TextInput} from '@mantine/core';
 import DOMPurify from 'dompurify';
-import { CreatePostType, PostType } from '../../../../interfaces/Interfaces';
-import {
-  ref,
-  uploadBytes,
-  getDownloadURL,
-} from 'firebase/storage';
-import { storage } from '../../../../Firebase/config';
+import { PostType} from '../../../../interfaces/Interfaces';
+import {getDownloadURL, ref, uploadBytes,} from 'firebase/storage';
+import {storage} from '../../../../Firebase/config';
+import API_POST_SERVICE from '../../../../services/apiPostService';
 
 interface Incoming {
   setOpened: Function;
@@ -18,10 +15,10 @@ interface Incoming {
   setPosts: Function;
 }
 
-function CreateEntryForm(props: Incoming) {
-  const URL = process.env.REACT_APP_API + '/posts';
+function CreateEntryForm({setOpened, space_id, user_id, setPosts}: Incoming) {
   const [richTextValue, setRichTextValue] = useState('');
   const [title, setTitle] = useState('');
+  // todo what about the tags that I created?
   const [tags, setTags] = useState<string[]>([
     'Travel',
     'News',
@@ -32,66 +29,42 @@ function CreateEntryForm(props: Incoming) {
   ]);
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
 
-  const tagsArrToStr = (tags: string[]) => {
-    let tagsString: string = '';
-    tags.forEach((tag: string) => {
-      tagsString += tag + ',';
-    });
-    return tagsString;
-  };
-
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>): void => {
     event.preventDefault();
 
-    if (props.user_id && props.space_id) {
+    if (user_id && space_id) {
       const postData = {
         title: DOMPurify.sanitize(title),
         content: richTextValue, // TODO: Check how to insert rich text safely without sanitizing here
         created_at: new Date(),
-        tags: DOMPurify.sanitize(tagsArrToStr(selectedTags)),
-        user_id: props.user_id,
-        space_id: props.space_id,
+        tags: DOMPurify.sanitize(selectedTags.join(',')),
+        user_id: user_id,
+        space_id: space_id,
         Comment: [],
       };
 
-      createPost(postData);
+      API_POST_SERVICE.createPost(postData)
+          .then((post) => {
+            // todo check with DB and models
+            // add comment property to post obj to prevent undefined objects
+            post.Comment = [];
+            setPosts((prevState: PostType[]) => {
+              return [post, ...prevState];
+            });
+          })
     }
-    props.setOpened(false);
-  };
-
-  const createPost = async (data: CreatePostType) => {
-    const res = await fetch(URL, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(data),
-    });
-    const post = await res.json();
-    // add comment property to post obj to prevent undefined objects
-    post.Comment = [];
-
-    props.setPosts((prevState: PostType[]) => {
-      // sort posts before adding new one
-      prevState.sort((a, b) => {
-        return (
-          new Date(b.created_at).valueOf() - new Date(a.created_at).valueOf()
-        );
-      });
-      return [post, ...prevState];
-    });
+    setOpened(false);
   };
 
   const handleImageUpload = async (file: File): Promise<string> => {
     // create a reference to the place I want to store the file
-    const storageRef = ref(storage, `space${props.space_id}/${file.name}`);
+    const storageRef = ref(storage, `space${space_id}/${file.name}`);
 
     // upload the file
     await uploadBytes(storageRef, file);
     // get the download link
-    const url = await getDownloadURL(storageRef);
     // return url to the rich text editor
-    return url;
+    return await getDownloadURL(storageRef);
   };
 
   // TODO: Fix Rich Text Editor Bugs

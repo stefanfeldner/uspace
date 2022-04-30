@@ -5,8 +5,8 @@ import SpaceWithCreatorType from '../../../../interfaces/Interfaces';
 import { Link } from 'react-router-dom';
 import { Menu } from '@mantine/core';
 import { Trash, Edit } from 'tabler-icons-react';
-import API_SERVICE from '../../../../Api-Service';
 import _ from 'lodash';
+import API_SPACE_SERVICE from '../../../../services/apiSpaceService';
 
 interface Incoming {
   spaces: SpaceWithCreatorType[];
@@ -18,8 +18,8 @@ function SpacesList(props: Incoming) {
   const { user, isLoading } = useAuth0();
 
   const deleteSpace = async (id: number) => {
-    await API_SERVICE.deleteUserSpaceRoleBySpaceId(id);
-    await API_SERVICE.deleteSpaceById(id);
+    await API_SPACE_SERVICE.deleteUserSpaceRoleBySpaceId(id);
+    await API_SPACE_SERVICE.deleteSpaceById(id);
 
     // deep clone spaces
     const clonedSpaces = _.cloneDeep(props.allSpaces);
