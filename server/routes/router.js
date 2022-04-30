@@ -13,13 +13,39 @@ const {
   deletePost,
   deleteSpace,
   deleteUserSpaceRole,
-} = require('./controllers/user.controller');
+} = require('../controllers/user.controller');
 
 //
 // '/:table' routes are dynamic and return all entries of a given table
 //
 
 // USERS
+
+/**
+ * @swagger
+ * tags:
+ *   name: Users
+ *   description: User management and retrieval
+ */
+
+/**
+ * @swagger
+ *  /users:
+ *   post:
+ *     summary: creates new user
+ *     description: Takes the user data and creates a new user.
+ *     tags: [Users]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: "#/components/schemas/User"
+ *     responses:
+ *       "201":
+ *         description: Created
+ */
+
 router.post('/users', postUser);  // USER
 
 // SPACES

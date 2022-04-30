@@ -1,0 +1,25 @@
+components:
+  schemas:
+    User:
+      type: object
+      properties:
+        email:
+          type: string
+          format: email
+          required: true
+        email_verified:
+          type: boolean
+        username:
+          type: string
+          required: true
+        picture_url:
+          type: string
+        sub:
+          type: string
+          required: true
+      example:
+        sub: 5ebac534954b54139806c112
+        email: fake@example.com
+        email_verified: true
+        username: fake name
+        picture_url: https://asdfasdfsadfsd

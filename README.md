@@ -35,19 +35,19 @@ Once you have found the space you want to visit, click on it, and you'll see all
 - Prisma with PostgreSQL as the Database
 
 ## Local Usage
-
+### Frontend
 To start up the frontend, change directory into the client folder and run:
 
 ```
 npm start
 ```
-
+### Backend
 For the backend, to start the server, run:
 
 ```
 npm start --> starts the node express server
 ```
-
+### Database
 For the database
 - start up your local postgres
 ```bash
@@ -63,6 +63,9 @@ npx prisma studio db push
 ```bash
 npx prisma studio
 ```
+
+### API
+The project implements swagger and openapi specifications. To see the docs, simply go to `localhost:3001/docs`.
 
 ## Environmental Variables
 
