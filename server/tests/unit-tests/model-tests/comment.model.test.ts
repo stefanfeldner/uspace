@@ -22,7 +22,7 @@ describe('Testing Comment Model', () => {
     try {
       expect(await createComment({} as IIncomingComment)).toThrowError();
     } catch (e) {
-      expect((e as Error).message).toEqual('A database error has occurred');
+      expect((e as Error).message).toEqual('A database error has occurred.');
     }
   });
 });
