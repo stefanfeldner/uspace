@@ -25,7 +25,7 @@ jest.mock('../../../models/post.model', () => ({
   }
 }));
 
-describe('Testing Comment Controller', () => {
+describe('Testing Post Controller', () => {
   test('Should send post data in request to model and return the saved post', async () => {
     const mReq = MOCK_REQ as Request;
     const mRes = { status: jest.fn().mockReturnThis(), send: jest.fn() } as any as Response;
