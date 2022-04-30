@@ -1,44 +1,32 @@
-// import { app, server } from '../../index';
-import serverInfo from '../../index';
-import supertest from 'supertest';
+import { postComment } from '../../controllers/comment.controller';
+import { Request, Response } from 'express';
 
-const { app, server } = serverInfo;
-// const supertest = require('supertest');
-// const app = require('../../index');
-const request = supertest(app);
+const MOCK_REQ = { body: { content: 'Test Post', user_id: 1, post_id: 2 } };
+const MOCK_RES = { ...MOCK_REQ.body, id: 25 }; ;
+jest.mock('../../models/comment.model', () => ({
+  createComment: (commentDetails: any) : any => {
+    if (commentDetails === MOCK_REQ.body) {
+      return MOCK_RES;
+    } else {
+      throw new Error();
+    }
+  }
+}));
 
 describe('Testing Comment Controller', () => {
-  beforeAll((done) => {
-    server.close();
-    done();
+  test('Should send comment data in request to model and return the saved comment', async () => {
+    const mReq = MOCK_REQ as Request;
+    const mRes = { status: jest.fn().mockReturnThis(), send: jest.fn() } as any as Response;
+    await postComment(mReq, mRes);
+    expect(mRes.status).toBeCalledWith(201);
+    expect(mRes.send).toBeCalledWith(MOCK_RES);
   });
-  afterAll((done) => {
-    server.close();
-    done();
-  });
 
-  const MOCK_REQ = { data: { content: 'Test Post', user_id: 1, post_id: 2 } };
-  const MOCK_RES = { content: 'Test Post', userId: 1, postId: 2, id: 25 };
-  // const MOCK_REQ = { body: { data: { content: 'Test Post', user_id: 1, post_id: 2 } } };
-
-  jest.mock('../../models/prisma.model', () => ({
-    createComment: (req: any) : any => MOCK_RES
-  }));
-
-  test('Should send comment data in request to database and return the saved comment', (done) => {
-    request.post('/comments').send(MOCK_REQ)
-      // .expect(201)
-      .expect((res) => {
-        console.log(res);
-        console.log('=============', res.body);
-        res.body = { MOCK_REQ };
-      })
-      .end(
-        done
-      );
+  test('Should handle errors thrown by the model', async () => {
+    const mReq = { body: {} } as Request;
+    const mRes = { status: jest.fn().mockReturnThis(), send: jest.fn() } as any as Response;
+    await postComment(mReq, mRes);
+    expect(mRes.status).toBeCalledWith(500);
+    expect(mRes.send).toBeCalledWith({ error: 'An unknown server error has occurred.' });
   });
 });
-
-// describe('testing the framework installed', () => {
-//   it('testing the testers', () => { expect(true).toBe(true); });
-// });
