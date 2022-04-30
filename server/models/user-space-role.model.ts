@@ -8,7 +8,7 @@ const prisma = new PrismaClient();
 
 // creates a single User_Space_Role
 // eslint-disable-next-line camelcase
-const createUserSpaceRole = async (createUserSpaceRoleInput: User_Space_Role): Promise<IUserSpaceRole> => {
+export const createUserSpaceRole = async (createUserSpaceRoleInput: User_Space_Role): Promise<IUserSpaceRole> => {
   try {
     const userSpaceRole = await prisma.user_Space_Role.create({
       data: createUserSpaceRoleInput
@@ -21,7 +21,7 @@ const createUserSpaceRole = async (createUserSpaceRoleInput: User_Space_Role): P
   }
 };
 
-const returnSpacesAndCreators = async (): Promise<ISpacesAndCreator[]> => {
+export const returnSpacesAndCreators = async (): Promise<ISpacesAndCreator[]> => {
   try {
     const spacesAndCreators = await prisma.space.findMany({
       include: {
@@ -63,7 +63,7 @@ const returnSpacesAndCreators = async (): Promise<ISpacesAndCreator[]> => {
 };
 
 // delete single User_Space_role by space_id
-const deleteSingleUserSpaceRole = async (spaceId: string): Promise<number> => {
+export const deleteSingleUserSpaceRole = async (spaceId: string): Promise<number> => {
   try {
     const deletedRowCount = await prisma.user_Space_Role.deleteMany({
       where: {
@@ -75,10 +75,4 @@ const deleteSingleUserSpaceRole = async (spaceId: string): Promise<number> => {
     console.log(error);
     throw new Error('A database error has occurred.');
   }
-};
-
-export default {
-  createUserSpaceRole,
-  returnSpacesAndCreators,
-  deleteSingleUserSpaceRole
 };
