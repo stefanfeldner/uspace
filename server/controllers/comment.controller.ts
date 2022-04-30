@@ -5,10 +5,8 @@ import { Request, Response } from 'express';
 export const postComment = async (req: Request, res: Response): Promise<void> => {
   try {
     const comment = await createComment(req.body);
-    res.status(201);
-    res.send(comment);
+    res.status(201).send(comment);
   } catch (error) {
-    res.status(500);
-    res.send(JSON.stringify(error));
+    res.status(500).send({ error: 'An unknown server error has occurred.' });
   }
 };

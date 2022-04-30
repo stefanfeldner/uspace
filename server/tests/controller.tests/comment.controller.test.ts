@@ -1,31 +1,32 @@
-import app from '../../index';
-import supertest from 'supertest';
-// const supertest = require('supertest');
-// const app = require('../../index');
+import { postComment } from '../../controllers/comment.controller';
+import { Request, Response } from 'express';
 
-const request = supertest(app);
+const MOCK_REQ = { body: { content: 'Test Post', user_id: 1, post_id: 2 } };
+const MOCK_RES = { ...MOCK_REQ.body, id: 25 }; ;
+jest.mock('../../models/comment.model', () => ({
+  createComment: (commentDetails: any) : any => {
+    if (commentDetails === MOCK_REQ.body) {
+      return MOCK_RES;
+    } else {
+      throw new Error();
+    }
+  }
+}));
 
 describe('Testing Comment Controller', () => {
-  // afterEach((done) => { done(); });
+  test('Should send comment data in request to model and return the saved comment', async () => {
+    const mReq = MOCK_REQ as Request;
+    const mRes = { status: jest.fn().mockReturnThis(), send: jest.fn() } as any as Response;
+    await postComment(mReq, mRes);
+    expect(mRes.status).toBeCalledWith(201);
+    expect(mRes.send).toBeCalledWith(MOCK_RES);
+  });
 
-  const MOCK_REQ = { data: { content: 'Test Post', user_id: 1, post_id: 2 } };
-  // const MOCK_REQ = { body: { data: { content: 'Test Post', user_id: 1, post_id: 2 } } };
-
-  jest.mock('../../models/prisma.model', () => ({
-    createComment: (req: any) : any => ({ data: { content: req.content, user_id: req.user_id, post_id: req.post_id } })
-  }));
-
-  test('Should send comment data in request to database and return the saved comment', (done) => {
-    request.post('/comments').send({ MOCK_REQ })
-      .expect(201)
-      .expect((res) => { res.body = { MOCK_REQ }; })
-      .end((err, res) => {
-        if (err) return done(err);
-        return done();
-      });
+  test('Should handle errors thrown by the model', async () => {
+    const mReq = { body: {} } as Request;
+    const mRes = { status: jest.fn().mockReturnThis(), send: jest.fn() } as any as Response;
+    await postComment(mReq, mRes);
+    expect(mRes.status).toBeCalledWith(500);
+    expect(mRes.send).toBeCalledWith({ error: 'An unknown server error has occurred.' });
   });
 });
-
-// describe('testing the framework installed', () => {
-//   it('testing the testers', () => { expect(true).toBe(true); });
-// });

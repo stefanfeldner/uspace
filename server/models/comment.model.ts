@@ -6,8 +6,6 @@ const prisma = new PrismaClient();
 // creates a single comment
 export const createComment = async (commentDetails: Comment): Promise<IComment> => {
   try {
-    // const { content, user_id: userId, post_id: postId } = commentDetails;
-
     const comment = await prisma.comment.create({
       data: commentDetails
     });
@@ -21,6 +19,6 @@ export const createComment = async (commentDetails: Comment): Promise<IComment> 
     };
   } catch (error) {
     console.log('Error in createComment', error);
-    throw new Error('A database error has occured');
+    throw new Error('A database error has occurred');
   }
 };
