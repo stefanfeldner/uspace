@@ -1,11 +1,8 @@
 import { postUser, getUserBySub } from './controllers/user.controller';
-// @ts-ignore
 import { postUserSpaceRole, getSpacesAndCreators, deleteUserSpaceRole } from './controllers/user-space-role.controller';
 import { postPost, deletePost } from './controllers/post.controller';
-// @ts-ignore
 import { postComment } from './controllers/comment.controller';
 import { postSpace, getSpaceData, deleteSpace } from './controllers/space.controller';
-// @ts-ignore
 import { getAllEntries, getSingleEntryById } from './controllers/modular-routes.controller';
 
 import { Router } from 'express';
