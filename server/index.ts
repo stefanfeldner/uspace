@@ -15,6 +15,6 @@ app.use(express.json());
 app.use(logger('dev'));
 app.use(router);
 
-app.listen(PORT, () => console.log(`🚀 Server running on http://localhost:${PORT} 🚀`));
+const server = app.listen(PORT, () => console.log(`🚀 Server running on http://localhost:${PORT} 🚀`));
 
-export default app;
+export default { app, server };
