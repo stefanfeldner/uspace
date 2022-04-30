@@ -1,5 +1,6 @@
 import { returnAllEntries, returnEntryById } from '../models/modular-routes.model';
 import { Response, Request } from 'express';
+import { handleError } from '../error-handling/error-helpers';
 
 // modular route: returns all entries in a table
 export const getAllEntries = async (req: Request, res: Response): Promise<void> => {
@@ -10,7 +11,7 @@ export const getAllEntries = async (req: Request, res: Response): Promise<void> 
     res.send(entries);
   } catch (error) {
     res.status(500);
-    res.send(JSON.stringify(error));
+    res.send(handleError(error));
   }
 };
 
@@ -23,6 +24,6 @@ export const getSingleEntryById = async (req: Request, res: Response): Promise<v
     res.send(entry);
   } catch (error) {
     res.status(500);
-    res.send(JSON.stringify(error));
+    res.send(handleError(error));
   }
 };

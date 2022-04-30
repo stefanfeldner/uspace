@@ -1,16 +1,15 @@
 import { createUserSpaceRole, returnSpacesAndCreators, deleteSingleUserSpaceRole } from '../models/user-space-role.model';
 import { Request, Response } from 'express';
+import { handleError } from '../error-handling/error-helpers';
 // creates a single User_Space_Role
 export const postUserSpaceRole = async (req: Request, res: Response): Promise<void> => {
   try {
     const userSpaceRole = await createUserSpaceRole(req.body);
-    res.status(201).send(userSpaceRole);
+    res.status(201);
+    res.send(userSpaceRole);
   } catch (error) {
-    if (error instanceof Error) {
-      res.status(500).send({ error: error.message });
-    } else {
-      res.status(500).send({ error: 'An unknown server error has occurred.' });
-    }
+    res.status(500);
+    res.send({ error: 'An unknown server error has occurred.' });
   }
 };
 
@@ -20,11 +19,8 @@ export const getSpacesAndCreators = async (req: Request, res: Response): Promise
     const spacesAndCreators = await returnSpacesAndCreators();
     res.status(200).send(spacesAndCreators);
   } catch (error) {
-    if (error instanceof Error) {
-      res.status(500).send({ error: error.message });
-    } else {
-      res.status(500).send({ error: 'An unknown server error has occurred.' });
-    }
+    res.status(500);
+    res.send(handleError(error));
   }
 };
 
@@ -32,12 +28,10 @@ export const getSpacesAndCreators = async (req: Request, res: Response): Promise
 export const deleteUserSpaceRole = async (req: Request, res: Response): Promise<void> => {
   try {
     const deletedRow = await deleteSingleUserSpaceRole(req.params.spaceId);
-    res.status(202).send(deletedRow);
+    res.status(202);
+    res.send(deletedRow);
   } catch (error) {
-    if (error instanceof Error) {
-      res.status(500).send({ error: error.message });
-    } else {
-      res.status(500).send({ error: 'An unknown server error has occurred.' });
-    }
+    res.status(500);
+    res.send(handleError(error));
   }
 };

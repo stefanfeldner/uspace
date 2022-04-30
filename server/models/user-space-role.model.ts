@@ -1,5 +1,6 @@
 // eslint-disable-next-line camelcase
 import { PrismaClient, User_Space_Role } from '@prisma/client';
+import { CustomError } from '../error-handling/custom-err.class';
 import { IStrippedUser } from '../interfaces/spaceData.interface';
 import { ISpacesAndCreator } from '../interfaces/spaces-and-creators.interface';
 import { IUserSpaceRole } from '../interfaces/user-space-role.interface';
@@ -17,7 +18,7 @@ export const createUserSpaceRole = async (createUserSpaceRoleInput: User_Space_R
     return { id: userSpaceRole.id, roleId: userSpaceRole.role_id, spaceId: userSpaceRole.space_id, userId: userSpaceRole.user_id };
   } catch (error) {
     console.log(error);
-    throw Error('A database error has occurred.');
+    throw new CustomError('A database error has occurred.');
   }
 };
 
@@ -58,7 +59,7 @@ export const returnSpacesAndCreators = async (): Promise<ISpacesAndCreator[]> =>
     }));
   } catch (error) {
     console.log(error);
-    throw Error('A database error has occurred.');
+    throw new CustomError('A database error has occurred.');
   }
 };
 
@@ -73,6 +74,6 @@ export const deleteSingleUserSpaceRole = async (spaceId: string): Promise<number
     return deletedRowCount.count; // returns count of deleted rows
   } catch (error) {
     console.log(error);
-    throw new Error('A database error has occurred.');
+    throw new CustomError('A database error has occurred.');
   }
 };

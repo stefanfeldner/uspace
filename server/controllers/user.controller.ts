@@ -1,5 +1,6 @@
 import { createUser, returnUserBySub } from '../models/user.model';
 import { Request, Response } from 'express';
+import { handleError } from '../error-handling/error-helpers';
 // creates a single user
 export const postUser = async (req: Request, res: Response): Promise<void> => {
   try {
@@ -7,11 +8,8 @@ export const postUser = async (req: Request, res: Response): Promise<void> => {
     res.status(201);
     res.send(user);
   } catch (error) {
-    if (error instanceof Error) {
-      res.status(500).send({ error: error.message });
-    } else {
-      res.status(500).send({ error: 'An unknown server error has occurred.' });
-    }
+    res.status(500);
+    res.send(handleError(error));
   }
 };
 
@@ -20,12 +18,14 @@ export const getUserBySub = async (req: Request, res:Response): Promise<void> =>
   try {
     const user = await returnUserBySub(req.params.sub);
     if (!user) {
-      res.status(404).send({ error: 'User not found.' });
+      res.status(404);
+      res.send({ error: 'User not found.' });
       return;
     }
-    res.status(200)
-      .send(user);
+    res.status(200);
+    res.send(user);
   } catch (error) {
-    res.status(500).send({ error: 'An unknown server error has occurred.' });
+    res.status(500);
+    res.send(handleError(error));
   }
 };

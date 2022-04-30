@@ -1,4 +1,5 @@
 import { Post, PrismaClient } from '@prisma/client';
+import { CustomError } from '../error-handling/custom-err.class';
 import { IPost } from '../interfaces/post.interface';
 
 const prisma = new PrismaClient();
@@ -11,7 +12,7 @@ export const createPost = async (postDetails: Post): Promise<IPost> => {
     });
     return { id: post.id, content: post.content, createdAt: post.created_at, spaceId: post.space_id, tags: post.tags, title: post.title, userId: post.user_id };
   } catch (error) {
-    throw new Error('A database error has occurred.');
+    throw new CustomError('A database error has occurred.');
   }
 };
 
@@ -25,6 +26,6 @@ export const deleteSinglePost = async (id: string): Promise<number> => {
     });
     return deletedPost.id;
   } catch (error) {
-    throw new Error('A database error has occurred.');
+    throw new CustomError('A database error has occurred.');
   }
 };

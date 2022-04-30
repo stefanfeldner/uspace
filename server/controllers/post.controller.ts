@@ -1,13 +1,16 @@
 import { createPost, deleteSinglePost } from '../models/post.model';
 import { Request, Response } from 'express';
+import { handleError } from '../error-handling/error-helpers';
 
 // creates a single post
 export const postPost = async (req: Request, res: Response): Promise<void> => {
   try {
     const post = await createPost(req.body);
-    res.status(201).send(post);
+    res.status(201);
+    res.send(post);
   } catch (error) {
-    res.status(500).send({ error: 'An unknown server error has occurred.' });
+    res.status(500);
+    res.send(handleError(error));
   }
 };
 
@@ -15,8 +18,10 @@ export const postPost = async (req: Request, res: Response): Promise<void> => {
 export const deletePost = async (req: Request, res: Response): Promise<void> => {
   try {
     const deletedPost = await deleteSinglePost(req.params.id);
-    res.status(202).send(deletedPost);
+    res.status(202);
+    res.send(deletedPost);
   } catch (error) {
-    res.status(500).send({ error: 'An unknown server error has occurred.' });
+    res.status(500);
+    res.send(handleError(error));
   }
 };

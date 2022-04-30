@@ -1,15 +1,11 @@
-import { Comment, PrismaClient } from '@prisma/client';
-import { IComment } from '../interfaces/comment.interface';
-
-const prisma = new PrismaClient();
+import { CustomError } from '../error-handling/custom-err.class';
+import { IComment, IIncomingComment } from '../interfaces/comment.interface';
+import { createCommentQuery } from '../queries/comment.queries';
 
 // creates a single comment
-export const createComment = async (commentDetails: Comment): Promise<IComment> => {
+export const createComment = async (commentDetails: IIncomingComment): Promise<IComment> => {
   try {
-    const comment = await prisma.comment.create({
-      data: commentDetails
-    });
-
+    const comment = await createCommentQuery(commentDetails);
     return {
       id: comment.id,
       content: comment.content,
@@ -19,6 +15,6 @@ export const createComment = async (commentDetails: Comment): Promise<IComment> 
     };
   } catch (error) {
     console.log('Error in createComment', error);
-    throw new Error('A database error has occurred');
+    throw new CustomError('A database error has occurred.');
   }
 };
