@@ -2,7 +2,7 @@ import { returnAllEntries, returnEntryById } from '../models/modular-routes.mode
 import { Response, Request } from 'express';
 
 // modular route: returns all entries in a table
-const getAllEntries = async (req: Request, res: Response): Promise<void> => {
+export const getAllEntries = async (req: Request, res: Response): Promise<void> => {
   try {
     // pass route (table name) and remove '/' in the end
     const entries = await returnAllEntries(req.path.slice(1, -1));
@@ -15,7 +15,7 @@ const getAllEntries = async (req: Request, res: Response): Promise<void> => {
 };
 
 // modular route: returns single entry in a table by id
-const getSingleEntryById = async (req: Request, res: Response): Promise<void> => {
+export const getSingleEntryById = async (req: Request, res: Response): Promise<void> => {
   try {
     // pass route param, cut off plural and '/' on front and beginning
     const entry = await returnEntryById(req.path, req.params.id);
@@ -26,4 +26,3 @@ const getSingleEntryById = async (req: Request, res: Response): Promise<void> =>
     res.send(JSON.stringify(error));
   }
 };
-module.exports = { getAllEntries, getSingleEntryById };
