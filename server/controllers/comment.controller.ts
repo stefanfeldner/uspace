@@ -1,7 +1,8 @@
-const { createComment } = require('../models/prisma.model');
+import { createComment } from '../models/comment.model';
+import { Request, Response } from 'express';
 
 // creates a single comment
-const postComment = async (req, res) => {
+export const postComment = async (req: Request, res: Response): Promise<void> => {
   try {
     const comment = await createComment(req.body);
     res.status(201);
@@ -11,4 +12,3 @@ const postComment = async (req, res) => {
     res.send(JSON.stringify(error));
   }
 };
-module.exports = { postComment };
