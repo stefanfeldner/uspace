@@ -1,10 +1,9 @@
 import { IComment } from './comment.interface';
 import { IPost } from './post.interface';
 import { ISpace } from './space.interface';
+import { IUser } from './user.interface';
 
-export interface IStrippedUser {
-  username: string, email:string, pictureUrl: string, id: number,
-}
+export interface IStrippedUser extends Omit<IUser, 'id'|'createdAt'|'emailVerified'|'sub'>{}
 
 export interface IPostWithComments extends IPost{
   comments: IComment[],
