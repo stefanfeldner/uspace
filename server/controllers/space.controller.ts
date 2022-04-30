@@ -1,13 +1,16 @@
 import { Request, Response } from 'express';
+import { handleError } from '../error-handling/error-helpers';
 import { createSpace, returnSpaceData, deleteSingleSpace } from '../models/space.model';
 
 // creates a single space
 export const postSpace = async (req: Request, res: Response): Promise<void> => {
   try {
     const space = await createSpace(req.body);
-    res.status(201).send(space);
+    res.status(201);
+    res.send(space);
   } catch (error) {
-    res.status(500).send({ error: 'An unknown server error has occurred.' });
+    res.status(500);
+    res.send(handleError(error));
   }
 };
 
@@ -16,12 +19,15 @@ export const getSpaceData = async (req:Request, res: Response): Promise<void> =>
   try {
     const spaceData = await returnSpaceData(req.params.id);
     if (!spaceData) {
-      res.status(404).send({ error: 'Space has not been found.' });
+      res.status(404);
+      res.send({ error: 'Space has not been found.' });
       return;
     }
-    res.status(200).send(spaceData);
+    res.status(200);
+    res.send(spaceData);
   } catch (error) {
-    res.status(500).send({ error: 'An unknown server error has occurred.' });
+    res.status(500);
+    res.send(handleError(error));
   }
 };
 
@@ -29,8 +35,10 @@ export const getSpaceData = async (req:Request, res: Response): Promise<void> =>
 export const deleteSpace = async (req: Request, res: Response): Promise<void> => {
   try {
     const deletedSpace = await deleteSingleSpace(req.params.id);
-    res.status(202).send(deletedSpace);
+    res.status(202);
+    res.send(deletedSpace);
   } catch (error) {
-    res.status(500).send({ error: 'An unknown server error has occurred.' });
+    res.status(500);
+    res.send(handleError(error));
   }
 };

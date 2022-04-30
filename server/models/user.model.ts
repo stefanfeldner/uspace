@@ -1,5 +1,7 @@
 import { PrismaClient, User } from '@prisma/client';
+import { CustomError } from '../error-handling/custom-err.class';
 import { IUser } from '../interfaces/user.interface';
+
 const prisma = new PrismaClient();
 
 // creates a single user
@@ -8,7 +10,6 @@ export const createUser = async (newUserDetails: User): Promise<IUser> => {
     const user = await prisma.user.create(
       { data: newUserDetails }
     );
-    console.log(user);
     return {
       id: user.id,
       email: user.email,
@@ -20,7 +21,7 @@ export const createUser = async (newUserDetails: User): Promise<IUser> => {
     };
   } catch (error) {
     console.log(error);
-    throw Error('A database error has occurred.');
+    throw new CustomError('A database error has occurred.');
   }
 };
 
@@ -47,6 +48,6 @@ export const returnUserBySub = async (sub: string): Promise<IUser| null> => {
     return user;
   } catch (error) {
     console.log(error);
-    throw new Error('A database error has occurred.');
+    throw new CustomError('A database error has occurred.');
   }
 };

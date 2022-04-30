@@ -1,4 +1,5 @@
 import { PrismaClient, Comment, Post, Space, User_Space_Role, User } from '@prisma/client'; //eslint-disable-line
+import { CustomError } from '../error-handling/custom-err.class';
 import { IComment } from '../interfaces/comment.interface';
 import { IPost } from '../interfaces/post.interface';
 import { IRole } from '../interfaces/role.interface';
@@ -85,13 +86,13 @@ export const returnAllEntries = async (route: string): Promise <[IAllTables]> =>
         });
         break;
       default: {
-        throw Error('A database error has occurred.');
+        throw new CustomError('A database error has occurred.');
       }
     }
     return entries;
   } catch (error) {
     console.log(error);
-    throw Error('A database error has occurred.');
+    throw new CustomError('A database error has occurred.');
   }
 };
 
@@ -102,7 +103,7 @@ export const returnEntryById = async (route: string, id: string): Promise<IAllTa
 
   try {
     if (!tableName) {
-      throw Error('A database error has occurred.');
+      throw new CustomError('A database error has occurred.');
     } else {
       // @ts-ignore
       const user = await prisma[tableName].findUnique({
@@ -114,6 +115,6 @@ export const returnEntryById = async (route: string, id: string): Promise<IAllTa
     }
   } catch (error) {
     console.log(error);
-    throw Error('A database error has occurred.');
+    throw new CustomError('A database error has occurred.');
   }
 };

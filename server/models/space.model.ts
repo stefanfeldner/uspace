@@ -2,6 +2,7 @@ import { Post, PrismaClient, Space, Comment } from '@prisma/client';
 import { IComment } from '../interfaces/comment.interface';
 import { IPostWithComments, ISpaceData, IStrippedUser } from '../interfaces/spaceData.interface';
 import { ISpace } from '../interfaces/space.interface';
+import { CustomError } from '../error-handling/custom-err.class';
 
 const prisma = new PrismaClient();
 
@@ -14,7 +15,7 @@ export const createSpace = async (newSpaceDetails: Space): Promise<ISpace> => {
     return { id: space.id, name: space.name, description: space.description, createdAt: space.created_at };
   } catch (error) {
     console.log(error);
-    throw Error('A database error occurred.');
+    throw new CustomError('A database error has occurred.');
   }
 };
 
@@ -86,7 +87,7 @@ export const returnSpaceData = async (id: string): Promise<ISpaceData | null> =>
     return sdata;
   } catch (error) {
     console.log(error);
-    throw new Error('A database error has occurred.');
+    throw new CustomError('A database error has occurred.');
   }
 };
 
@@ -101,6 +102,6 @@ export const deleteSingleSpace = async (id: string): Promise<number> => {
     return deletedSpace.id;
   } catch (error) {
     console.log(error);
-    throw new Error('A database error has occurred.');
+    throw new CustomError('A database error has occurred.');
   }
 };
