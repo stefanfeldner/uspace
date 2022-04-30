@@ -7,65 +7,58 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model comment {
-  comment_id         Int       @id @default(autoincrement())
-  content            String
-  created_at         DateTime? @default(now()) @db.Timestamptz(6)
-  user_id            Int
-  post_id            Int
-  post               post      @relation(fields: [post_id], references: [post_id], onDelete: Cascade)
-  user_commentTouser user      @relation(fields: [user_id], references: [user_id], onDelete: Cascade)
-  user_commentpost   user[]    @relation("commentpost")
-}
-
-model post {
-  post_id           Int           @id @default(autoincrement())
-  space_id          Int
-  title             String
-  tags              String
-  content           String?
-  created_at        DateTime?     @default(now()) @db.Timestamptz(6)
-  space_postTospace space         @relation(fields: [space_id], references: [space_id], onDelete: Cascade)
+model user {
+  sub               String        @id
+  email             String        @db.VarChar(255)
+  email_verified    Boolean?
+  username          String        @db.VarChar(50)
+  picture_url       String?       @db.VarChar(255)
+  created_at        DateTime?     @default(now())
+  post              post[]
   comment           comment[]
   space_colab       space_colab[]
-  space_postspace   space[]       @relation("postspace")
 }
 
 model space {
   space_id         Int           @id @default(autoincrement())
-  user_id          Int
   name             String
   description      String?
-  created_at       DateTime?     @default(now()) @db.Timestamptz(6)
-  user_spaceTouser user          @relation(fields: [user_id], references: [user_id], onDelete: Cascade)
-  post_postTospace post[]
+  created_at       DateTime?     @default(now())
+  post             post[]
   space_colab      space_colab[]
-  post_postspace   post[]        @relation("postspace")
-  user_spaceuser   user[]        @relation("spaceuser")
+}
+
+model post {
+  post_id     Int           @id @default(autoincrement())
+  space_id    Int
+  user_id     String
+  title       String
+  tags        String
+  content     String?
+  created_at  DateTime?     @default(now())
+  comment     comment[]
+  user        user          @relation(fields: [user_id], references: [sub], onDelete: Cascade)
+  space       space         @relation(fields: [space_id], references: [space_id], onDelete: Cascade)
+}
+
+model comment {
+comment_id Int       @id @default(autoincrement())
+user_id    String
+post_id    Int
+content    String
+created_at DateTime? @default(now())
+post       post      @relation(fields: [post_id], references: [post_id], onDelete: Cascade)
+user       user      @relation(fields: [user_id], references: [sub], onDelete: Cascade)
 }
 
 model space_colab {
-  space_colab_id Int     @id @default(autoincrement())
   space_id       Int
-  user_id        Int
-  post_id        Int
+  user_id        String
   canwrite       Boolean @default(false)
-  post           post    @relation(fields: [post_id], references: [post_id], onDelete: Cascade)
   space          space   @relation(fields: [space_id], references: [space_id], onDelete: Cascade)
-  user           user    @relation(fields: [user_id], references: [user_id], onDelete: Cascade)
+  user           user    @relation(fields: [user_id], references: [sub], onDelete: Cascade)
+
+  @@id([space_id, user_id])
 }
 
-model user {
-  email                 String        @db.VarChar(255)
-  email_verified        Boolean?
-  username              String        @db.VarChar(50)
-  picture_url           String?       @db.VarChar(255)
-  sub                   String        @db.VarChar(255)
-  user_id               Int           @id @default(autoincrement())
-  created_at            DateTime?     @default(now()) @db.Timestamptz(6)
-  comment_commentTouser comment[]
-  space_spaceTouser     space[]
-  space_colab           space_colab[]
-  comment_commentpost   comment[]     @relation("commentpost")
-  space_spaceuser       space[]       @relation("spaceuser")
-}
+
