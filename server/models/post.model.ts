@@ -1,11 +1,11 @@
-import { Post, PrismaClient } from '@prisma/client';
+import { PrismaClient } from '@prisma/client';
 import { CustomError } from '../error-handling/custom-err.class';
-import { IPost } from '../interfaces/post.interface';
+import { IIncomingPost, IPost } from '../interfaces/post.interface';
 
 const prisma = new PrismaClient();
 
 // creates a single post
-export const createPost = async (postDetails: Post): Promise<IPost> => {
+export const createPost = async (postDetails: IIncomingPost): Promise<IPost> => {
   try {
     const post = await prisma.post.create({
       data: postDetails
