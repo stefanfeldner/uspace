@@ -7,7 +7,7 @@ const MOCK_RESPONSE = { ...MOCK_DETAILS, id: 25 }; ;
 jest.mock('../../../queries/comment.queries', () => ({
   createCommentQuery: (commentDetails: any) : any => {
     if (commentDetails === MOCK_DETAILS) { return MOCK_RESPONSE; } else {
-      throw new Error('A database error has occurred');
+      throw new Error('A database error has occurred.');
     }
   }
 }));
@@ -22,7 +22,7 @@ describe('Testing Comment Model', () => {
     try {
       expect(await createComment({} as IIncomingComment)).toThrowError();
     } catch (e) {
-      expect((e as Error).message).toEqual('A database error has occurred.');
+      expect((e as Error).message).toEqual('A database error has occurred');
     }
   });
 });
