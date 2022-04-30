@@ -2,7 +2,7 @@ import { Request, Response } from 'express';
 import { createSpace, returnSpaceData, deleteSingleSpace } from '../models/space.model';
 
 // creates a single space
-const postSpace = async (req: Request, res: Response): Promise<void> => {
+export const postSpace = async (req: Request, res: Response): Promise<void> => {
   try {
     const space = await createSpace(req.body);
     res.status(201).send(space);
@@ -12,7 +12,7 @@ const postSpace = async (req: Request, res: Response): Promise<void> => {
 };
 
 // return a space and it's posts
-const getSpaceData = async (req:Request, res: Response): Promise<void> => {
+export const getSpaceData = async (req:Request, res: Response): Promise<void> => {
   try {
     const spaceData = await returnSpaceData(req.params.id);
     if (!spaceData) {
@@ -26,7 +26,7 @@ const getSpaceData = async (req:Request, res: Response): Promise<void> => {
 };
 
 // delete a single post by id
-const deleteSpace = async (req: Request, res: Response): Promise<void> => {
+export const deleteSpace = async (req: Request, res: Response): Promise<void> => {
   try {
     const deletedSpace = await deleteSingleSpace(req.params.id);
     res.status(202).send(deletedSpace);
@@ -34,5 +34,3 @@ const deleteSpace = async (req: Request, res: Response): Promise<void> => {
     res.status(500).send({ error: 'An unknown server error has occurred.' });
   }
 };
-
-module.exports = { postSpace, getSpaceData, deleteSpace };
