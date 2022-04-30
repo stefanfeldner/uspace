@@ -12,7 +12,7 @@ const prisma = new PrismaClient();
 type IAllTables = IComment | IPost | IRole | ISpace | IUserSpaceRole | IUser;
 
 // modular route: returns all entries in a table
-export const returnAllEntries = async (route: string): Promise <[IAllTables]> => {
+export const returnAllEntries = async (route: string): Promise <IAllTables[]> => {
   const tableName = route;
 
   try {
