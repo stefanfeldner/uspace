@@ -4,12 +4,8 @@ import { RichTextEditor } from '@mantine/rte';
 import { TextInput, MultiSelect } from '@mantine/core';
 import DOMPurify from 'dompurify';
 import { CreatePostType, PostType } from '../../interfaces/Interfaces';
-import {
-  ref,
-  uploadBytes,
-  getDownloadURL,
-} from 'firebase/storage';
-import { storage } from '../../firebase/config';
+import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
+import { storage } from '../../Firebase/config';
 
 interface Incoming {
   setOpened: Function;
@@ -22,14 +18,7 @@ function CreateEntryForm(props: Incoming) {
   const URL = process.env.REACT_APP_API + '/posts';
   const [richTextValue, setRichTextValue] = useState('');
   const [title, setTitle] = useState('');
-  const [tags, setTags] = useState<string[]>([
-    'Travel',
-    'News',
-    'Bug',
-    'Important',
-    'Diary',
-    'Notes',
-  ]);
+  const [tags, setTags] = useState<string[]>(['Travel', 'News', 'Bug', 'Important', 'Diary', 'Notes']);
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
 
   const tagsArrToStr = (tags: string[]) => {
@@ -74,9 +63,7 @@ function CreateEntryForm(props: Incoming) {
     props.setPosts((prevState: PostType[]) => {
       // sort posts before adding new one
       prevState.sort((a, b) => {
-        return (
-          new Date(b.created_at).valueOf() - new Date(a.created_at).valueOf()
-        );
+        return new Date(b.created_at).valueOf() - new Date(a.created_at).valueOf();
       });
       return [post, ...prevState];
     });
@@ -99,11 +86,7 @@ function CreateEntryForm(props: Incoming) {
     <div className="create-entry-form">
       <form onSubmit={handleSubmit}>
         <label>Title:</label>
-        <TextInput
-          required
-          value={title}
-          onChange={(event) => setTitle(event.currentTarget.value)}
-        />
+        <TextInput required value={title} onChange={(event) => setTitle(event.currentTarget.value)} />
         <label>Text:</label>
         <RichTextEditor
           value={richTextValue}
