@@ -1,6 +1,4 @@
-const { PrismaClient } = require('@prisma/client');
 
-const prisma = new PrismaClient();
 
 // modular route: returns all entries in a table
 const returnAllEntries = async (route) => {
