@@ -1,3 +1,6 @@
+import { PrismaClient } from '@prisma/client';
+
+const prisma = new PrismaClient();
 
 
 // modular route: returns all entries in a table
