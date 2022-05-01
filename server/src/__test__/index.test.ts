@@ -2,6 +2,7 @@ import app from '../app';
 import request from 'supertest';
 import { describe, expect, it, beforeEach, afterEach} from '@jest/globals'
 
+
 let server!: any; 
 
 
@@ -42,6 +43,8 @@ describe('GET/', () => {
         it('Get User Request', async () => {
           const output = await request(app).get('/users');
           expect(output.statusCode).toEqual(200);
+          console.log(output.body)
+          expect(output.body).toEqual(200);
         })
     })
 })
