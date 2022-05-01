@@ -22,12 +22,14 @@ model user {
 model space {
   space_id         Int           @id @default(autoincrement())
   name             String
+  owner            String
   description      String?
   created_at       DateTime?     @default(now())
+  user             user          @relation(fields: [owner], references: [sub], onDelete: Cascade)
   post             post[]
   space_colab      space_colab[]
 }
-
+ 
 model post {
   post_id     Int           @id @default(autoincrement())
   space_id    Int
