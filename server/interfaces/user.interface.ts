@@ -1,3 +1,5 @@
+import { User } from '@prisma/client';
+
 export interface IUser{
   id: number,
   email: string,
@@ -7,3 +9,5 @@ export interface IUser{
   sub:string,
   createdAt: Date
 }
+
+export interface IIncomingUser extends Omit<User, 'id'|'created_at'> {}
