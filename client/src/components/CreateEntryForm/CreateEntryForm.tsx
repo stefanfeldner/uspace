@@ -9,7 +9,7 @@ import { storage } from '../../Firebase/config';
 
 interface Incoming {
   setOpened: Function;
-  space_id?: number;
+  spaceId?: number;
   userId?: number;
   setPosts: Function;
 }
@@ -32,14 +32,14 @@ function CreateEntryForm(props: Incoming) {
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>): void => {
     event.preventDefault();
 
-    if (props.userId && props.space_id) {
+    if (props.userId && props.spaceId) {
       const postData = {
         title: DOMPurify.sanitize(title),
         content: richTextValue, // TODO: Check how to insert rich text safely without sanitizing here
         createdAt: new Date(),
         tags: DOMPurify.sanitize(tagsArrToStr(selectedTags)),
         userId: props.userId,
-        space_id: props.space_id,
+        spaceId: props.spaceId,
         Comment: [],
       };
 
@@ -71,7 +71,7 @@ function CreateEntryForm(props: Incoming) {
 
   const handleImageUpload = async (file: File): Promise<string> => {
     // create a reference to the place I want to store the file
-    const storageRef = ref(storage, `space${props.space_id}/${file.name}`);
+    const storageRef = ref(storage, `space${props.spaceId}/${file.name}`);
 
     // upload the file
     await uploadBytes(storageRef, file);

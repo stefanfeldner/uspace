@@ -34,7 +34,7 @@ export interface PostType {
   tags: string;
   title: string;
   userId: number;
-  space_id: number;
+  spaceId: number;
   createdAt: Date;
   Comment: CommentType[];
 }
@@ -44,7 +44,7 @@ export interface CreatePostType {
   tags: string;
   title: string;
   userId: number;
-  space_id: number;
+  spaceId: number;
   createdAt: Date;
 }
 

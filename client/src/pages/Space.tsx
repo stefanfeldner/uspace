@@ -127,7 +127,7 @@ function Space() {
         <CreateEntryForm
           setPosts={setPosts}
           setOpened={setOpened}
-          space_id={spaceData && spaceData[0]?.id}
+          spaceId={spaceData && spaceData[0]?.id}
           userId={spaceData && spaceData[0]?.userSpaceRole[0].user.id}
         />
       </Modal>

@@ -4,10 +4,10 @@ const URL = process.env.REACT_APP_API;
 
 const API_SERVICE = {
   // creates a new userSpaceRole and returns it
-  createUserSpaceRole: async (userId: number, space_id: number, role_id: number) => {
+  createUserSpaceRole: async (userId: number, spaceId: number, role_id: number) => {
     const data = {
       userId,
-      space_id,
+      spaceId,
       role_id,
     };
     const res = await fetch(URL + '/User_Space_Roles', {
@@ -60,11 +60,11 @@ const API_SERVICE = {
     const deletedSpace = await res.json();
     return deletedSpace;
   },
-  //delete single userSpaceRole by space_id
-  deleteUserSpaceRoleBySpaceId: async (space_id: number) => {
-    console.log('space_id', space_id);
+  //delete single userSpaceRole by spaceId
+  deleteUserSpaceRoleBySpaceId: async (spaceId: number) => {
+    console.log('spaceId', spaceId);
 
-    const res = await fetch(URL + `/User_Space_Roles/${space_id}`, {
+    const res = await fetch(URL + `/User_Space_Roles/${spaceId}`, {
       method: 'DELETE',
     });
     const deletedUserSpaceRole = await res.json();
