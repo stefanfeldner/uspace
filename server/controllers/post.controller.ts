@@ -17,9 +17,9 @@ export const postPost = async (req: Request, res: Response): Promise<void> => {
 // delete a single post by id
 export const deletePost = async (req: Request, res: Response): Promise<void> => {
   try {
-    const deletedPost = await deleteSinglePost(req.params.id);
+    const deletedPostId = await deleteSinglePost(req.params.id);
     res.status(202);
-    res.send(deletedPost);
+    res.send({ id: deletedPostId });
   } catch (error) {
     res.status(500);
     res.send(handleError(error));
