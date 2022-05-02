@@ -10,5 +10,5 @@ export interface IPostWithComments extends IPost{
 }
 export interface ISpaceData extends ISpace {
     posts: IPostWithComments[],
-    userSpaceRoles: {user: IStrippedUser}[],
+    userSpaceRoles: {user: Omit<IUser, 'createdAt'|'emailVerified'|'sub'>}[],
 }
