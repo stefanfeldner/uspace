@@ -33,7 +33,7 @@ function Space() {
     try {
       const data = await fetch(url);
       const spaces: SpaceDataType[] = await data.json();
-      const posts = spaces[0].Post;
+      const posts = spaces[0].posts;
 
       // filter out duplicates with a set
       const tagsSet: Set<string> = new Set();
@@ -53,14 +53,12 @@ function Space() {
       // sort posts by date before inserting into state
       posts.sort((a, b) => {
         // compare milliseconds
-        return (
-          new Date(b.created_at).valueOf() - new Date(a.created_at).valueOf()
-        );
+        return new Date(b.createdAt).valueOf() - new Date(a.createdAt).valueOf();
       });
 
       setSpaceData(spaces);
       setPosts(posts);
-      setSpaceOwnerId(spaces[0].User_Space_Role[0].user.id);
+      setSpaceOwnerId(spaces[0].userSpaceRoles[0].user.id);
     } catch (error) {
       console.error(error);
     }
@@ -106,11 +104,7 @@ function Space() {
             <div className="main-left">
               {posts && (
                 <EntryList
-                  posts={
-                    filteredPosts.length > 0 && selectedTags.length > 0
-                      ? filteredPosts
-                      : posts
-                  }
+                  posts={filteredPosts.length > 0 && selectedTags.length > 0 ? filteredPosts : posts}
                   setClickedPost={setClickedPost}
                 />
               )}
@@ -118,11 +112,7 @@ function Space() {
             <div className="main-right">
               {spaceData && (
                 <EntryDetail
-                  posts={
-                    filteredPosts.length > 0 && selectedTags.length > 0
-                      ? filteredPosts
-                      : posts
-                  }
+                  posts={filteredPosts.length > 0 && selectedTags.length > 0 ? filteredPosts : posts}
                   setPosts={setPosts}
                   spaceData={spaceData}
                   clickedPost={clickedPost}
@@ -133,18 +123,12 @@ function Space() {
           </div>
         </div>
       </main>
-      <Modal
-        centered
-        size="lg"
-        opened={opened}
-        onClose={() => setOpened(false)}
-        title="Post an Update"
-      >
+      <Modal centered size="lg" opened={opened} onClose={() => setOpened(false)} title="Post an Update">
         <CreateEntryForm
           setPosts={setPosts}
           setOpened={setOpened}
-          space_id={spaceData && spaceData[0]?.id}
-          user_id={spaceData && spaceData[0]?.User_Space_Role[0].user.id}
+          spaceId={spaceData && spaceData[0]?.id}
+          userId={spaceData && spaceData[0]?.userSpaceRoles[0].user.id}
         />
       </Modal>
     </>

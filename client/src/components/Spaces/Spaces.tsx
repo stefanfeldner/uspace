@@ -36,7 +36,7 @@ function Spaces(props: Incoming) {
   // filter out my spaces
   const mySpaces = (data: SpaceWithCreatorType[]) => {
     return data.filter((space) => {
-      return space.User_Space_Role[0].user.email === user?.email;
+      return space.userSpaceRoles[0].user.email === user?.email;
     });
   };
 
