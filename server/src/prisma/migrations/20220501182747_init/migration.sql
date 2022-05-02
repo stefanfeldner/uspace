@@ -1,10 +1,10 @@
 -- CreateTable
 CREATE TABLE "user" (
+    "sub" TEXT NOT NULL,
     "email" VARCHAR(255) NOT NULL,
     "email_verified" BOOLEAN,
     "username" VARCHAR(50) NOT NULL,
     "picture_url" VARCHAR(255),
-    "sub" TEXT NOT NULL,
     "created_at" TIMESTAMP(3) DEFAULT CURRENT_TIMESTAMP,
 
     CONSTRAINT "user_pkey" PRIMARY KEY ("sub")
@@ -14,6 +14,7 @@ CREATE TABLE "user" (
 CREATE TABLE "space" (
     "space_id" SERIAL NOT NULL,
     "name" TEXT NOT NULL,
+    "owner" TEXT NOT NULL,
     "description" TEXT,
     "created_at" TIMESTAMP(3) DEFAULT CURRENT_TIMESTAMP,
 
@@ -52,6 +53,9 @@ CREATE TABLE "space_colab" (
 
     CONSTRAINT "space_colab_pkey" PRIMARY KEY ("space_id","user_id")
 );
+
+-- AddForeignKey
+ALTER TABLE "space" ADD CONSTRAINT "space_owner_fkey" FOREIGN KEY ("owner") REFERENCES "user"("sub") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "post" ADD CONSTRAINT "post_user_id_fkey" FOREIGN KEY ("user_id") REFERENCES "user"("sub") ON DELETE CASCADE ON UPDATE CASCADE;

@@ -1,53 +1,35 @@
-const router = require('express').Router();
-const {
-  postUser,
-  postSpace,
-  getAllEntries,
-  getSingleEntryById,
-  postPost,
-  postComment,
-  postUserSpaceRole,
-  getSpacesAndCreators,
-  getSpaceData,
-  getUserBySub,
-  deletePost,
-  deleteSpace,
-  deleteUserSpaceRole,
-} = require('../controllers/user.controller');
+import Router from 'express';
+import { getUser, postUser, getAllSpaces, postSpace,
+        deleteSpace, postPost, deletePost, postComment, 
+        deleteComment } from './controllers/controllers';
 
-//
-// '/:table' routes are dynamic and return all entries of a given table
-//
-
+const router = Router();
+  
 // USERS
-/**
+ /**
  * @swagger
  * tags:
  *   name: Users
  *   description: User management and retrieval
  */
 
-/**
+ /**
  * @swagger
  *  /users:
  *   post:
  *     summary: creates new user
  *     description: Takes the user data and creates a new user.
  *     tags: [Users]
- *     requestBody:
- *       required: true
- *       content:
- *         application/json:
- *           schema:
- *             $ref: "#/components/schemas/User"
+ *     c
  *     responses:
  *       "201":
  *         description: Created
  */
 
-router.post('/users', postUser);
+ router.post('/users', postUser);
 
-/**
+
+ /**
  * @swagger
  *  /users/{id}:
  *   get:
@@ -59,36 +41,50 @@ router.post('/users', postUser);
  *         required: true
  *         description: numeric user id
  *         schema:
- *           type: integer
+ *           type: string
  *     responses:
  *       "201":
  *         description: Created
  */
-router.get('/users/:id', () => console.log('get user by id'))
+ router.get('/users/:id', getUser);
 
 
-// SPACES
-/**
+
+ // SPACES
+ /**
  * @swagger
  * tags:
  *   name: Spaces
  *   description: Spaces management and retrieval
  */
 
-/**
+ /**
  * @swagger
- *  /spaces:
+ *  /spaces/{owner}/{page}:
  *   get:
- *     summary: get required number of spaces
+ *     summary: get required number of spaces based on the selected page
  *     description: Takes 20 of own spaces, 20 of other spaces and returns all populated data (posts, comments)
  *     tags: [Spaces]
+ *     parameters:
+ *       - in: path
+ *         name: owner
+ *         required: true
+ *         description: string user sub
+ *         schema:
+ *           type: string
+ *       - in: path
+ *         name: page
+ *         required: true
+ *         description: number of selected page first page 0
+ *         schema:
+ *           type: integer
  *     responses:
  *       "201":
  *         description: Created
  */
-router.post('/spaces', () => console.log('get all spaces'));
+router.get('/spaces/:page', getAllSpaces);
 
-/**
+ /**
  * @swagger
  *  /spaces:
  *   post:
@@ -106,7 +102,8 @@ router.post('/spaces', () => console.log('get all spaces'));
  *         description: Created
  */
 router.post('/spaces', postSpace);
-/**
+
+ /**
  * @swagger
  *  /spaces/{spaceId}:
  *   delete:
@@ -125,7 +122,6 @@ router.post('/spaces', postSpace);
  */
 router.delete('/spaces/:id', deleteSpace);
 
-
 // POSTS
 /**
  * @swagger
@@ -134,7 +130,7 @@ router.delete('/spaces/:id', deleteSpace);
  *   description: Posts management and retrieval
  */
 
-/**
+ /**
  * @swagger
  *  /posts:
  *   post:
@@ -153,7 +149,7 @@ router.delete('/spaces/:id', deleteSpace);
  */
 router.post('/posts', postPost);
 
-/**
+ /**
  * @swagger
  *  /posts/{postsId}:
  *   delete:
@@ -172,15 +168,7 @@ router.post('/posts', postPost);
  */
 router.delete('/posts/:id', deletePost);
 
-// COMMENTS
-/**
- * @swagger
- * tags:
- *   name: Comments
- *   description: Comments management and retrieval
- */
-
-/**
+ /**
  * @swagger
  *  /comments:
  *   post:
@@ -198,7 +186,8 @@ router.delete('/posts/:id', deletePost);
  *         description: Created
  */
 router.post('/comments', postComment);
-/**
+
+ /**
  * @swagger
  *  /comments:
  *   delete:
@@ -216,26 +205,6 @@ router.post('/comments', postComment);
  *       "201":
  *         description: Created
  */
-// todo implement delete
-router.delete('/comments/:id', () => console.log('delete comment'));
+router.delete('/comments/:id', deleteComment);
 
-
-// USER_SPACE_ROLE
-router.post('/User_Space_Roles', postUserSpaceRole);  // SPACE_COLAB
-router.get('/spacesAndCreators', getSpacesAndCreators);  // SPACE_COLAB
-router.delete('/User_Space_Roles/:spaceId', deleteUserSpaceRole);
-
-// SPACE + POSTS
-//todo will not be needed
-router.get('/spaceData/:id', getSpaceData);  // SPACE
-
-// GET USER BY SUB
-//todo will not be needed
-router.get('/usersBySub/:sub', getUserBySub); // USER
-
-// MODULAR ROUTES
-//todo will not be needed
-// router.get('/:table', getAllEntries);
-// router.get('/:table/:id', getSingleEntryById);
-
-module.exports = router;
+export default router;
