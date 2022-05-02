@@ -65,7 +65,7 @@ export interface CreateSpaceDataType {
 export interface UserType {
   id: number;
   email: string;
-  email_verified: boolean;
+  emailVerified: boolean;
   username: string;
   pictureUrl: string;
   sub: string;
@@ -74,7 +74,7 @@ export interface UserType {
 
 export interface CreateUserType {
   email: string;
-  email_verified: boolean;
+  emailVerified: boolean;
   username: string;
   pictureUrl: string;
   sub: string;

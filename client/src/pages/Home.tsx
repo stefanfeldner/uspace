@@ -19,7 +19,7 @@ function Home() {
   if (!isLoading && user) {
     const userData: CreateUserType = {
       email: user!.email!,
-      email_verified: user!.email_verified!,
+      emailVerified: user!.emailVerified!,
       username: user!.nickname!,
       pictureUrl: user!.picture!,
       sub: user!.sub!,
