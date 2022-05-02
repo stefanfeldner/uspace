@@ -1,15 +1,11 @@
-import { PrismaClient, User } from '@prisma/client';
 import { CustomError } from '../error-handling/custom-err.class';
-import { IUser } from '../interfaces/user.interface';
-
-const prisma = new PrismaClient();
+import { IIncomingUser, IUser } from '../interfaces/user.interface';
+import { createUserQuery, findFirstQuery } from '../queries/user.queries';
 
 // creates a single user
-export const createUser = async (newUserDetails: User): Promise<IUser> => {
+export const createUser = async (newUserDetails: IIncomingUser): Promise<IUser> => {
   try {
-    const user = await prisma.user.create(
-      { data: newUserDetails }
-    );
+    const user = await createUserQuery(newUserDetails);
     return {
       id: user.id,
       email: user.email,
@@ -28,11 +24,7 @@ export const createUser = async (newUserDetails: User): Promise<IUser> => {
 // find user by sub and return
 export const returnUserBySub = async (sub: string): Promise<IUser| null> => {
   try {
-    const prismaUser = await prisma.user.findFirst({
-      where: {
-        sub
-      }
-    });
+    const prismaUser = await findFirstQuery(sub);
     if (!prismaUser) {
       return null;
     }
