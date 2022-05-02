@@ -1,15 +1,17 @@
-import { PrismaClient, User } from '@prisma/client';
+import { PrismaClient } from '@prisma/client';
 import { CustomError } from '../error-handling/custom-err.class';
-import { IUser } from '../interfaces/user.interface';
+import { IIncomingUser, IUser } from '../interfaces/user.interface';
+import { createUserQuery } from '../queries/user.queries';
 
 const prisma = new PrismaClient();
 
 // creates a single user
-export const createUser = async (newUserDetails: User): Promise<IUser> => {
+export const createUser = async (newUserDetails: IIncomingUser): Promise<IUser> => {
   try {
-    const user = await prisma.user.create(
-      { data: newUserDetails }
-    );
+    const user = await createUserQuery(newUserDetails);
+    // const user = await prisma.user.create(
+    //   { data: newUserDetails }
+    // );
     return {
       id: user.id,
       email: user.email,
