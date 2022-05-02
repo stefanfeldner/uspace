@@ -1,5 +1,3 @@
-import { Post } from '@prisma/client';
-
 export interface IPost {
   id: number,
   title: string,
@@ -10,4 +8,4 @@ export interface IPost {
   spaceId: number,
 }
 
-export interface IIncomingPost extends Omit<Post, 'id'|'created_at'> {}
+export interface IIncomingPost extends Omit<IPost, 'id'|'createdAt'> {}

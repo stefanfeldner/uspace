@@ -6,7 +6,7 @@ import { createPostQuery, deletePostQuery } from '../queries/post.queries';
 export const createPost = async (postDetails: IIncomingPost): Promise<IPost> => {
   try {
     const post = await createPostQuery(postDetails);
-    return { id: post.id, content: post.content, createdAt: post.created_at, spaceId: post.space_id, tags: post.tags, title: post.title, userId: post.user_id };
+    return post;
   } catch (error) {
     throw new CustomError('A database error has occurred.');
   }
