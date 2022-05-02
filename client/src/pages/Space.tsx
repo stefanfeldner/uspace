@@ -58,7 +58,7 @@ function Space() {
 
       setSpaceData(spaces);
       setPosts(posts);
-      setSpaceOwnerId(spaces[0].userSpaceRole[0].user.id);
+      setSpaceOwnerId(spaces[0].userSpaceRoles[0].user.id);
     } catch (error) {
       console.error(error);
     }
@@ -128,7 +128,7 @@ function Space() {
           setPosts={setPosts}
           setOpened={setOpened}
           spaceId={spaceData && spaceData[0]?.id}
-          userId={spaceData && spaceData[0]?.userSpaceRole[0].user.id}
+          userId={spaceData && spaceData[0]?.userSpaceRoles[0].user.id}
         />
       </Modal>
     </>

@@ -47,7 +47,7 @@ function CreateSpaceForm(props: Incoming) {
         // create a m-m relationship using the user id, space id and 2 for creator
         await API_SERVICE.createUserSpaceRole(foundUser.id, newSpace.id, 2);
         // add new userSpaceRole array and input new user
-        newSpace.userSpaceRole = [
+        newSpace.userSpaceRoles = [
           {
             user: {
               email: foundUser.email,

@@ -19,8 +19,8 @@ interface Incoming {
 
 function EntryDetail(props: Incoming) {
   const post = props.posts[props.clickedPost];
-  const username = props.spaceData[0]?.userSpaceRole[0]?.user?.username;
-  const pictureUrl = props.spaceData[0]?.userSpaceRole[0]?.user?.pictureUrl;
+  const username = props.spaceData[0]?.userSpaceRoles[0]?.user?.username;
+  const pictureUrl = props.spaceData[0]?.userSpaceRoles[0]?.user?.pictureUrl;
   const comments = props.posts[props.clickedPost]?.Comment;
   const { user, isLoading } = useAuth0();
   const [isOwner, setIsOwner] = useState<boolean>(false);

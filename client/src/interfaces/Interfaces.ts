@@ -11,7 +11,7 @@ export default interface SpaceWithCreatorType {
   id: number;
   name: string;
   createdAt: Date;
-  userSpaceRole: UserSpaceRoleType[];
+  userSpaceRoles: UserSpaceRoleType[];
 }
 
 export interface CommentType {
@@ -54,7 +54,7 @@ export interface SpaceDataType {
   description: string;
   id: number;
   name: string;
-  userSpaceRole: UserSpaceRoleType[];
+  userSpaceRoles: UserSpaceRoleType[];
 }
 
 export interface CreateSpaceDataType {

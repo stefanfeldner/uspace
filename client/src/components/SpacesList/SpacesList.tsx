@@ -32,7 +32,7 @@ function SpacesList(props: Incoming) {
   };
 
   const spaceItem = props.spaces.map((space) => {
-    const { username, pictureUrl } = space.userSpaceRole[0].user;
+    const { username, pictureUrl } = space.userSpaceRoles[0].user;
     const { name } = space;
     const { id } = space;
     let isOwner = false;
