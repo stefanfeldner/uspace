@@ -2,8 +2,6 @@ const router = require('express').Router();
 const {
   postUser,
   postSpace,
-  getAllEntries,
-  getSingleEntryById,
   postPost,
   postComment,
   postUserSpaceRole,
@@ -67,11 +65,7 @@ router.post('/users', postUser);
  *         content:
  *           application/json:
  *             schema:
- *               type: object
- *               properties:
- *                 message: string
- *               example:
- *                 message: user created
+ *               $ref: "#/components/schemas/UserResponse"
  */
 router.get('/users/:id', () => console.log('get user by id'))
 
