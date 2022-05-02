@@ -6,8 +6,7 @@ const prisma = new PrismaClient();
 export class SpaceModel {
 
   // creates a single space
-  createSpace(req: Space): any {     // TODO ADD TYPE HERE
-    return async () => {
+  async createSpace(req: Space) {     // TODO ADD TYPE HERE
       try {
         const { name, owner, description } = req;
       
@@ -22,11 +21,9 @@ export class SpaceModel {
       } catch (error) {
           return error;
         }
-      } 
   };
 
-  getSpaces(req: any): any { // TODO ADD TYPE HERE
-    return async () => {
+  async getSpaces(req: any) { // TODO ADD TYPE HERE
       try {
         const allSpaces = [];
 
@@ -35,7 +32,7 @@ export class SpaceModel {
         let next = (page * 20);
 
         // first - 20 own spaces
-        const first = prisma.space.findMany({
+        const first = await prisma.space.findMany({
           skip: next,
           take: 20,
           where: {
@@ -50,7 +47,7 @@ export class SpaceModel {
           },
         });
 
-        const second = prisma.space.findMany({
+        const second = await prisma.space.findMany({
           skip: next,
           take: 20,
           where: {
@@ -74,23 +71,18 @@ export class SpaceModel {
       } catch (error) {
         return error;
       }
-    }
   }
 
-  deleteSpace(req: any): any { // TODO ADD TYPE HERE
-    return async () => {
-
-      const { space_id } = req;
-      
-      try {
-        const space = prisma.space.delete({
+  async deleteSpace(req: any) { // TODO ADD TYPE HERE  
+    try {
+        const { space_id } = req;
+        const space = await prisma.space.delete({
           where: {
             space_id: space_id,
           }
         });
-      } catch (error) {
+    } catch (error) {
         return error;
-      }
     }
   }
 }

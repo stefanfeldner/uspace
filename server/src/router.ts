@@ -1,24 +1,25 @@
-import express from 'express';
-import { BaseController } from './controllers/controllers';
+import Router from 'express';
+import { getUser, postUser, getAllSpaces, postSpace,
+        deleteSpace, postPost, deletePost, postComment, 
+        deleteComment } from './controllers/controllers';
 
-const controller = new BaseController();
-const router = express.Router();
+const router = Router();
   
 // USERS
-router.get('/users/:id', controller.getUser);
-router.post('/users', controller.postUser);
+router.get('/users/:id', getUser);
+router.post('/users', postUser);
 
 // SPACES
-router.get('/spaces/:page', controller.getAllSpaces);
-router.post('/spaces', controller.postSpace);
-router.delete('/spaces/:id', controller.deleteSpace);
+router.get('/spaces/:page', getAllSpaces);
+router.post('/spaces', postSpace);
+router.delete('/spaces/:id', deleteSpace);
 
 // POSTS
-router.post('/posts', controller.postPost);
-router.delete('/posts/:id', controller.deletePost);
+router.post('/posts', postPost);
+router.delete('/posts/:id', deletePost);
 
 // COMMENTS
-router.post('/comments', controller.postComment);
-router.delete('/comments/:id', controller.deleteComment);
+router.post('/comments', postComment);
+router.delete('/comments/:id', deleteComment);
 
 export default router;
