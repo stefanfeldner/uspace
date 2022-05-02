@@ -117,7 +117,7 @@ router.post('/spaces', postSpace);
  *     tags: [Spaces]
  *     parameters:
  *       - in: path
- *         name: id
+ *         name: spaceId
  *         required: true
  *         description: numeric space id
  *         schema:
@@ -158,13 +158,13 @@ router.post('/posts', postPost);
 
 /**
  * @swagger
- *  /posts/{postsId}:
+ *  /posts/{postId}:
  *   delete:
  *     summary: deletes post by id
  *     tags: [Posts]
  *     parameters:
  *       - in: path
- *         name: id
+ *         name: postId
  *         required: true
  *         description: numeric post id
  *         schema:
@@ -203,14 +203,14 @@ router.delete('/posts/:id', deletePost);
 router.post('/comments', postComment);
 /**
  * @swagger
- *  /comments:
+ *  /comments/{commentId}:
  *   delete:
  *     summary: creates new comment
  *     description: Takes the post data and creates a new post.
  *     tags: [Comments]
  *     parameters:
  *       - in: path
- *         name: id
+ *         name: commentId
  *         required: true
  *         description: numeric comment id
  *         schema:
