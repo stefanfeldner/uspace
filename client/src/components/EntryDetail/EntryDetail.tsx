@@ -39,7 +39,7 @@ function EntryDetail(props: Incoming) {
 
   let date = '';
   if (post) {
-    date = new Date(post.created_at).toLocaleTimeString('en-EN', {
+    date = new Date(post.createdAt).toLocaleTimeString('en-EN', {
       hour: '2-digit',
       minute: '2-digit',
       year: 'numeric',
@@ -59,9 +59,7 @@ function EntryDetail(props: Incoming) {
     // deep clone posts of space
     const clonedPosts = _.cloneDeep(props.posts);
     // find index of deleted post in state
-    const indexOfDeletedPost = clonedPosts.findIndex(
-      (arrPost) => arrPost.id === post.id
-    );
+    const indexOfDeletedPost = clonedPosts.findIndex((arrPost) => arrPost.id === post.id);
     // delete post from state
     clonedPosts.splice(indexOfDeletedPost, 1);
     // set posts without deleted one to state
@@ -76,11 +74,7 @@ function EntryDetail(props: Incoming) {
     <div className="entry-detail">
       <div className="entry-detail-top">
         <div className="entry-detail-creator">
-          <img
-            className="entry-detail-creator-avatar"
-            src={picture_url}
-            alt="Avatar User"
-          />
+          <img className="entry-detail-creator-avatar" src={picture_url} alt="Avatar User" />
           <div className="entry-detail-creator-info">
             <div className="name">{username}</div>
             <div className="time">{date}</div>
@@ -92,11 +86,7 @@ function EntryDetail(props: Incoming) {
             <Menu.Item icon={<Edit size={14} />} onClick={editPost}>
               Edit this Post
             </Menu.Item>
-            <Menu.Item
-              color="red"
-              icon={<Trash size={14} />}
-              onClick={deletePost}
-            >
+            <Menu.Item color="red" icon={<Trash size={14} />} onClick={deletePost}>
               Delete this Post
             </Menu.Item>
           </Menu>

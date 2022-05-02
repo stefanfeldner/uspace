@@ -36,7 +36,7 @@ function CreateEntryForm(props: Incoming) {
       const postData = {
         title: DOMPurify.sanitize(title),
         content: richTextValue, // TODO: Check how to insert rich text safely without sanitizing here
-        created_at: new Date(),
+        createdAt: new Date(),
         tags: DOMPurify.sanitize(tagsArrToStr(selectedTags)),
         user_id: props.user_id,
         space_id: props.space_id,
@@ -63,7 +63,7 @@ function CreateEntryForm(props: Incoming) {
     props.setPosts((prevState: PostType[]) => {
       // sort posts before adding new one
       prevState.sort((a, b) => {
-        return new Date(b.created_at).valueOf() - new Date(a.created_at).valueOf();
+        return new Date(b.createdAt).valueOf() - new Date(a.createdAt).valueOf();
       });
       return [post, ...prevState];
     });

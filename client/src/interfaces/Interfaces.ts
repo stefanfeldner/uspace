@@ -10,14 +10,14 @@ export interface UserSpaceRoleType {
 export default interface SpaceWithCreatorType {
   id: number;
   name: string;
-  created_at: Date;
+  createdAt: Date;
   User_Space_Role: UserSpaceRoleType[];
 }
 
 export interface CommentType {
   id: number;
   content: string;
-  created_at: string;
+  createdAt: string;
   post_id: number;
   user_id: number;
 }
@@ -35,7 +35,7 @@ export interface PostType {
   title: string;
   user_id: number;
   space_id: number;
-  created_at: Date;
+  createdAt: Date;
   Comment: CommentType[];
 }
 
@@ -45,12 +45,12 @@ export interface CreatePostType {
   title: string;
   user_id: number;
   space_id: number;
-  created_at: Date;
+  createdAt: Date;
 }
 
 export interface SpaceDataType {
   Post: PostType[];
-  created_at: Date;
+  createdAt: Date;
   description: string;
   id: number;
   name: string;
@@ -69,7 +69,7 @@ export interface UserType {
   username: string;
   picture_url: string;
   sub: string;
-  created_at: Date;
+  createdAt: Date;
 }
 
 export interface CreateUserType {

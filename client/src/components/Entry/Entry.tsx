@@ -19,14 +19,13 @@ function Entry(props: Incoming) {
   };
 
   // format date to show MONTH DAY
-  const date = new Date(post.created_at).toLocaleDateString('en-EN', {
+  const date = new Date(post.createdAt).toLocaleDateString('en-EN', {
     month: 'short',
     day: 'numeric',
   });
 
   // remove html tags and only allow certain character amount
-  const content =
-    post.content.replace(/(<([^>]+)>)/gi, '').slice(0, 90) + '...';
+  const content = post.content.replace(/(<([^>]+)>)/gi, '').slice(0, 90) + '...';
 
   // cut title if too long
   const shapeTitle = (title: string) => {
@@ -35,10 +34,7 @@ function Entry(props: Incoming) {
   };
 
   return (
-    <div
-      className={props.activePostId === props.index ? 'entry active' : 'entry'}
-      onClick={changeDetails}
-    >
+    <div className={props.activePostId === props.index ? 'entry active' : 'entry'} onClick={changeDetails}>
       <div className="entry-left">
         <div className="entry-left-date">{date}</div>
       </div>
