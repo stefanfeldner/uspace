@@ -14,7 +14,7 @@ function Comment(props: Incoming) {
   const spaceOwnerId = props.spaceOwnerId || 0;
   const URL = `${process.env.REACT_APP_API}/users/${comment.user_id}`;
 
-  const date = new Date(comment.created_at).toLocaleTimeString('en-EN', {
+  const date = new Date(comment.createdAt).toLocaleTimeString('en-EN', {
     // weekday: 'short',
     year: '2-digit',
     month: 'short',
@@ -36,7 +36,7 @@ function Comment(props: Incoming) {
   return (
     <div className={spaceOwnerId === comment.user_id ? 'comment right' : 'comment'}>
       <div className="comment-avatar">
-        <img src={user && user.picture_url} alt="User Avatar" />
+        <img src={user && user.pictureUrl} alt="User Avatar" />
         <div className="comment-online">&nbsp;</div>
       </div>
       <div className="comment-wrapper">

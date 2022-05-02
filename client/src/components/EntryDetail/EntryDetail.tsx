@@ -19,8 +19,8 @@ interface Incoming {
 
 function EntryDetail(props: Incoming) {
   const post = props.posts[props.clickedPost];
-  const username = props.spaceData[0]?.User_Space_Role[0]?.user?.username;
-  const picture_url = props.spaceData[0]?.User_Space_Role[0]?.user?.picture_url;
+  const username = props.spaceData[0]?.userSpaceRole[0]?.user?.username;
+  const pictureUrl = props.spaceData[0]?.userSpaceRole[0]?.user?.pictureUrl;
   const comments = props.posts[props.clickedPost]?.Comment;
   const { user, isLoading } = useAuth0();
   const [isOwner, setIsOwner] = useState<boolean>(false);
@@ -74,7 +74,7 @@ function EntryDetail(props: Incoming) {
     <div className="entry-detail">
       <div className="entry-detail-top">
         <div className="entry-detail-creator">
-          <img className="entry-detail-creator-avatar" src={picture_url} alt="Avatar User" />
+          <img className="entry-detail-creator-avatar" src={pictureUrl} alt="Avatar User" />
           <div className="entry-detail-creator-info">
             <div className="name">{username}</div>
             <div className="time">{date}</div>

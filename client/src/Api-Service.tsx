@@ -1,19 +1,10 @@
-import {
-  CreateSpaceDataType,
-  CreateUserType,
-  PrismaError,
-  SpaceDataType,
-} from './interfaces/Interfaces';
+import { CreateSpaceDataType, CreateUserType, PrismaError, SpaceDataType } from './interfaces/Interfaces';
 
 const URL = process.env.REACT_APP_API;
 
 const API_SERVICE = {
-  // creates a new user_space_role and returns it
-  createUserSpaceRole: async (
-    user_id: number,
-    space_id: number,
-    role_id: number
-  ) => {
+  // creates a new userSpaceRole and returns it
+  createUserSpaceRole: async (user_id: number, space_id: number, role_id: number) => {
     const data = {
       user_id,
       space_id,
@@ -69,7 +60,7 @@ const API_SERVICE = {
     const deletedSpace = await res.json();
     return deletedSpace;
   },
-  //delete single User_Space_role by space_id
+  //delete single userSpaceRole by space_id
   deleteUserSpaceRoleBySpaceId: async (space_id: number) => {
     console.log('space_id', space_id);
 

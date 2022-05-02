@@ -2,8 +2,8 @@ export interface UserSpaceRoleType {
   user: {
     username: string;
     email: string;
-    pictureUrl: string;
-    id: number;
+    pictureUrl?: string;
+    id?: number;
   };
 }
 
@@ -11,7 +11,7 @@ export default interface SpaceWithCreatorType {
   id: number;
   name: string;
   createdAt: Date;
-  User_Space_Role: UserSpaceRoleType[];
+  userSpaceRole: UserSpaceRoleType[];
 }
 
 export interface CommentType {
@@ -54,7 +54,7 @@ export interface SpaceDataType {
   description: string;
   id: number;
   name: string;
-  User_Space_Role: UserSpaceRoleType[];
+  userSpaceRole: UserSpaceRoleType[];
 }
 
 export interface CreateSpaceDataType {
@@ -67,7 +67,7 @@ export interface UserType {
   email: string;
   email_verified: boolean;
   username: string;
-  picture_url: string;
+  pictureUrl: string;
   sub: string;
   createdAt: Date;
 }
@@ -76,7 +76,7 @@ export interface CreateUserType {
   email: string;
   email_verified: boolean;
   username: string;
-  picture_url: string;
+  pictureUrl: string;
   sub: string;
 }
 
