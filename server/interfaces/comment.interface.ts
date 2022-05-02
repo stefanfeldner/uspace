@@ -6,8 +6,4 @@ export interface IComment {
   postId: number,
 }
 
-export interface IIncomingComment {
-  content: string;
-  user_id: number;
-  post_id: number;
-}
+export interface IIncomingComment extends Omit<IComment, 'id'|'createdAt'>{}

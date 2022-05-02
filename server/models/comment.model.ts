@@ -6,13 +6,7 @@ import { createCommentQuery } from '../queries/comment.queries';
 export const createComment = async (commentDetails: IIncomingComment): Promise<IComment> => {
   try {
     const comment = await createCommentQuery(commentDetails);
-    return {
-      id: comment.id,
-      content: comment.content,
-      createdAt: comment.created_at,
-      userId: comment.user_id,
-      postId: comment.post_id
-    };
+    return comment;
   } catch (error) {
     console.log('Error in createComment', error);
     throw new CustomError('A database error has occurred.');

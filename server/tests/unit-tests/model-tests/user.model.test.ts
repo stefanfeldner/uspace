@@ -4,8 +4,8 @@ import { createUser, returnUserBySub } from '../../../models/user.model';
 
 const TEST_ID = '1';
 const TEST_SUB = 'sub text';
-const MOCK_DETAILS = { email: 'test@test.com', email_verified: true, username: 'Stefan', picture_url: './image.png', sub: TEST_SUB };
-const MOCK_RESPONSE = { ...MOCK_DETAILS, id: +TEST_ID, created_at: new Date() };
+const MOCK_DETAILS = { email: 'test@test.com', emailVerified: true, username: 'Stefan', pictureUrl: './image.png', sub: TEST_SUB };
+const MOCK_RESPONSE = { id: +TEST_ID, created_at: new Date() };
 
 jest.mock('../../../queries/user.queries', () => ({
   createUserQuery: (newUserDetails: IIncomingUser) : any => {
@@ -15,12 +15,11 @@ jest.mock('../../../queries/user.queries', () => ({
   },
   findFirstQuery: (sub: string): User | null => {
     if (sub === MOCK_DETAILS.sub) {
-      return MOCK_RESPONSE;
-    } else if (!+sub) { return null; } else {
+      return MOCK_RESPONSE as User;
+    } else if (+sub) { return null; } else {
       throw new Error();
     }
   }
-
 }));
 
 describe('Testing User Model', () => {
@@ -45,13 +44,13 @@ describe('Testing User Model', () => {
   });
 
   it('Should send sub to database get null of corresponding user does not exist', async () => {
-    const response = await returnUserBySub('wrong sub');
+    const response = await returnUserBySub('9');
     expect(response).toEqual(null);
   });
 
   it('Should send sub to database get null of corresponding user does not exist', async () => {
     try {
-      expect(await returnUserBySub('9')).toThrowError();
+      expect(await returnUserBySub('hello')).toThrowError();
     } catch (e) {
       expect((e as Error).message).toEqual('A database error has occurred.');
     }

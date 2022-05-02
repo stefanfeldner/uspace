@@ -1,4 +1,3 @@
-import { Space } from '@prisma/client';
 
 export interface ISpace{
   id: number,
@@ -7,4 +6,4 @@ export interface ISpace{
   createdAt: Date,
 }
 
-export interface IIncomingSpace extends Omit<Space, 'id'|'created_at'>{}
+export interface IIncomingSpace extends Omit<ISpace, 'id'|'createdAt'>{}

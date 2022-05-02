@@ -2,7 +2,7 @@ import { postComment } from '../../../controllers/comment.controller';
 import { Request, Response } from 'express';
 import { IIncomingComment } from '../../../interfaces/comment.interface';
 
-const MOCK_REQ: {body: IIncomingComment} = { body: { content: 'Test Post', user_id: 1, post_id: 2 } };
+const MOCK_REQ: {body: IIncomingComment} = { body: { content: 'Test Post', userId: 1, postId: 2 } };
 const MOCK_RES = { ...MOCK_REQ.body, id: 25 }; ;
 jest.mock('../../../models/comment.model', () => ({
   createComment: (commentDetails: IIncomingComment) : any => {
