@@ -1,0 +1,48 @@
+@import '../../../../custom-styles';
+
+.spaces {
+  margin-top: 80px;
+  padding-bottom: 50px;
+
+  .spaces-search {
+    margin-bottom: 30px;
+
+    input {
+      max-width: 500px;
+    }
+  }
+
+  .spaces-not-found {
+    margin-top: -30px;
+    margin-bottom: 50px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+
+    p {
+      margin-bottom: 0;
+    }
+  }
+
+  .spaces-row {
+    margin-bottom: 20px;
+
+    &:first-child {
+      margin-bottom: 50px;
+    }
+
+    .spaces-row-title {
+      font-size: 1.375em;
+      color: $color-headings;
+      line-height: 1em;
+      margin-bottom: 30px;
+    }
+    .spaces-wrapper {
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      flex-wrap: wrap;
+      margin: 0 -10px;
+    }
+  }
+}

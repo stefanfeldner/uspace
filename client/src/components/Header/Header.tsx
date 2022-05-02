@@ -6,10 +6,10 @@ import { useAuth0 } from '@auth0/auth0-react';
 import LoginButton from '../LoginButton/LoginButton';
 import SignupButton from '../SignupButton/SignupButton';
 import { useLocation } from 'react-router';
-import API_SERVICE from '../../Api-Service';
 import { Menu } from '@mantine/core';
 import { Logout, User } from 'tabler-icons-react';
 import { useNavigate } from "react-router-dom";
+import API_USER_SERVICE from '../../services/apiUserService';
 
 interface Incoming {
   setOpened?: Function;
@@ -27,7 +27,7 @@ function Header(props: Incoming) {
   const getUser = async () => {
     if (user) {
       // get user by sub
-      const foundUser = await API_SERVICE.findUserBySub(user.sub!);
+      const foundUser = await API_USER_SERVICE.findUserBySub(user.sub!);
       // check if user is owner
       if (props.spaceOwnerId === foundUser.id) setIsOwner(true);
     }
@@ -97,7 +97,7 @@ function Header(props: Incoming) {
         <div className="header-wrapper">
           <div className="header-left">
             <a href="/">
-              <img src={logo} alt="Wepanion Logo" />
+              <img src={logo} alt="uspace Logo" />
             </a>
           </div>
           <div className="header-right">{renderButton()}</div>
