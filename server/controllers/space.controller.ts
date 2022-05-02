@@ -15,7 +15,7 @@ export const postSpace = async (req: Request, res: Response): Promise<void> => {
 };
 
 // return a space and it's posts
-export const getSpaceData = async (req:Request, res: Response): Promise<void> => {
+export const getSpaceData = async (req: Request, res: Response): Promise<void> => {
   try {
     const spaceData = await returnSpaceData(req.params.id);
     if (!spaceData) {
@@ -34,9 +34,9 @@ export const getSpaceData = async (req:Request, res: Response): Promise<void> =>
 // delete a single post by id
 export const deleteSpace = async (req: Request, res: Response): Promise<void> => {
   try {
-    const deletedSpace = await deleteSingleSpace(req.params.id);
+    const deletedSpaceID = await deleteSingleSpace(req.params.id);
     res.status(202);
-    res.send(deletedSpace);
+    res.send({ id: deletedSpaceID });
   } catch (error) {
     res.status(500);
     res.send(handleError(error));

@@ -1,13 +1,13 @@
-import { Post, PrismaClient, Space, Comment } from '@prisma/client';
+import { Post, PrismaClient, Comment } from '@prisma/client';
 import { IComment } from '../interfaces/comment.interface';
 import { IPostWithComments, ISpaceData, IStrippedUser } from '../interfaces/spaceData.interface';
-import { ISpace } from '../interfaces/space.interface';
+import { IIncomingSpace, ISpace } from '../interfaces/space.interface';
 import { CustomError } from '../error-handling/custom-err.class';
 
 const prisma = new PrismaClient();
 
 // creates a single space
-export const createSpace = async (newSpaceDetails: Space): Promise<ISpace> => {
+export const createSpace = async (newSpaceDetails: IIncomingSpace): Promise<ISpace> => {
   try {
     const space = await prisma.space.create({
       data: newSpaceDetails
