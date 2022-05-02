@@ -6,11 +6,15 @@ const logger = require('morgan');
 const router = require('./routes/router');
 const swaggerUi = require('swagger-ui-express');
 const openapiSpecification = require('./docs/swaggerDef');
+const fs = require('fs');
 
 const PORT = process.env.PORT;
 const app = express();
 
 // SWAGGER
+fs.writeFile('openapi.json', JSON.stringify(openapiSpecification), (err) => {
+  console.error(err);
+})
 app.use('/docs', swaggerUi.serve, swaggerUi.setup(openapiSpecification));
 
 app.use(cors());

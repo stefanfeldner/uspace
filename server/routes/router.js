@@ -58,11 +58,20 @@ router.post('/users', postUser);
  *         name: id
  *         required: true
  *         description: numeric user id
+ *         example: 123asd
  *         schema:
- *           type: integer
+ *           type: string
  *     responses:
  *       "201":
  *         description: Created
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message: string
+ *               example:
+ *                 message: user created
  */
 router.get('/users/:id', () => console.log('get user by id'))
 
