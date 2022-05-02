@@ -8,7 +8,7 @@ const options = {
       version: '1.0.0',
     },
   },
-  apis: ['./docs/*.yml', './routes/router.js'],
+  apis: ['./src/docs/*.yml', './src/router.ts'],
 };
 
 export default swaggerJsdoc(options);

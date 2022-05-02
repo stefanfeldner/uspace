@@ -25,13 +25,11 @@ export class PostModel {
     }
   };
 
-  async deletePost(req: any) {
+  async deletePost(id: string) {
     try {
-      const { post_id } = req;
-
       const post = await prisma.post.delete({
         where: {
-          post_id: post_id,
+          post_id: +id
         }
       });
       return post;

@@ -6,8 +6,9 @@ const prisma = new PrismaClient();
 export class SpaceModel {
 
   // creates a single space
-  async createSpace(req: Space) {     // TODO ADD TYPE HERE
+  async createSpace(req: any) {     // TODO ADD TYPE HERE
       try {
+        console.log(req)
         const { name, owner, description } = req;
       
         const space = await prisma.space.create({
@@ -20,14 +21,12 @@ export class SpaceModel {
         return space;
       } catch (error) {
           return error;
-        }
+      }
   };
 
-  async getSpaces(req: any) { // TODO ADD TYPE HERE
+  async getSpaces(owner: string, page: number) { // TODO ADD TYPE HERE
       try {
         const allSpaces = [];
-
-        const { owner, page } = req;
 
         let next = (page * 20);
 
@@ -66,21 +65,21 @@ export class SpaceModel {
 
         allSpaces.push(first);
         allSpaces.push(second);
-
+        
         return allSpaces;
       } catch (error) {
         return error;
       }
   }
 
-  async deleteSpace(req: any) { // TODO ADD TYPE HERE  
+  async deleteSpace(id: string) { // TODO ADD TYPE HERE  
     try {
-        const { space_id } = req;
         const space = await prisma.space.delete({
           where: {
-            space_id: space_id,
+            space_id: +id,
           }
         });
+        return space
     } catch (error) {
         return error;
     }

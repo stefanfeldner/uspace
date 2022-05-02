@@ -48,7 +48,9 @@ export const postSpace: RequestHandler = async (req: Request, res: Response) => 
 // get 20 own spaces and 20 other spaces 
 export const getAllSpaces: RequestHandler = async (req: Request, res: Response) => {
     try {
-        const allSpaces = await spaceModel.getSpaces(req.params.page);
+        const owner = req.params.owner;
+        const page = +req.params.page
+        const allSpaces = await spaceModel.getSpaces(owner, page);
         res.status(201);
         res.send(allSpaces);
     } catch (error) {

@@ -23,13 +23,11 @@ export class CommentModel {
     } 
   };
 
-  async deleteComment(req: any) {     // TODO ADD TYPE HERE
+  async deleteComment(id: string) {     // TODO ADD TYPE HERE
     try {
-      const { comment_id } = req;
-
       const comment = await prisma.comment.delete({
         where: {
-          comment_id: comment_id,
+          comment_id: +id,
         }
       });
       return comment;
