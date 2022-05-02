@@ -49,7 +49,7 @@ export interface CreatePostType {
 }
 
 export interface SpaceDataType {
-  Post: PostType[];
+  posts: PostType[];
   createdAt: Date;
   description: string;
   id: number;

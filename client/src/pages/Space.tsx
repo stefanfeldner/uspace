@@ -33,7 +33,7 @@ function Space() {
     try {
       const data = await fetch(url);
       const spaces: SpaceDataType[] = await data.json();
-      const posts = spaces[0].Post;
+      const posts = spaces[0].posts;
 
       // filter out duplicates with a set
       const tagsSet: Set<string> = new Set();
