@@ -12,7 +12,7 @@ function Comment(props: Incoming) {
   const { comment } = props;
   const [user, setUser] = useState<UserType>();
   const spaceOwnerId = props.spaceOwnerId || 0;
-  const URL = `${process.env.REACT_APP_API}/users/${comment.user_id}`;
+  const URL = `${process.env.REACT_APP_API}/users/${comment.userId}`;
 
   const date = new Date(comment.createdAt).toLocaleTimeString('en-EN', {
     // weekday: 'short',
@@ -34,7 +34,7 @@ function Comment(props: Incoming) {
   }, [fetchUser]);
 
   return (
-    <div className={spaceOwnerId === comment.user_id ? 'comment right' : 'comment'}>
+    <div className={spaceOwnerId === comment.userId ? 'comment right' : 'comment'}>
       <div className="comment-avatar">
         <img src={user && user.pictureUrl} alt="User Avatar" />
         <div className="comment-online">&nbsp;</div>

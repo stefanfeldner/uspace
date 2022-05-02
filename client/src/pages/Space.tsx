@@ -128,7 +128,7 @@ function Space() {
           setPosts={setPosts}
           setOpened={setOpened}
           space_id={spaceData && spaceData[0]?.id}
-          user_id={spaceData && spaceData[0]?.userSpaceRole[0].user.id}
+          userId={spaceData && spaceData[0]?.userSpaceRole[0].user.id}
         />
       </Modal>
     </>

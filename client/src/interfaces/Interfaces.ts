@@ -19,13 +19,13 @@ export interface CommentType {
   content: string;
   createdAt: string;
   postId: number;
-  user_id: number;
+  userId: number;
 }
 
 export interface CreateCommentType {
   content: string;
   postId: number;
-  user_id: number;
+  userId: number;
 }
 
 export interface PostType {
@@ -33,7 +33,7 @@ export interface PostType {
   content: string;
   tags: string;
   title: string;
-  user_id: number;
+  userId: number;
   space_id: number;
   createdAt: Date;
   Comment: CommentType[];
@@ -43,7 +43,7 @@ export interface CreatePostType {
   content: string;
   tags: string;
   title: string;
-  user_id: number;
+  userId: number;
   space_id: number;
   createdAt: Date;
 }

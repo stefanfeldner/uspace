@@ -10,7 +10,7 @@ import { storage } from '../../Firebase/config';
 interface Incoming {
   setOpened: Function;
   space_id?: number;
-  user_id?: number;
+  userId?: number;
   setPosts: Function;
 }
 
@@ -32,13 +32,13 @@ function CreateEntryForm(props: Incoming) {
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>): void => {
     event.preventDefault();
 
-    if (props.user_id && props.space_id) {
+    if (props.userId && props.space_id) {
       const postData = {
         title: DOMPurify.sanitize(title),
         content: richTextValue, // TODO: Check how to insert rich text safely without sanitizing here
         createdAt: new Date(),
         tags: DOMPurify.sanitize(tagsArrToStr(selectedTags)),
-        user_id: props.user_id,
+        userId: props.userId,
         space_id: props.space_id,
         Comment: [],
       };

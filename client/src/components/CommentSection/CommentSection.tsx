@@ -46,7 +46,7 @@ function CommentSection(props: Incoming) {
     if (props.postId) {
       const commentData = {
         content: saveComment,
-        user_id: await fetchUser(),
+        userId: await fetchUser(),
         postId: props.postId,
       };
 

@@ -4,9 +4,9 @@ const URL = process.env.REACT_APP_API;
 
 const API_SERVICE = {
   // creates a new userSpaceRole and returns it
-  createUserSpaceRole: async (user_id: number, space_id: number, role_id: number) => {
+  createUserSpaceRole: async (userId: number, space_id: number, role_id: number) => {
     const data = {
-      user_id,
+      userId,
       space_id,
       role_id,
     };
