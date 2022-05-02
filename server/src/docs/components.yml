@@ -48,13 +48,10 @@ components:
       properties:
         space_id:
           type: integer
-          reqruired: true
         user_id:
           type: string
-          reqruired: true
         title:
           type: string
-          reqruired: true
         tags:
           type: string
         content:
