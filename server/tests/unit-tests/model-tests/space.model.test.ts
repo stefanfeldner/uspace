@@ -1,58 +1,13 @@
 import { createSpace, deleteSingleSpace, returnSpaceData } from '../../../models/space.model';
 import { IIncomingSpace, ISpace } from '../../../interfaces/space.interface';
 import { ISpaceData } from '../../../interfaces/spaceData.interface';
-import { Space, Comment, Post } from '@prisma/client';
+import { Space } from '@prisma/client';
 import { CustomError } from '../../../error-handling/custom-err.class';
 const MOCK_DATE = new Date();
 const MOCK_ID = '25';
 const MOCK_INCOMING_SPACE: IIncomingSpace = { name: 'Example Space', description: 'Example Space description' };
 const MOCK_SPACE: ISpace = { ...MOCK_INCOMING_SPACE, id: +MOCK_ID, createdAt: MOCK_DATE };
-const MOCK_SPACE_DATA_QUERY_RESPONSE: Space & {
-  Post: (Post & {
-      Comment: Comment[];
-  })[];
-  User_Space_Role: {
-      user: {
-          id: number;
-          username: string;
-          email: string;
-          picture_url: string;
-      };
-  }[];
-} = {
-  id: +MOCK_ID,
-  name: 'Example Space',
-  description: 'Example Space description',
-  created_at: MOCK_DATE,
-  Post: [
-    {
-      id: +MOCK_ID,
-      title: 'Example Post title',
-      tags: 'Example Tags',
-      created_at: MOCK_DATE,
-      content: 'Exmaple Post content',
-      user_id: +MOCK_ID,
-      space_id: +MOCK_ID,
-      Comment: [
-        {
-          id: +MOCK_ID,
-          content: 'Example Comment',
-          created_at: MOCK_DATE,
-          user_id: +MOCK_ID,
-          post_id: +MOCK_ID
-        }
-      ]
-    }
-  ],
-  User_Space_Role: [{
-    user: {
-      id: +MOCK_ID,
-      email: 'Example Email',
-      username: 'Example Username',
-      picture_url: 'Example URL'
-    }
-  }]
-};
+
 const MOCK_SPACE_DATA: ISpaceData = {
   id: +MOCK_ID,
   name: 'Example Space',
@@ -95,22 +50,10 @@ jest.mock('../../../queries/space.queries', () => ({
       throw new Error();
     }
   },
-  findSpaceDataQuery: (id: string): (Space & {
-    Post: (Post & {
-        Comment: Comment[];
-    })[];
-    User_Space_Role: {
-        user: {
-            id: number;
-            username: string;
-            email: string;
-            picture_url: string;
-        };
-    }[];
-}) | null => {
+  findSpaceDataQuery: (id: string): ISpaceData | null => {
     if (id === MOCK_ID) {
       console.log('CORRECT ID');
-      return MOCK_SPACE_DATA_QUERY_RESPONSE;
+      return MOCK_SPACE_DATA;
     }
     if (id) {
       return null;
