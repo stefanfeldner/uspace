@@ -2,8 +2,8 @@ export interface UserSpaceRoleType {
   user: {
     username: string;
     email: string;
-    picture_url?: string;
-    id?: number;
+    pictureUrl: string;
+    id: number;
   };
 }
 

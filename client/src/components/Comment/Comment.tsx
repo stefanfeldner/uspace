@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import './Comment.scss';
 import { CommentType, UserType } from '../../interfaces/Interfaces';
 import DOMPurify from 'dompurify';
@@ -23,20 +23,18 @@ function Comment(props: Incoming) {
   });
 
   // get comment creator / user
-  const fetchUser = async () => {
+  const fetchUser = useCallback(async () => {
     const fetchedUser = await fetch(URL);
     const data = await fetchedUser.json();
     setUser(data);
-  };
+  }, [URL]);
 
   useEffect(() => {
     fetchUser();
-  }, []);
+  }, [fetchUser]);
 
   return (
-    <div
-      className={spaceOwnerId === comment.user_id ? 'comment right' : 'comment'}
-    >
+    <div className={spaceOwnerId === comment.user_id ? 'comment right' : 'comment'}>
       <div className="comment-avatar">
         <img src={user && user.picture_url} alt="User Avatar" />
         <div className="comment-online">&nbsp;</div>
