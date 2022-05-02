@@ -1,17 +1,15 @@
-import { Post, PrismaClient, Comment } from '@prisma/client';
+import { Post, Comment } from '@prisma/client';
 import { IComment } from '../interfaces/comment.interface';
-import { IPostWithComments, ISpaceData, IStrippedUser } from '../interfaces/spaceData.interface';
+import { IPostWithComments, ISpaceData } from '../interfaces/spaceData.interface';
 import { IIncomingSpace, ISpace } from '../interfaces/space.interface';
 import { CustomError } from '../error-handling/custom-err.class';
-
-const prisma = new PrismaClient();
+import { createSpaceQuery, deleteSpaceQuery, findSpaceDataQuery } from '../queries/space.queries';
+import { IUser } from '../interfaces/user.interface';
 
 // creates a single space
 export const createSpace = async (newSpaceDetails: IIncomingSpace): Promise<ISpace> => {
   try {
-    const space = await prisma.space.create({
-      data: newSpaceDetails
-    });
+    const space = await createSpaceQuery(newSpaceDetails);
     return { id: space.id, name: space.name, description: space.description, createdAt: space.created_at };
   } catch (error) {
     console.log(error);
@@ -21,33 +19,7 @@ export const createSpace = async (newSpaceDetails: IIncomingSpace): Promise<ISpa
 
 export const returnSpaceData = async (id: string): Promise<ISpaceData | null> => {
   try {
-    const spaceData = await prisma.space.findUnique({
-      where: {
-        id: +id
-      },
-      include: {
-        Post: {
-          include: {
-            Comment: true
-          }
-        },
-        User_Space_Role: {
-          where: {
-            role_id: 2
-          },
-          select: {
-            user: {
-              select: {
-                username: true,
-                email: true,
-                picture_url: true,
-                id: true
-              }
-            }
-          }
-        }
-      }
-    });
+    const spaceData = await findSpaceDataQuery(id);
 
     if (!spaceData) {
       return null;
@@ -67,7 +39,7 @@ export const returnSpaceData = async (id: string): Promise<ISpaceData | null> =>
         tags: post.tags,
         comments: post.Comment.map<IComment>((comment: Comment) => ({ id: comment.id, content: comment.content, createdAt: comment.created_at, postId: comment.post_id, userId: comment.user_id }))
       })),
-      userSpaceRoles: spaceData.User_Space_Role.map<{user: IStrippedUser}>((userSpaceRole: {
+      userSpaceRoles: spaceData.User_Space_Role.map<{user: Omit<IUser, 'createdAt'|'emailVerified'|'sub'>}>((userSpaceRole: {
       user: {
           id: number;
           username: string;
@@ -94,11 +66,7 @@ export const returnSpaceData = async (id: string): Promise<ISpaceData | null> =>
 // delete single space and posts/comments inside
 export const deleteSingleSpace = async (id: string): Promise<number> => {
   try {
-    const deletedSpace = await prisma.space.delete({
-      where: {
-        id: +id // parse id to int
-      }
-    });
+    const deletedSpace = await deleteSpaceQuery(id);
     return deletedSpace.id;
   } catch (error) {
     console.log(error);

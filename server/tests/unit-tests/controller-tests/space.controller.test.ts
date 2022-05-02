@@ -33,6 +33,7 @@ const MOCK_SPACE_DATA: ISpaceData = {
   ],
   userSpaceRoles: [{
     user: {
+      id: +MOCK_ID,
       email: 'Example Email',
       username: 'Example Username',
       pictureUrl: 'Example URL'
@@ -66,17 +67,10 @@ jest.mock('../../../models/space.model', () => ({
       throw new Error();
     }
   }
-  // deleteSinglePost: (id: string): Promise<number> => {
-  //   if (id === MOCK_ID) {
-  //     return Promise.resolve(+MOCK_ID);
-  //   } else {
-  //     throw new Error();
-  //   }
-  // }
 }));
 
 describe('Testing Space Controller', () => {
-  test('postSpace() Should send space data in request to model and return the saved post', async () => {
+  test('postSpace() Should send space data in request to model and return the saved space', async () => {
     const mReq = MOCK_REQ as Request;
     const mRes = { status: jest.fn().mockReturnThis(), send: jest.fn() } as any as Response;
     await postSpace(mReq, mRes);
