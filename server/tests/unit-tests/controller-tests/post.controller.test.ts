@@ -8,7 +8,7 @@ const MOCK_ID = '1';
 const MOCK_REQ_DELETE: {params: {id: string}} = { params: { id: MOCK_ID } };
 const MOCK_RES_DELETE: {id: number} = { id: +MOCK_ID };
 jest.mock('../../../models/post.model', () => ({
-  ...jest.requireActual('../../../models/post.model'),
+  // ...jest.requireActual('../../../models/post.model'),
   createPost: (postDetails: any) : any => {
     if (postDetails === MOCK_REQ.body) {
       return MOCK_RES;
