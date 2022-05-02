@@ -20,7 +20,6 @@ const {
 //
 
 // USERS
-
 /**
  * @swagger
  * tags:
@@ -46,40 +45,197 @@ const {
  *         description: Created
  */
 
-router.post('/users', postUser);  // USER
+router.post('/users', postUser);
+
+/**
+ * @swagger
+ *  /users/{id}:
+ *   get:
+ *     summary: get user by id
+ *     tags: [Users]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         description: numeric user id
+ *         schema:
+ *           type: integer
+ *     responses:
+ *       "201":
+ *         description: Created
+ */
+router.get('/users/:id', () => console.log('get user by id'))
+
 
 // SPACES
-router.post('/spaces', postSpace);  // SPACE
+/**
+ * @swagger
+ * tags:
+ *   name: Spaces
+ *   description: Spaces management and retrieval
+ */
+
+/**
+ * @swagger
+ *  /spaces:
+ *   get:
+ *     summary: get required number of spaces
+ *     description: Takes 20 of own spaces, 20 of other spaces and returns all populated data (posts, comments)
+ *     tags: [Spaces]
+ *     responses:
+ *       "201":
+ *         description: Created
+ */
+router.post('/spaces', () => console.log('get all spaces'));
+
+/**
+ * @swagger
+ *  /spaces:
+ *   post:
+ *     summary: creates new space
+ *     description: Takes the space data and creates a new space.
+ *     tags: [Spaces]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: "#/components/schemas/Space"
+ *     responses:
+ *       "201":
+ *         description: Created
+ */
+router.post('/spaces', postSpace);
+/**
+ * @swagger
+ *  /spaces/{spaceId}:
+ *   delete:
+ *     summary: deletes space by id
+ *     tags: [Spaces]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         description: numeric space id
+ *         schema:
+ *           type: integer
+ *     responses:
+ *       "201":
+ *         description: Created
+ */
+router.delete('/spaces/:id', deleteSpace);
+
 
 // POSTS
-router.post('/posts', postPost);  // POST
+/**
+ * @swagger
+ * tags:
+ *   name: Posts
+ *   description: Posts management and retrieval
+ */
+
+/**
+ * @swagger
+ *  /posts:
+ *   post:
+ *     summary: creates new post
+ *     description: Takes the post data and creates a new post.
+ *     tags: [Posts]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: "#/components/schemas/Post"
+ *     responses:
+ *       "201":
+ *         description: Created
+ */
+router.post('/posts', postPost);
+
+/**
+ * @swagger
+ *  /posts/{postsId}:
+ *   delete:
+ *     summary: deletes post by id
+ *     tags: [Posts]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         description: numeric post id
+ *         schema:
+ *           type: integer
+ *     responses:
+ *       "201":
+ *         description: Created
+ */
+router.delete('/posts/:id', deletePost);
 
 // COMMENTS
-router.post('/comments', postComment);  // COMMENT
+/**
+ * @swagger
+ * tags:
+ *   name: Comments
+ *   description: Comments management and retrieval
+ */
+
+/**
+ * @swagger
+ *  /comments:
+ *   post:
+ *     summary: creates new comment
+ *     description: Takes the post data and creates a new post.
+ *     tags: [Comments]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: "#/components/schemas/Comment"
+ *     responses:
+ *       "201":
+ *         description: Created
+ */
+router.post('/comments', postComment);
+/**
+ * @swagger
+ *  /comments:
+ *   delete:
+ *     summary: creates new comment
+ *     description: Takes the post data and creates a new post.
+ *     tags: [Comments]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         description: numeric comment id
+ *         schema:
+ *           type: integer
+ *     responses:
+ *       "201":
+ *         description: Created
+ */
+// todo implement delete
+router.delete('/comments/:id', () => console.log('delete comment'));
+
 
 // USER_SPACE_ROLE
-router.post('/User_Space_Roles', postUserSpaceRole);  // who knows
-
-// SPACES + CREATORS
-router.get('/spacesAndCreators', getSpacesAndCreators);  // SPACE
+router.post('/User_Space_Roles', postUserSpaceRole);  // SPACE_COLAB
+router.get('/spacesAndCreators', getSpacesAndCreators);  // SPACE_COLAB
+router.delete('/User_Space_Roles/:spaceId', deleteUserSpaceRole);
 
 // SPACE + POSTS
+//todo will not be needed
 router.get('/spaceData/:id', getSpaceData);  // SPACE
 
 // GET USER BY SUB
+//todo will not be needed
 router.get('/usersBySub/:sub', getUserBySub); // USER
 
 // MODULAR ROUTES
-router.get('/:table', getAllEntries);
-router.get('/:table/:id', getSingleEntryById);
-
-// DELETE POST
-router.delete('/posts/:id', deletePost);
-
-// DELETE SPACE
-router.delete('/spaces/:id', deleteSpace);
-
-// DELETE SPACE BY SPACE ID
-router.delete('/User_Space_Roles/:spaceId', deleteUserSpaceRole);
+//todo will not be needed
+// router.get('/:table', getAllEntries);
+// router.get('/:table/:id', getSingleEntryById);
 
 module.exports = router;
