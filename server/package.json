@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.ts",
   "scripts": {
+    "tsilent": "jest --silent",
     "test": "jest",
     "start": "nodemon"
   },

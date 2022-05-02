@@ -9,8 +9,8 @@ import { storage } from '../../Firebase/config';
 
 interface Incoming {
   setOpened: Function;
-  space_id?: number;
-  user_id?: number;
+  spaceId?: number;
+  userId?: number;
   setPosts: Function;
 }
 
@@ -32,15 +32,15 @@ function CreateEntryForm(props: Incoming) {
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>): void => {
     event.preventDefault();
 
-    if (props.user_id && props.space_id) {
+    if (props.userId && props.spaceId) {
       const postData = {
         title: DOMPurify.sanitize(title),
         content: richTextValue, // TODO: Check how to insert rich text safely without sanitizing here
-        created_at: new Date(),
+        createdAt: new Date(),
         tags: DOMPurify.sanitize(tagsArrToStr(selectedTags)),
-        user_id: props.user_id,
-        space_id: props.space_id,
-        Comment: [],
+        userId: props.userId,
+        spaceId: props.spaceId,
+        comments: [],
       };
 
       createPost(postData);
@@ -58,12 +58,12 @@ function CreateEntryForm(props: Incoming) {
     });
     const post = await res.json();
     // add comment property to post obj to prevent undefined objects
-    post.Comment = [];
+    post.comments = [];
 
     props.setPosts((prevState: PostType[]) => {
       // sort posts before adding new one
       prevState.sort((a, b) => {
-        return new Date(b.created_at).valueOf() - new Date(a.created_at).valueOf();
+        return new Date(b.createdAt).valueOf() - new Date(a.createdAt).valueOf();
       });
       return [post, ...prevState];
     });
@@ -71,7 +71,7 @@ function CreateEntryForm(props: Incoming) {
 
   const handleImageUpload = async (file: File): Promise<string> => {
     // create a reference to the place I want to store the file
-    const storageRef = ref(storage, `space${props.space_id}/${file.name}`);
+    const storageRef = ref(storage, `space${props.spaceId}/${file.name}`);
 
     // upload the file
     await uploadBytes(storageRef, file);
