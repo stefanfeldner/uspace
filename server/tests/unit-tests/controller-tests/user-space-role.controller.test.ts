@@ -1,34 +1,47 @@
 import { Request, Response } from 'express';
-import { postUserSpaceRole } from '../../../controllers/user-space-role.controller';
+import { deleteUserSpaceRole, postUserSpaceRole } from '../../../controllers/user-space-role.controller';
+// import { ISpacesAndCreator } from '../../../interfaces/spaces-and-creators.interface';
 import { IIncomingUserSpaceRole } from '../../../interfaces/user-space-role.interface';
 
 // Mock data
-// For creating UserSpaceRole
-const MOCK_REQ_POST_USERSPACEROLE: {body: IIncomingUserSpaceRole} = { body: { user_id: 1, space_id: 2, role_id: 1 } };
-const MOCK_RES_POST_USERSPACEROLE = { ...MOCK_REQ_POST_USERSPACEROLE.body, id: 7 };
+const MOCK_ID = '33';
+const MOCK_REQ: {body: IIncomingUserSpaceRole} = { body: { user_id: 1, space_id: 2, role_id: 1 } };
+const MOCK_RES = { ...MOCK_REQ.body, id: 7 };
+// const MOCK_SPACES_AND_CREATORS_DATA: ISpacesAndCreator = {
+
+// };
 jest.mock('../../../models/user-space-role.model', () => ({
   createUserSpaceRole: (userSpaceRoleDetails: IIncomingUserSpaceRole) : any => {
-    if (userSpaceRoleDetails === MOCK_REQ_POST_USERSPACEROLE.body) {
-      return MOCK_RES_POST_USERSPACEROLE;
+    if (userSpaceRoleDetails === MOCK_REQ.body) {
+      return MOCK_RES;
+    } else {
+      throw new Error();
+    }
+  },
+  // returnSpacesAndCreators: (): ISpacesAndCreator[] => {
+
+  // },
+  deleteSingleUserSpaceRole: (id: string): number => {
+    console.log('id in mocking deleteSingleUserSpaceRole ftion: ', id);
+    if (id === MOCK_ID) {
+      return +MOCK_ID;
     } else {
       throw new Error();
     }
   }
 }));
-// For returning spaces and creators
-// For deleting a UserSpaceRole
 
 describe('Testing UserSpaceRole Controller', () => {
   // Tests for PostUserSpaceRole function
-  test('Should send UserSpaceRole data in request to model and return the saved UserSpaceRole', async () => {
-    const mReq = MOCK_REQ_POST_USERSPACEROLE as Request;
+  test('postUserSpaceRole() should send UserSpaceRole data in request to model and return the saved UserSpaceRole', async () => {
+    const mReq = MOCK_REQ as Request;
     const mRes = { status: jest.fn().mockReturnThis(), send: jest.fn() } as any as Response;
     await postUserSpaceRole(mReq, mRes);
     expect(mRes.status).toBeCalledWith(201);
-    expect(mRes.send).toBeCalledWith(MOCK_RES_POST_USERSPACEROLE);
+    expect(mRes.send).toBeCalledWith(MOCK_RES);
   });
 
-  test('Should handle errors thrown by the model when creating a new UserSpaceRole', async () => {
+  test('postUserSpaceRole should handle errors thrown by the model when creating a new UserSpaceRole', async () => {
     const mReq = { body: {} } as Request;
     const mRes = { status: jest.fn().mockReturnThis(), send: jest.fn() } as any as Response;
     await postUserSpaceRole(mReq, mRes);
@@ -46,11 +59,19 @@ describe('Testing UserSpaceRole Controller', () => {
   // });
 
   // Tests for deleting a single UserSpaceRole by spaceId
-  // test('Should send spaceId from request params in request to model and return the deleted row data', async () => {
-  //   // //test goes here
-  // });
+  test('deleteUserSpaceRole() should send spaceId from request params in request to model and return the deleted row data', async () => {
+    const mReq = { params: { spaceId: MOCK_ID } } as any as Request;
+    const mRes = { status: jest.fn().mockReturnThis(), send: jest.fn() } as any as Response;
+    await deleteUserSpaceRole(mReq, mRes);
+    expect(mRes.status).toBeCalledWith(202);
+    expect(mRes.send).toBeCalledWith(+MOCK_ID);
+  });
 
-  // test('Should handle errors thrown by the model when deleting an item in UserSpaceRole table', async () => {
-
-  // });
+  test('deleteUserSpaceRole() should handle errors thrown by the model when deleting an item in UserSpaceRole table', async () => {
+    const mReq = { params: { spaceId: '999' } } as any as Request;
+    const mRes = { status: jest.fn().mockReturnThis(), send: jest.fn() } as any as Response;
+    await deleteUserSpaceRole(mReq, mRes);
+    expect(mRes.status).toBeCalledWith(500);
+    expect(mRes.send).toBeCalledWith({ error: 'An unknown server error has occurred.' });
+  });
 });
