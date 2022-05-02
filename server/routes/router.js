@@ -49,19 +49,89 @@ const {
 router.post('/users', postUser);  // USER
 
 // SPACES
+/**
+ * @swagger
+ * tags:
+ *   name: Spaces
+ *   description: Spaces management and retrieval
+ */
+
+/**
+ * @swagger
+ *  /spaces:
+ *   post:
+ *     summary: creates new space
+ *     description: Takes the space data and creates a new space.
+ *     tags: [Spaces]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: "#/components/schemas/Space"
+ *     responses:
+ *       "201":
+ *         description: Created
+ */
 router.post('/spaces', postSpace);  // SPACE
 
 // POSTS
+/**
+ * @swagger
+ * tags:
+ *   name: Posts
+ *   description: Posts management and retrieval
+ */
+
+/**
+ * @swagger
+ *  /posts:
+ *   post:
+ *     summary: creates new post
+ *     description: Takes the post data and creates a new post.
+ *     tags: [Posts]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: "#/components/schemas/Post"
+ *     responses:
+ *       "201":
+ *         description: Created
+ */
 router.post('/posts', postPost);  // POST
 
 // COMMENTS
+/**
+ * @swagger
+ * tags:
+ *   name: Comments
+ *   description: Comments management and retrieval
+ */
+
+/**
+ * @swagger
+ *  /comments:
+ *   post:
+ *     summary: creates new post
+ *     description: Takes the post data and creates a new post.
+ *     tags: [Comments]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: "#/components/schemas/Comment"
+ *     responses:
+ *       "201":
+ *         description: Created
+ */
 router.post('/comments', postComment);  // COMMENT
 
 // USER_SPACE_ROLE
-router.post('/User_Space_Roles', postUserSpaceRole);  // who knows
-
-// SPACES + CREATORS
-router.get('/spacesAndCreators', getSpacesAndCreators);  // SPACE
+router.post('/User_Space_Roles', postUserSpaceRole);  // SPACE_COLAB
+router.get('/spacesAndCreators', getSpacesAndCreators);  // SPACE_COLAB
 
 // SPACE + POSTS
 router.get('/spaceData/:id', getSpaceData);  // SPACE

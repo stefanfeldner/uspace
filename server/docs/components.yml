@@ -23,3 +23,103 @@ components:
         email_verified: true
         username: fake name
         picture_url: https://asdfasdfsadfsd
+
+    Space:
+      type: object
+      properties:
+        owner:
+          type: string
+          required: true
+        name:
+          type: string
+          required: true
+        description:
+          type: string
+          reqruired: true
+      example:
+        owner: 'thisIsUserSub'
+        name: 'Otters are awesome'
+        description: 'space to celebrate otters'
+
+    Post:
+      type: object
+      properties:
+        space_id:
+          type: integer
+          reqruired: true
+        user_id:
+          type: string
+          reqruired: true
+        title:
+          type: string
+          reqruired: true
+        tags:
+          type: string
+        content:
+          type: string
+          reqruired: true
+      example:
+        space_id: 123
+        user_id: 'thisIsUserSub'
+        title: 'Did you know...'
+        content: '...that otters hold hands when they sleep?'
+        tags: 'otters, cute, fluffy'
+
+    Comment:
+      type: object
+      properties:
+        user_id:
+          type: string
+          reqruired: true
+        post_id:
+          type: integer
+          reqruired: true
+        content:
+          type: string
+          reqruired: true
+      example:
+        post_id: 234
+        user_id: 'thisIsAnotherUserSub'
+        content: 'OMG thats the cutest thing s2 🦦!!'
+
+
+#    PostResponse:
+#      type: object
+#      properties:
+#        ref: '#/schema/Post'
+#        comments: '#/schema/Comment'
+#
+#    SpaceResponse:
+#      type: object
+#      properties:
+#        space_id:
+#          type: integer
+#          required: true
+#        owner:
+#          type: string
+#        name:
+#          type: string
+#          required: true
+#        description:
+#          type: string
+#          required: true
+#        created_at:
+#          type: string
+#          form: datetime
+#        space_colab:
+#          type: {}
+#          properties:
+#            space_id:
+#              type: integer
+#            user_id:
+#              type: string
+#            canwrite:
+#              type: boolean
+#        posts:
+#          $ref: '#/schema/PostResponse'
+#      example:
+#        sub: 5ebac534954b54139806c112
+#        email: fake@example.com
+#        email_verified: true
+#        username: fake name
+#        picture_url: https://asdfasdfsadfsd
