@@ -40,7 +40,7 @@ function CreateEntryForm(props: Incoming) {
         tags: DOMPurify.sanitize(tagsArrToStr(selectedTags)),
         userId: props.userId,
         spaceId: props.spaceId,
-        Comment: [],
+        comments: [],
       };
 
       createPost(postData);
@@ -58,7 +58,7 @@ function CreateEntryForm(props: Incoming) {
     });
     const post = await res.json();
     // add comment property to post obj to prevent undefined objects
-    post.Comment = [];
+    post.comments = [];
 
     props.setPosts((prevState: PostType[]) => {
       // sort posts before adding new one

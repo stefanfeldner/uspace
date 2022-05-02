@@ -46,9 +46,9 @@ function Entry(props: Incoming) {
           }}
         ></div>
         <div className="entry-right-text">{content}</div>
-        {post.Comment && post.Comment.length > 0 && (
+        {post.comments && post.comments.length > 0 && (
           <div className="entry-right-tags">
-            <div className="comment-tag">{post.Comment.length} comments</div>
+            <div className="comment-tag">{post.comments.length} comments</div>
             {/* <div className="attachment-tag">1 attachment</div> */}
           </div>
         )}

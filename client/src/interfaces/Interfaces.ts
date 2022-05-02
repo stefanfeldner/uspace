@@ -36,7 +36,7 @@ export interface PostType {
   userId: number;
   spaceId: number;
   createdAt: Date;
-  Comment: CommentType[];
+  comments: CommentType[];
 }
 
 export interface CreatePostType {
