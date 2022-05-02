@@ -18,13 +18,13 @@ export interface CommentType {
   id: number;
   content: string;
   createdAt: string;
-  post_id: number;
+  postId: number;
   user_id: number;
 }
 
 export interface CreateCommentType {
   content: string;
-  post_id: number;
+  postId: number;
   user_id: number;
 }
 
