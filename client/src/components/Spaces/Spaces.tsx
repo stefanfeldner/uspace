@@ -27,6 +27,7 @@ function Spaces(props: Incoming) {
   const fetchSpaces = async () => {
     const spaces = await fetch(url);
     const data: SpaceWithCreatorType[] = await spaces.json();
+    console.log(data);
 
     setAllSpaces(data);
 

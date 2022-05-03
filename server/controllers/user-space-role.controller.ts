@@ -4,7 +4,9 @@ import { handleError } from '../error-handling/error-helpers';
 // creates a single User_Space_Role
 export const postUserSpaceRole = async (req: Request, res: Response): Promise<void> => {
   try {
-    const userSpaceRole = await createUserSpaceRole(req.body);
+    const incomingData = req.body;
+    console.log(incomingData);
+    const userSpaceRole = await createUserSpaceRole(incomingData);
     res.status(201);
     res.send(userSpaceRole);
   } catch (error) {
