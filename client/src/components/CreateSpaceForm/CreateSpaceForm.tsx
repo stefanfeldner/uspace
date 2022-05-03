@@ -31,10 +31,8 @@ function CreateSpaceForm(props: Incoming) {
 
     // create new space
     const newSpace: SpaceDataType | PrismaError = await API_SERVICE.createSpace(spaceData);
-
     // check for unique space name constraint
     if ('code' in newSpace) {
-      console.log(newSpace);
       setSpaceNameTakenError('This Space name is already taken, please choose a different one!');
       return;
     }

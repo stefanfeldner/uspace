@@ -52,7 +52,6 @@ jest.mock('../../../queries/space.queries', () => ({
   },
   findSpaceDataQuery: (id: string): ISpaceData | null => {
     if (id === MOCK_ID) {
-      console.log('CORRECT ID');
       return MOCK_SPACE_DATA;
     }
     if (id) {

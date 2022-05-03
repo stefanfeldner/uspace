@@ -11,7 +11,7 @@ import { useAuth0 } from '@auth0/auth0-react';
 
 interface Incoming {
   clickedPost: number;
-  spaceData: SpaceDataType[];
+  spaceData: SpaceDataType;
   spaceOwnerId?: number;
   posts: PostType[];
   setPosts: Function;
@@ -19,8 +19,8 @@ interface Incoming {
 
 function EntryDetail(props: Incoming) {
   const post = props.posts[props.clickedPost];
-  const username = props.spaceData[0]?.userSpaceRoles[0]?.user?.username;
-  const pictureUrl = props.spaceData[0]?.userSpaceRoles[0]?.user?.pictureUrl;
+  const username = props.spaceData?.userSpaceRoles[0]?.user?.username;
+  const pictureUrl = props.spaceData?.userSpaceRoles[0]?.user?.pictureUrl;
   const comments = props.posts[props.clickedPost]?.comments;
   const { user, isLoading } = useAuth0();
   const [isOwner, setIsOwner] = useState<boolean>(false);

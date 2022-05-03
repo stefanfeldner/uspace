@@ -5,8 +5,4 @@ export interface IUserSpaceRole {
   roleId: number,
 }
 
-export interface IIncomingUserSpaceRole {
-  user_id: number,
-  space_id: number,
-  role_id: number,
-}
+export interface IIncomingUserSpaceRole extends Omit<IUserSpaceRole, 'id'> {}

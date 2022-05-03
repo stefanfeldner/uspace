@@ -5,7 +5,7 @@ import { IIncomingUserSpaceRole } from '../../../interfaces/user-space-role.inte
 
 // Mock data
 const MOCK_ID = '33';
-const MOCK_REQ: {body: IIncomingUserSpaceRole} = { body: { user_id: 1, space_id: 2, role_id: 1 } };
+const MOCK_REQ: {body: IIncomingUserSpaceRole} = { body: { userId: 1, spaceId: 2, roleId: 1 } };
 const MOCK_RES = { ...MOCK_REQ.body, id: 7 };
 // const MOCK_SPACES_AND_CREATORS_DATA: ISpacesAndCreator = {
 
@@ -22,7 +22,6 @@ jest.mock('../../../models/user-space-role.model', () => ({
 
   // },
   deleteSingleUserSpaceRole: (id: string): number => {
-    console.log('id in mocking deleteSingleUserSpaceRole ftion: ', id);
     if (id === MOCK_ID) {
       return +MOCK_ID;
     } else {

@@ -8,7 +8,7 @@ import { createUserSpaceRoleQuery, deleteSingleUserSpaceRoleQuery, returnSpacesA
 export const createUserSpaceRole = async (newUserSpaceRoleDetails: IIncomingUserSpaceRole): Promise<IUserSpaceRole> => {
   try {
     const userSpaceRole = await createUserSpaceRoleQuery(newUserSpaceRoleDetails);
-    return { id: userSpaceRole.id, roleId: userSpaceRole.role_id, spaceId: userSpaceRole.space_id, userId: userSpaceRole.user_id };
+    return userSpaceRole;
   } catch (error) {
     console.log(error);
     throw new CustomError('A database error has occurred.');

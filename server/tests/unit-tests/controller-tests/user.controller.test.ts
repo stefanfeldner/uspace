@@ -44,7 +44,6 @@ describe('Testing User Controller', () => {
   test('Should return user data if it is found in the database', async () => {
     const mReq = MOCK_REQ_2 as any as Request;
     const mRes = { status: jest.fn().mockReturnThis(), send: jest.fn() } as any as Response;
-    // console.log('mReq.body.sub', mReq.body.sub);
     await getUserBySub(mReq, mRes);
     expect(mRes.status).toBeCalledWith(200);
     expect(mRes.send).toBeCalledWith(MOCK_RES);

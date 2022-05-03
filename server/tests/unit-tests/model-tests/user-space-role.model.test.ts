@@ -1,18 +1,17 @@
 // eslint-disable-next-line camelcase
-import { User_Space_Role } from '@prisma/client';
 import { CustomError } from '../../../error-handling/custom-err.class';
-import { IIncomingUserSpaceRole } from '../../../interfaces/user-space-role.interface';
+import { IIncomingUserSpaceRole, IUserSpaceRole } from '../../../interfaces/user-space-role.interface';
 import { createUserSpaceRole, deleteSingleUserSpaceRole } from '../../../models/user-space-role.model';
 
 const MOCK_ID = '33';
 const DELETED_LINE_COUNT = 1;
-const MOCK_INCOMING_USERSPACEROLE: IIncomingUserSpaceRole = { user_id: 5, space_id: 4, role_id: 2 };
+const MOCK_INCOMING_USERSPACEROLE: IIncomingUserSpaceRole = { userId: 5, spaceId: 4, roleId: 2 };
 // eslint-disable-next-line camelcase
-const MOCK_USERSPACEROLE: User_Space_Role = { ...MOCK_INCOMING_USERSPACEROLE, id: +MOCK_ID };
+const MOCK_USERSPACEROLE: IUserSpaceRole = { ...MOCK_INCOMING_USERSPACEROLE, id: +MOCK_ID };
 
 jest.mock('../../../queries/user-space-role.queries', () => ({
   // eslint-disable-next-line camelcase
-  createUserSpaceRoleQuery: (newUserSpaceRoleDetails: IIncomingUserSpaceRole): User_Space_Role => {
+  createUserSpaceRoleQuery: (newUserSpaceRoleDetails: IIncomingUserSpaceRole): IUserSpaceRole => {
     if (newUserSpaceRoleDetails === MOCK_INCOMING_USERSPACEROLE) {
       return { ...MOCK_USERSPACEROLE };
     } else {
