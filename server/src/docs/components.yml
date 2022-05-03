@@ -39,9 +39,9 @@ components:
         - name
         - description
       example:
-        owner: 'thisIsUserSub'
-        name: 'Otters are awesome'
-        description: 'space to celebrate otters'
+        owner: 5ebac534954b54139806c112
+        name: Otters are awesome
+        description: space to celebrate otters
 
     Post:
       type: object
@@ -63,10 +63,10 @@ components:
         - content
       example:
         space_id: 123
-        user_id: 'thisIsUserSub'
-        title: 'Did you know...'
-        content: '...that otters hold hands when they sleep?'
-        tags: 'otters, cute, fluffy'
+        user_id: 5ebac534954b54139806c112
+        title: Did you know...
+        content: ...that otters hold hands when they sleep?
+        tags: otters, cute, fluffy
     Comment:
       type: object
       properties:
@@ -82,8 +82,8 @@ components:
         - content
       example:
         post_id: 234
-        user_id: 'thisIsAnotherUserSub'
-        content: 'OMG thats the cutest thing s2 🦦!!'
+        user_id: 5ebac534954b54139806c112
+        content: OMG thats the cutest thing s2 🦦!!
     UserResponse:
       type: object
       properties:
