@@ -1,38 +1,42 @@
 import { PrismaClient } from '@prisma/client';
+import { ErrorResponse } from '../interfaces/error.interface';
 import { Comment } from '../interfaces/comment.interface';
 
 const prisma = new PrismaClient();
 
 export class CommentModel {
 
-  // creates a single post
-  async createComment(req: Comment) {     // TODO ADD TYPE HERE
+  async createComment(req: Comment): Promise<Comment | ErrorResponse> {
     try {
       const { user_id, post_id, content } = req;
     
-      const comment = await prisma.comment.create({
+      return await prisma.comment.create({
         data: {
           user_id: user_id,
           post_id: post_id,
           content: content
         },
       });
-      return comment;
     } catch (error) {
-        return error;
+        console.error(error)
+        return {
+          error: 'Could not create comment'
+        }
     } 
   };
 
-  async deleteComment(id: string) {     // TODO ADD TYPE HERE
+  async deleteComment(comment_id: string): Promise<Comment | ErrorResponse> {
     try {
-      const comment = await prisma.comment.delete({
+      return await prisma.comment.delete({
         where: {
-          comment_id: +id,
+          comment_id: +comment_id,
         }
       });
-      return comment;
     } catch (error) {
-      return error
+      console.error(error)
+      return {
+        error: 'Could not delete comment'
+      }
     }
   }
 

@@ -1,36 +1,37 @@
 import { PrismaClient } from '@prisma/client';
+import { ErrorResponse } from '../interfaces/error.interface';
 import { Space } from '../interfaces/space.interface';
 
 const prisma = new PrismaClient();
 
 export class SpaceModel {
 
-  // creates a single space
-  async createSpace(req: any) {     // TODO ADD TYPE HERE
+  async createSpace(req: Space): Promise<Space | ErrorResponse> {  
       try {
-        console.log(req)
         const { name, owner, description } = req;
       
-        const space = await prisma.space.create({
+        return await prisma.space.create({
           data: {
             name: name,
             description: description,
             owner: owner,
           },
         });
-        return space;
       } catch (error) {
-          return error;
+        console.error(error)
+        return {
+          error: 'Could not create Space'
+        }
       }
   };
 
-  async getSpaces(owner: string, page: number) { // TODO ADD TYPE HERE
+  async getSpaces(owner: string, page: number): Promise<Space[] | ErrorResponse> { 
       try {
         const allSpaces = [];
 
         let next = (page * 20);
 
-        // first - 20 own spaces
+        // first - 20 own most recent spaces 
         const first = await prisma.space.findMany({
           skip: next,
           take: 20,
@@ -46,6 +47,7 @@ export class SpaceModel {
           },
         });
 
+        // second - 20 other most recent spaces
         const second = await prisma.space.findMany({
           skip: next,
           take: 20,
@@ -68,20 +70,25 @@ export class SpaceModel {
         
         return allSpaces;
       } catch (error) {
-        return error;
+        console.error(error)
+        return {
+          error: 'Could not find spaces'
+        }
       }
   }
 
-  async deleteSpace(id: string) { // TODO ADD TYPE HERE  
+  async deleteSpace(space_id: string): Promise<Space | ErrorResponse> { 
     try {
-        const space = await prisma.space.delete({
+        return await prisma.space.delete({
           where: {
-            space_id: +id,
+            space_id: +space_id,
           }
         });
-        return space
     } catch (error) {
-        return error;
+      console.error(error)
+      return {
+        error: 'Could not delete space'
+      }
     }
   }
 }

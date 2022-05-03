@@ -1,15 +1,16 @@
 import { PrismaClient } from '@prisma/client';
 import { User } from '../interfaces/user.interface';
+import { ErrorResponse } from '../interfaces/error.interface';
 
 const prisma = new PrismaClient();
 
 export class UserModel {
-    // creates a single user
-    async createUser(req: User) {     // TODO ADD TYPE HERE
+
+    async createUser(req: User): Promise<User | ErrorResponse> {
         try {
             const { email, email_verified, username, picture_url, sub } = req;
 
-            const user = await prisma.user.create({
+            return await prisma.user.create({
                 data: {
                     email: email,
                     email_verified: email_verified,
@@ -18,23 +19,26 @@ export class UserModel {
                     sub: sub,
                 },
             });
-            return user;
         } catch (error) {
-            return error;
+            console.error(error)
+            return {
+                error: 'Could not create User'
+            }
         }
     }
 
-    async getUser(id: string) {
+    async getUser(user_id: string): Promise<User | ErrorResponse> {
         try {
-            console.log(id)
-            const user = await prisma.user.findUnique({
+            return await prisma.user.findUnique({
                 where: {
-                    sub: id,
+                    sub: user_id,
                 },
             });
-            return user;
         } catch (error) {
-            return error
+            console.error(error)
+            return {
+                error: 'Could not find User'
+            }
         }
     }
 

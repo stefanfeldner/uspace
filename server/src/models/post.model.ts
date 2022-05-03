@@ -1,16 +1,16 @@
 import { PrismaClient } from '@prisma/client';
+import { ErrorResponse } from '../interfaces/error.interface';
 import { Post } from '../interfaces/post.interface';
 
 const prisma = new PrismaClient();
 
 export class PostModel {
-
-  // creates a single post
-  async createPost(req: Post) {     // TODO ADD TYPE HERE
+  
+  async createPost(req: Post): Promise<Post | ErrorResponse> {
     try {
       const { user_id, space_id, title, tags, content } = req;
     
-      const post = await prisma.post.create({
+      return await prisma.post.create({
         data: {
           space_id: space_id,
           user_id: user_id,
@@ -19,22 +19,26 @@ export class PostModel {
           tags: tags,
         },
       });
-      return post;
     } catch (error) {
-        return error;
+      console.error(error);
+      return {
+        error: 'Could not create post'
+      }
     }
   };
 
-  async deletePost(id: string) {
+  async deletePost(post_id: string): Promise<Post | ErrorResponse> {
     try {
-      const post = await prisma.post.delete({
+      return await prisma.post.delete({
         where: {
-          post_id: +id
+          post_id: +post_id
         }
       });
-      return post;
     } catch (error) {
-      return error
+      console.error(error);
+      return {
+        error: 'Could not delete post'
+      }
     }
   }
 

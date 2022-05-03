@@ -3,7 +3,6 @@ import { SpaceModel } from '../models/space.model';
 
 const spaceModel = new SpaceModel;
 
-
 // create a space
 export const postSpace: RequestHandler = async (req: Request, res: Response) => {
     try {
