@@ -1,10 +1,11 @@
 import Router from 'express';
-import { getUser, postUser, getAllSpaces, postSpace,
-        deleteSpace, postPost, deletePost, postComment, 
-        deleteComment } from './controllers/controllers';
+import { getUser, postUser } from './controllers/user.controllers';
+import { getAllSpaces, postSpace, deleteSpace } from './controllers/space.controllers'
+import { postPost, deletePost } from './controllers/post.controllers'
+import { postComment, deleteComment } from './controllers/comment.controllers'
 
 const router = Router();
-  
+
 // USERS
 /**
  * @swagger
