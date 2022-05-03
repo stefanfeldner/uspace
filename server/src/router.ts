@@ -6,21 +6,26 @@ import { getUser, postUser, getAllSpaces, postSpace,
 const router = Router();
   
 // USERS
- /**
+/**
  * @swagger
  * tags:
  *   name: Users
  *   description: User management and retrieval
  */
 
- /**
+/**
  * @swagger
  *  /users:
  *   post:
  *     summary: creates new user
  *     description: Takes the user data and creates a new user.
  *     tags: [Users]
- *     c
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: "#/components/schemas/User"
  *     responses:
  *       "201":
  *         description: Created
@@ -29,7 +34,7 @@ const router = Router();
  router.post('/users', postUser);
 
 
- /**
+/**
  * @swagger
  *  /users/{id}:
  *   get:
@@ -39,26 +44,31 @@ const router = Router();
  *       - in: path
  *         name: id
  *         required: true
- *         description: numeric user id
+ *         description: string user id sub
+ *         example: 123asd
  *         schema:
  *           type: string
  *     responses:
  *       "201":
  *         description: Created
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: "#/components/schemas/UserResponse"
  */
  router.get('/users/:id', getUser);
 
 
 
  // SPACES
- /**
+/**
  * @swagger
  * tags:
  *   name: Spaces
  *   description: Spaces management and retrieval
  */
 
- /**
+/**
  * @swagger
  *  /spaces/{owner}/{page}:
  *   get:
@@ -78,13 +88,14 @@ const router = Router();
  *         description: number of selected page first page 0
  *         schema:
  *           type: integer
+ *         example: 0
  *     responses:
  *       "201":
  *         description: Created
  */
 router.get('/spaces/:page', getAllSpaces);
 
- /**
+/**
  * @swagger
  *  /spaces:
  *   post:
@@ -103,7 +114,7 @@ router.get('/spaces/:page', getAllSpaces);
  */
 router.post('/spaces', postSpace);
 
- /**
+/**
  * @swagger
  *  /spaces/{spaceId}:
  *   delete:
@@ -111,7 +122,7 @@ router.post('/spaces', postSpace);
  *     tags: [Spaces]
  *     parameters:
  *       - in: path
- *         name: id
+ *         name: spaceId
  *         required: true
  *         description: numeric space id
  *         schema:
@@ -130,7 +141,7 @@ router.delete('/spaces/:id', deleteSpace);
  *   description: Posts management and retrieval
  */
 
- /**
+/**
  * @swagger
  *  /posts:
  *   post:
@@ -149,15 +160,15 @@ router.delete('/spaces/:id', deleteSpace);
  */
 router.post('/posts', postPost);
 
- /**
+/**
  * @swagger
- *  /posts/{postsId}:
+ *  /posts/{postId}:
  *   delete:
  *     summary: deletes post by id
  *     tags: [Posts]
  *     parameters:
  *       - in: path
- *         name: id
+ *         name: postId
  *         required: true
  *         description: numeric post id
  *         schema:
@@ -168,7 +179,14 @@ router.post('/posts', postPost);
  */
 router.delete('/posts/:id', deletePost);
 
- /**
+/**
+ * @swagger
+ * tags:
+ *   name: Comments
+ *   description: Comments management and retrieval
+ */
+
+/**
  * @swagger
  *  /comments:
  *   post:
@@ -187,16 +205,16 @@ router.delete('/posts/:id', deletePost);
  */
 router.post('/comments', postComment);
 
- /**
+/**
  * @swagger
- *  /comments:
+ *  /comments/{commentId}:
  *   delete:
  *     summary: creates new comment
  *     description: Takes the post data and creates a new post.
  *     tags: [Comments]
  *     parameters:
  *       - in: path
- *         name: id
+ *         name: commentId
  *         required: true
  *         description: numeric comment id
  *         schema:
