@@ -20,7 +20,7 @@ app.use(express.json());
 // OPENAPI VALIDATION
 app.use(
   OpenApiValidator.middleware({
-      // @ts-ignore
+    // @ts-ignore
     apiSpec: openapiSpecification,
     validateRequests: true, // (default)
     // validateResponses: true, // false by default

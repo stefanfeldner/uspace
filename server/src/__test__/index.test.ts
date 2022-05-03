@@ -2,67 +2,67 @@ import app from '../app';
 import jestOpenAPI from 'jest-openapi'; 
 import path from 'path';
 import request from 'supertest';
-// import { PrismaClient } from '@prisma/client';
+import { PrismaClient } from '@prisma/client';
 import { describe, expect, it, beforeEach, afterEach} from '@jest/globals';
 
 jestOpenAPI(path.join(__dirname, 'openapi.yml'));
 
 let server!: any; 
-const PORT = 3002
+const PORT = process.env.PORT
+
+const prisma = new PrismaClient()
 
 beforeEach(async() => {
-  server = await app.listen(PORT)
+  server = await app.listen(PORT);
 });
 
-afterEach(() => {
+afterEach(async () => {
   server.close();
 })
 
 
 describe('User', () => {
-    describe('GET/users/:sub', () => {
-        it('should satisfy OpenAPI spec', async () => {
-          const output = await request(app).get('/users/5ebac534954b54139806c112');
-          
-          // @ts-ignore
-          expect(output).toSatisfyApiSpec();
-        })
-    });
 
-    describe('POST/users', () => {
-        it('should satisfy OpenAPI spec', async () => {
+  describe('POST/users', () => {
+    it('should satisfy OpenAPI spec', async () => {
+      const data = {
+        sub: "5ebac534954b54139c806cmeo",
+        email: "fake@example.com",
+        email_verified: true,
+        username: "fake name",
+        picture_url: "https://asdfasdfsadfsd"
+      }
 
-          const data = {
-            sub: "5ebac534954b54139806c1222",
-            email: "fake@example.com",
-            email_verified: true,
-            username: "fake name",
-            picture_url: "https://asdfasdfsadfsd"
-          }
+      const output = await request(app).post('/users').send(data);
+      
+      // @ts-ignore
+      expect(output).toSatisfyApiSpec();
+    })
+  });
 
-          const output = await request(app).post('/users').send(data);
-          
-          // @ts-ignore
-          expect(output).toSatisfyApiSpec();
-        })
-    });
+  describe('GET/users/:sub', () => {
+      it('should satisfy OpenAPI spec', async () => {
+        const output = await request(app).get('/users/5ebac534954b54139c806cmeo');
+        
+        // @ts-ignore
+        expect(output).toSatisfyApiSpec();
+      })
+  });
 
+  describe('Error: GET/users/:sub', () => {
+      it('should return not found', async () => {
+        const output = await request(app).get('/users/2');
+        
+        // @ts-ignore
+        expect(output.statusCode).toEqual(404);
+      })
+  });
 })
 
 
 describe('Space', () => {
-    // describe('GET/space/:owner/:page', () => {
-    //     it('should satisfy OpenAPI spec', async () => {
-    //       const output = await request(app).get('/spaces/5ebac534954b54139806c112/0');
-
-    //       // @ts-ignore
-    //       expect(output).toSatisfyApiSpec();
-    //     })
-    // })
-
     describe('POST/space/:spacesId', () => {
         it('should satisfy OpenAPI spec', async () => {
-
           const data = {
             owner: "5ebac534954b54139806c112",
             name: "Otters are awesome",
@@ -89,7 +89,6 @@ describe('Space', () => {
 describe('Post', () => {
     describe('POST/posts', () => {
         it('should satisfy OpenAPI spec', async () => {
-
           const data = {
             space_id: 123,
             user_id: "5ebac534954b54139806c112",
@@ -107,7 +106,6 @@ describe('Post', () => {
 
     describe('DELETE/posts/postId', () => {
         it('should satisfy OpenAPI spec', async () => {
-
           const output = await request(app).delete('/posts/1');
           
           // @ts-ignore
@@ -121,7 +119,6 @@ describe('Post', () => {
 describe('Comment', () => {
     describe('POST/comments', () => {
         it('should satisfy OpenAPI spec', async () => {
-
           const data = {
             post_id: 234,
             user_id: "5ebac534954b54139806c112",
@@ -137,7 +134,6 @@ describe('Comment', () => {
 
     describe('DELETE/comments/commentId', () => {
         it('should satisfy OpenAPI spec', async () => {
-
           const output = await request(app).delete('/comments/1');
           
           // @ts-ignore
