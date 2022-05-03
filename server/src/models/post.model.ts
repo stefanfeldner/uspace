@@ -6,7 +6,7 @@ const prisma = new PrismaClient();
 
 export class PostModel {
   
-  async createPost(req: Post): Promise<Post | ErrorResponse> {
+  async createPost(req: Post) {
     try {
       const { user_id, space_id, title, tags, content } = req;
     
@@ -27,7 +27,7 @@ export class PostModel {
     }
   };
 
-  async deletePost(post_id: string): Promise<Post | ErrorResponse> {
+  async deletePost(post_id: string) {
     try {
       return await prisma.post.delete({
         where: {

@@ -6,7 +6,7 @@ const prisma = new PrismaClient();
 
 export class CommentModel {
 
-  async createComment(req: Comment): Promise<Comment | ErrorResponse> {
+  async createComment(req: Comment) {
     try {
       const { user_id, post_id, content } = req;
     
@@ -25,7 +25,7 @@ export class CommentModel {
     } 
   };
 
-  async deleteComment(comment_id: string): Promise<Comment | ErrorResponse> {
+  async deleteComment(comment_id: string) {
     try {
       return await prisma.comment.delete({
         where: {

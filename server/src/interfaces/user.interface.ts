@@ -1,8 +1,8 @@
 export interface User {
     sub: string;
     email: string;
-    email_verified: boolean;
+    email_verified?: boolean | null;
     username: string;
-    picture_url?: string;
-    created_at?: Date;
+    picture_url: string | null;
+    created_at?: Date | null;
 }

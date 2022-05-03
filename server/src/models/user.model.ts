@@ -6,7 +6,7 @@ const prisma = new PrismaClient();
 
 export class UserModel {
 
-    async createUser(req: User): Promise<User | ErrorResponse> {
+    async createUser(req: User) {
         try {
             const { email, email_verified, username, picture_url, sub } = req;
 
@@ -27,7 +27,7 @@ export class UserModel {
         }
     }
 
-    async getUser(user_id: string): Promise<User | ErrorResponse> {
+    async getUser(user_id: string) {
         try {
             return await prisma.user.findUnique({
                 where: {

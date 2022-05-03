@@ -15,16 +15,15 @@ components:
         sub:
           type: string
       required:
-        - email
-        - username
-        - sub
+      - email
+      - username
+      - sub
       example:
         sub: 5ebac534954b54139806c112
         email: fake@example.com
         email_verified: true
         username: fake name
         picture_url: https://asdfasdfsadfsd
-
     Space:
       type: object
       properties:
@@ -35,14 +34,13 @@ components:
         description:
           type: string
       required:
-        - owner
-        - name
-        - description
+      - owner
+      - name
+      - description
       example:
         owner: 5ebac534954b54139806c112
         name: Otters are awesome
         description: space to celebrate otters
-
     Post:
       type: object
       properties:
@@ -57,15 +55,15 @@ components:
         content:
           type: string
       required:
-        - space_id
-        - user_id
-        - title
-        - content
+      - space_id
+      - user_id
+      - title
+      - content
       example:
         space_id: 123
         user_id: 5ebac534954b54139806c112
         title: Did you know...
-        content: ...that otters hold hands when they sleep?
+        content: "...that otters hold hands when they sleep?"
         tags: otters, cute, fluffy
     Comment:
       type: object
@@ -77,13 +75,13 @@ components:
         content:
           type: string
       required:
-        - user_id
-        - post_id
-        - content
+      - user_id
+      - post_id
+      - content
       example:
         post_id: 234
         user_id: 5ebac534954b54139806c112
-        content: OMG thats the cutest thing s2 🦦!!
+        content: "OMG thats the cutest thing s2 \U0001F9A6!!"
     UserResponse:
       type: object
       properties:
@@ -107,4 +105,95 @@ components:
         sub: 89bd9d8d-69a6-474e-8f46-7cc8796ed151
         username: OtterLover
         picture_url: https://asdfasdfsadfsd
-        created_at: 2022-05-02T14:16:43.152Z
+        created_at: '2022-05-02T14:16:43.152Z'
+    PostResponse:
+      type: object
+      properties:
+        email:
+          type: string
+          x-faker: internet.email
+        sub:
+          type: string
+          x-faker: datatype.uuid
+        email_verified:
+          type: boolean
+        username:
+          type: string
+          x-faker: internet.userName
+        picture_url:
+          type: string
+          x-faker: image.imageUrl
+      example:
+        email: iloveooters@gmail.com
+        email_verified: true
+        sub: 89bd9d8d-69a6-474e-8f46-7cc8796ed151
+        username: OtterLover
+        picture_url: https://asdfasdfsadfsd
+        created_at: '2022-05-02T14:16:43.152Z'
+    SpaceResponse:
+      type: object
+      properties:
+        space_id:
+          type: number
+          x-faker: datatype.number
+        name:
+          type: string
+          x-faker: lorem.word
+        owner:
+          type: string
+          x-faker: datatype.uuid
+        description:
+          type: string
+          x-faker: lorem.words
+        created_at:
+          type: string
+        post:
+          type: array
+          items:
+            "$ref": "#/components/schemas/Post"
+        space_colab: 
+          type: array
+          items:
+            "$ref": "#/components/schemas/Space"
+      example:
+        space_id: 13
+        name: "I Love"
+        owner: 89bd9d8d-69a6-474e-8f46-7cc8796ed151
+        description: "Love love s2"
+        created_at: '2022-05-02T14:16:43.152Z'
+    AllSpacesResponse:
+      type: array
+      items:
+        $ref: '#/components/schemas/SpaceResponse'
+    CommentResponse:
+      type: object
+      properties:
+        comment_id:
+          type: number
+          x-faker: datatype.number
+        user_id:
+          type: string
+          x-faker: datatype.uuid
+        post_id:
+          type: number
+        content:
+          type: string
+          x-faker: lorem.words
+        created_at:
+          type: string
+      example:
+        comment_id: 13
+        user_id: 89bd9d8d-69a6-474e-8f46-7cc8796ed151
+        post_id: 7
+        content: "OtterLover"
+        created_at: '2022-05-02T14:16:43.152Z'
+        
+tags:
+- name: Users
+  description: User management and retrieval
+- name: Spaces
+  description: Spaces management and retrieval
+- name: Posts
+  description: Posts management and retrieval
+- name: Comments
+  description: Comments management and retrieval
