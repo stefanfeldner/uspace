@@ -26,12 +26,12 @@ jobs:
           node-version: ${{ matrix.node-version }}
           cache: "npm"
       - run: |
-          echo "Server Tests"
+          Backend Tests
           npm ci
           npm test
         working-directory: ./server
       - run: |
-          echo "Client Tests"
+          Frontend Tests
           npm ci
           npm test
         working-directory: ./client
