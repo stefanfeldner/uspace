@@ -2,7 +2,7 @@ import { postPost, deletePost } from '../../../controllers/post.controller';
 import { Request, Response } from 'express';
 import { IIncomingPost } from '../../../interfaces/post.interface';
 
-const MOCK_REQ: {body: IIncomingPost} = { body: { title: 'Test Post', user_id: 1, space_id: 1, tags: 'test tags', content: 'test content' } };
+const MOCK_REQ: {body: IIncomingPost} = { body: { title: 'Test Post', userId: 1, spaceId: 1, tags: 'test tags', content: 'test content' } };
 const MOCK_RES = { ...MOCK_REQ.body, id: 25 }; ;
 const MOCK_ID = '1';
 const MOCK_REQ_DELETE: {params: {id: string}} = { params: { id: MOCK_ID } };

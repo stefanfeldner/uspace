@@ -2,9 +2,9 @@ import { IIncomingUser } from '../../../interfaces/user.interface';
 import { Request, Response } from 'express';
 import { getUserBySub, postUser } from '../../../controllers/user.controller';
 
-const MOCK_REQ: {body: IIncomingUser} = { body: { email: 'test@test.com', email_verified: true, username: 'Stefan', picture_url: './image.png', sub: 'sub text' } };
+const MOCK_REQ: {body: IIncomingUser} = { body: { email: 'test@test.com', emailVerified: true, username: 'Stefan', pictureUrl: './image.png', sub: 'sub text' } };
 const MOCK_RES = { ...MOCK_REQ.body, id: 25 };
-const MOCK_REQ_2: {params: IIncomingUser} = { params: { email: 'test@test.com', email_verified: true, username: 'Stefan', picture_url: './image.png', sub: 'sub text' } };
+const MOCK_REQ_2: {params: IIncomingUser} = { params: { email: 'test@test.com', emailVerified: true, username: 'Stefan', pictureUrl: './image.png', sub: 'sub text' } };
 
 jest.mock('../../../models/user.model', () => ({
   createUser: (userDetails: any) : any => {

@@ -1,7 +1,7 @@
 import { IIncomingComment } from '../../../interfaces/comment.interface';
 import { createComment } from '../../../models/comment.model';
 
-const MOCK_DETAILS = { content: 'Test Post', user_id: 1, post_id: 2 };
+const MOCK_DETAILS = { content: 'Test Post', userId: 1, postId: 2 };
 const MOCK_RESPONSE = { ...MOCK_DETAILS, id: 25 }; ;
 
 jest.mock('../../../queries/comment.queries', () => ({
