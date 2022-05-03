@@ -11,10 +11,6 @@ const app: Application  = express();
 
 dotenv.config()
 
-const PORT = process.env.PORT;
-
-console.log(JSON.stringify(openapiSpecification))
-
 // SWAGGER
 app.use('/docs', swaggerUi.serve, swaggerUi.setup(openapiSpecification))
 

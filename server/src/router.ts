@@ -20,7 +20,6 @@ const router = Router();
  *     summary: creates new user
  *     description: Takes the user data and creates a new user.
  *     tags: [Users]
- *     c
  *     responses:
  *       "201":
  *         description: Created
