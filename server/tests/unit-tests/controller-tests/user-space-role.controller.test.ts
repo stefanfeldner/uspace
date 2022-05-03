@@ -22,7 +22,6 @@ jest.mock('../../../models/user-space-role.model', () => ({
 
   // },
   deleteSingleUserSpaceRole: (id: string): number => {
-    console.log('id in mocking deleteSingleUserSpaceRole ftion: ', id);
     if (id === MOCK_ID) {
       return +MOCK_ID;
     } else {

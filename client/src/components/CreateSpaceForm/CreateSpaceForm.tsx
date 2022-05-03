@@ -31,10 +31,8 @@ function CreateSpaceForm(props: Incoming) {
 
     // create new space
     const newSpace: SpaceDataType | PrismaError = await API_SERVICE.createSpace(spaceData);
-    console.log('NEWSPACE: ', newSpace);
     // check for unique space name constraint
     if ('code' in newSpace) {
-      console.log(newSpace);
       setSpaceNameTakenError('This Space name is already taken, please choose a different one!');
       return;
     }
@@ -44,10 +42,8 @@ function CreateSpaceForm(props: Incoming) {
       if (user) {
         // fetch user from db to get id
         const foundUser = await API_SERVICE.findUserBySub(user.sub!);
-        console.log('FOUND USER:', foundUser);
         // create a m-m relationship using the user id, space id and 2 for creator
         await API_SERVICE.createUserSpaceRole(foundUser.id, newSpace.id, 2);
-        console.log('FINISHED CREATING USER SPACE ROLE');
         // add new userSpaceRole array and input new user
         newSpace.userSpaceRoles = [
           {

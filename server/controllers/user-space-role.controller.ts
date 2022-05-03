@@ -5,7 +5,6 @@ import { handleError } from '../error-handling/error-helpers';
 export const postUserSpaceRole = async (req: Request, res: Response): Promise<void> => {
   try {
     const incomingData = req.body;
-    console.log(incomingData);
     const userSpaceRole = await createUserSpaceRole(incomingData);
     res.status(201);
     res.send(userSpaceRole);

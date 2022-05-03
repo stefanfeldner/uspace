@@ -62,8 +62,6 @@ const API_SERVICE = {
   },
   //delete single userSpaceRole by spaceId
   deleteUserSpaceRoleBySpaceId: async (spaceId: number) => {
-    console.log('spaceId', spaceId);
-
     const res = await fetch(URL + `/User_Space_Roles/${spaceId}`, {
       method: 'DELETE',
     });

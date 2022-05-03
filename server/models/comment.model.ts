@@ -8,7 +8,7 @@ export const createComment = async (commentDetails: IIncomingComment): Promise<I
     const comment = await createCommentQuery(commentDetails);
     return comment;
   } catch (error) {
-    console.log('Error in createComment', error);
+    console.log(error);
     throw new CustomError('A database error has occurred.');
   }
 };

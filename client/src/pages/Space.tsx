@@ -12,7 +12,7 @@ import { Tag } from 'tabler-icons-react';
 
 function Space() {
   const [opened, setOpened] = useState<boolean>(false);
-  const [spaceData, setSpaceData] = useState<SpaceDataType[]>([]);
+  const [spaceData, setSpaceData] = useState<SpaceDataType>();
   const [clickedPost, setClickedPost] = useState<number>(0);
   const spaceId = useParams().id; // returns id of current space
   const [posts, setPosts] = useState<PostType[]>([]);
@@ -32,8 +32,8 @@ function Space() {
   const fetchSpaceData = async () => {
     try {
       const data = await fetch(url);
-      const spaces: SpaceDataType[] = await data.json();
-      const posts = spaces[0].posts;
+      const spaces: SpaceDataType = await data.json();
+      const posts = spaces.posts;
 
       // filter out duplicates with a set
       const tagsSet: Set<string> = new Set();
@@ -58,7 +58,7 @@ function Space() {
 
       setSpaceData(spaces);
       setPosts(posts);
-      setSpaceOwnerId(spaces[0].userSpaceRoles[0].user.id);
+      setSpaceOwnerId(spaces.userSpaceRoles[0].user.id);
     } catch (error) {
       console.error(error);
     }
@@ -78,7 +78,6 @@ function Space() {
       // check if tags are included in posts tags array and add it to return
       return selectedTags.some((tag) => post.tags.includes(tag));
     });
-    console.log(filteredPosts);
 
     setFilteredPosts(filteredPosts);
   };
@@ -127,8 +126,8 @@ function Space() {
         <CreateEntryForm
           setPosts={setPosts}
           setOpened={setOpened}
-          spaceId={spaceData && spaceData[0]?.id}
-          userId={spaceData && spaceData[0]?.userSpaceRoles[0].user.id}
+          spaceId={spaceData && spaceData?.id}
+          userId={spaceData && spaceData?.userSpaceRoles[0].user.id}
         />
       </Modal>
     </>
