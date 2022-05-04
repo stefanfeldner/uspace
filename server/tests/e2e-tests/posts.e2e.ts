@@ -1,50 +1,14 @@
 import { prisma } from '../../prisma/prisma-client';
 import { app, server } from '../../index';
-
 import request from 'supertest';
-import { IUser } from '../../interfaces/user.interface';
-import { ISpace } from '../../interfaces/space.interface';
 import { IIncomingPost, IPost } from '../../interfaces/post.interface';
+import { addMockSpace, addMockUser } from './helpers';
 export const postsTests = (): void => {
-  const _addMockUser = async (): Promise<IUser> => {
-    const MOCK_USER = {
-      email: 'test@test.com',
-      email_verified: false,
-      username: 'testUsername',
-      picture_url: '/fakeImageUrl.png',
-      sub: 'subText'
-    };
-    const dbUser = await prisma.user.create({ data: MOCK_USER });
-    const user: IUser = {
-      id: dbUser.id,
-      createdAt: dbUser.created_at,
-      email: dbUser.email,
-      emailVerified: dbUser.email_verified,
-      pictureUrl: dbUser.picture_url,
-      sub: dbUser.sub,
-      username: dbUser.username
-    };
-    return user;
-  };
-  const _addMockSpace = async (): Promise<ISpace> => {
-    const MOCK_SPACE = {
-      name: 'Mock Spacee',
-      description: 'Mock Space Description'
-    };
-    const dbSpace = await prisma.space.create({ data: MOCK_SPACE });
-    const space: ISpace = {
-      id: dbSpace.id,
-      createdAt: dbSpace.created_at,
-      description: dbSpace.description,
-      name: dbSpace.name
-    };
-    return space;
-  };
-
   describe('Prisma Tests', () => {
     afterEach(async () => {
       await prisma.user.deleteMany();
       await prisma.space.deleteMany();
+      await prisma.post.deleteMany();
     });
 
     afterAll(async () => {
@@ -54,8 +18,8 @@ export const postsTests = (): void => {
 
     describe('POST /posts', () => {
       it('Should add a post to the database.', async () => {
-        const _mockUser = await _addMockUser();
-        const _mockSpace = await _addMockSpace();
+        const _mockUser = await addMockUser();
+        const _mockSpace = await addMockSpace();
         const MOCK_REQ: IIncomingPost = {
           title: 'Example Post',
           tags: 'Tags',
