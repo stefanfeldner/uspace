@@ -22,7 +22,7 @@ jest.mock('../../../models/modular-routes.model', () => ({
   }
 }));
 
-describe.only('Testing Modular-Routes Controller', () => {
+describe('Testing Modular-Routes Controller', () => {
   // Testing Get all entries
   it('Should send request to model and fetch all results for Comment', async () => {
     MOCK_TABLE_NAME = 'Comment';
