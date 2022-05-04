@@ -2,6 +2,7 @@ import { prisma } from '../../prisma/prisma-client';
 import { commentsTests } from './comments.e2e';
 import { modularRoutesTests } from './modular-route.e2e';
 import { postsTests } from './posts.e2e';
+import { spaceDataTests } from './space-data.e2e';
 import { spacesAndCreatorsTests } from './spaces-and-creators.e2e';
 import { spaceTests } from './spaces.e2e';
 import { userTests } from './users.e2e';
@@ -30,4 +31,5 @@ describe('E2E Tests', () => {
   spaceTests();
   modularRoutesTests();
   spacesAndCreatorsTests();
+  spaceDataTests();
 });
