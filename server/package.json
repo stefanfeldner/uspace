@@ -4,10 +4,11 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "jest",
-    "start": "nodemon index.ts",
+    "test": "dotenv -e .env.test jest -i",
+    "start": "dotenv -e .env.dev nodemon index.ts",
     "dev": "nodemon index.ts",
     "build": "tsc -p .",
+    "migrate:postgres": "dotenv -e .env.test -- npx prisma migrate dev --name postgres-init",
     "mock": "prism mock -d openapi.json"
   },
   "keywords": [],

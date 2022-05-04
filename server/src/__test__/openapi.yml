@@ -16,6 +16,12 @@ paths:
           application/json:
             schema:
               "$ref": "#/components/schemas/User"
+            example:
+              sub: 5ebac534ecwe139806wdcwe12
+              email: fake@example.com
+              email_verified: true
+              username: fake name
+              picture_url: https://asdfasdfsadfsd
       responses:
         '201':
           description: Created
@@ -284,20 +290,25 @@ components:
     UserResponse:
       type: object
       properties:
-        email:
+        email: 
           type: string
           x-faker: internet.email
+          example: iloveooters@gmail.com
         sub:
           type: string
           x-faker: datatype.uuid
+          example: 89bd9d8d-69a6-474e-8f46-7cc8796ed151
         email_verified:
           type: boolean
+          example: true
         username:
           type: string
           x-faker: internet.userName
+          example: OtterLover
         picture_url:
           type: string
           x-faker: image.imageUrl
+          example: hhdqdjqie
       example:
         email: iloveooters@gmail.com
         email_verified: true

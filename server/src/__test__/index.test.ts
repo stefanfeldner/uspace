@@ -25,16 +25,17 @@ describe('User', () => {
 
   describe('POST/users', () => {
     it('should satisfy OpenAPI spec', async () => {
-      const data = {
-        sub: "5ebac534954b54139c806cmeo",
-        email: "fake@example.com",
-        email_verified: true,
-        username: "fake name",
-        picture_url: "https://asdfasdfsadfsd"
-      }
+      // const data = {
+      //   sub: "5ebac534954b54139c806otter",
+      //   email: "fake@example.com",
+      //   email_verified: true,
+      //   username: "fake name",
+      //   picture_url: "https://asdfasdfsadfsd"
+      // }
 
-      const output = await request(app).post('/users').send(data);
-      
+      // const output = await request(app).post('/users').send(data);
+      const output = await request(app).post('/users')
+      console.log('thiiiis', output)
       // @ts-ignore
       expect(output).toSatisfyApiSpec();
     })
@@ -42,7 +43,7 @@ describe('User', () => {
 
   describe('GET/users/:sub', () => {
       it('should satisfy OpenAPI spec', async () => {
-        const output = await request(app).get('/users/5ebac534954b54139c806cmeo');
+        const output = await request(app).get('/users/5ebac534954b54139c806otter');
         
         // @ts-ignore
         expect(output).toSatisfyApiSpec();
@@ -64,7 +65,7 @@ describe('Space', () => {
     describe('POST/space/:spacesId', () => {
         it('should satisfy OpenAPI spec', async () => {
           const data = {
-            owner: "5ebac534954b54139806c112",
+            owner: "5ebac534954b54139c806otter",
             name: "Otters are awesome",
             description: "space to celebrate otters"
           }
