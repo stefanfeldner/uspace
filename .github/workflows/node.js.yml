@@ -6,8 +6,6 @@ name: Node.js CI
 on:
   pull_request:
     branches: [main, dev]
-  push:
-    branches: [client-test-setup]
 
 jobs:
   build:
@@ -17,7 +15,20 @@ jobs:
       matrix:
         node-version: [16.x]
         # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
-
+    services:
+      postgres:
+        image: postgres:12-alpine
+        env:
+          POSTGRES_USER: ${{secrets.PG_USER}}
+          POSTGRES_PASSWORD: ${{secrets.PG_PW}}
+          POSTGRES_DB: ${{secrets.PG_DB}}
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
     steps:
       - uses: actions/checkout@v3
       - name: Use Node.js ${{ matrix.node-version }}
@@ -27,8 +38,11 @@ jobs:
           cache: "npm"
       - run: |
           npm ci
+          npx prisma db push
           npm test
         working-directory: ./server
+        env:
+          DATABASE_URL: ${{secrets.DATABASE_URL}}
       - run: |
           npm ci
           npm test
