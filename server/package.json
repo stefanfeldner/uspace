@@ -8,6 +8,7 @@
     "start": "dotenv -e .env.dev nodemon index.ts",
     "dev": "nodemon index.ts",
     "build": "tsc -p .",
+    "docker:up": "docker-compose up -d",
     "migrate:postgres": "dotenv -e .env.test -- npx prisma migrate dev --name postgres-init",
     "mock": "prism mock -d openapi.json"
   },

@@ -24,7 +24,7 @@ export const getUser: RequestHandler = async (req: Request, res: Response) => {
             res.status(201);
             res.send(findUser);
         } else {
-            res.status(404)
+            res.status(404);
             res.send({message: 'Not Found'})
         }
     } catch (error) {

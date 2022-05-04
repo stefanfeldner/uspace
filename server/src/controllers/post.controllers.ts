@@ -19,8 +19,14 @@ export const postPost: RequestHandler = async (req: Request, res: Response) => {
 export const deletePost: RequestHandler = async (req: Request, res: Response) => {
     try {
         const deletedPost = await postModel.deletePost(req.params.id);
-        res.status(201);
-        res.send(deletedPost);
+
+        if (deletedPost) {
+            res.status(201);
+            res.send(deletedPost);
+        } else {
+            res.status(404);
+            res.send({message: 'Not Found'});
+        }
     } catch (error) {
         res.status(500);
         res.send(JSON.stringify(error));

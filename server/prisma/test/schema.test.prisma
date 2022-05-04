@@ -1,0 +1,67 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model user {
+  sub               String        @id
+  email             String        @db.VarChar(255)
+  email_verified    Boolean?
+  username          String        @db.VarChar(50)
+  picture_url       String?       @db.VarChar(255)
+  created_at        DateTime?     @default(now())
+  space             space[]
+  post              post[]
+  comment           comment[]
+  space_colab       space_colab[]
+}
+
+model space {
+  space_id         Int           @id @default(autoincrement())
+  name             String
+  owner            String
+  description      String?
+  created_at       DateTime?     @default(now())
+  user             user          @relation(fields: [owner], references: [sub], onDelete: Cascade)
+  post             post[]
+  space_colab      space_colab[]
+}
+ 
+model post {
+  post_id     Int           @id @default(autoincrement())
+  space_id    Int
+  user_id     String
+  title       String
+  tags        String
+  content     String?
+  created_at  DateTime?     @default(now())
+  comment     comment[]
+  user        user          @relation(fields: [user_id], references: [sub], onDelete: Cascade)
+  space       space         @relation(fields: [space_id], references: [space_id], onDelete: Cascade)
+}
+
+model comment {
+comment_id Int       @id @default(autoincrement())
+user_id    String
+post_id    Int
+content    String
+created_at DateTime? @default(now())
+post       post      @relation(fields: [post_id], references: [post_id], onDelete: Cascade)
+user       user      @relation(fields: [user_id], references: [sub], onDelete: Cascade)
+}
+
+model space_colab {
+  space_id       Int
+  user_id        String
+  canwrite       Boolean @default(false)
+  space          space   @relation(fields: [space_id], references: [space_id], onDelete: Cascade)
+  user           user    @relation(fields: [user_id], references: [sub], onDelete: Cascade)
+
+  @@id([space_id, user_id])
+}
+
+

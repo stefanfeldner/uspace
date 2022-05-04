@@ -33,8 +33,14 @@ export const getAllSpaces: RequestHandler = async (req: Request, res: Response) 
 export const deleteSpace: RequestHandler = async (req: Request, res: Response) => {
     try {
         const deletedSpace = await spaceModel.deleteSpace(req.params.id);
-        res.status(201);
-        res.send(deletedSpace);
+
+        if (deletedSpace){
+            res.status(201);
+            res.send(deletedSpace);
+        } else {
+            res.status(404);
+            res.send({message: 'Not Found'});
+        }
     } catch (error) {
         res.status(500);
         res.send(JSON.stringify(error));
