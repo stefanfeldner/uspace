@@ -9,7 +9,7 @@ import { Server } from 'http';
 const PORT = process.env.PORT
 let server: Server
 
-jestOpenAPI(path.join(__dirname, 'openapi.yml'));
+jestOpenAPI(path.join(__dirname, 'openapi.test.yml'));
 
 beforeEach(async() => {
   server = await app.listen(PORT);
