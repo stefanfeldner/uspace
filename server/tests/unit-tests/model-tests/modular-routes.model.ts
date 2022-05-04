@@ -34,31 +34,32 @@ jest.mock('../../../queries/modular-routes.queries', () => ({
     }
   }
 }));
-
-describe('Testing Modular Routes model', () => {
-  for (const route of ROUTES) {
-    test(route + 's', async () => {
-      const response = await returnAllEntries(route);
-      expect(response).toEqual(EXPECTED_VALUES[route]);
-    });
-    test(route + 's', async () => {
-      const response = await returnEntryById(`/${route}s/1`, '1');
-      expect(response).toEqual(EXPECTED_VALUES[route][0]);
-    });
-  }
-  test('Catch error on Role route', async () => {
-    try {
-      await returnAllEntries('Role');
-    } catch (e) {
-      expect((e as Error).message).toBe('A database error has occurred.');
+export const modularRoutesModelTests = (): void => {
+  describe('Testing Modular Routes model', () => {
+    for (const route of ROUTES) {
+      it(route + 's', async () => {
+        const response = await returnAllEntries(route);
+        expect(response).toEqual(EXPECTED_VALUES[route]);
+      });
+      it(route + 's', async () => {
+        const response = await returnEntryById(`/${route}s/1`, '1');
+        expect(response).toEqual(EXPECTED_VALUES[route][0]);
+      });
     }
-  });
+    it('Catch error on Role route', async () => {
+      try {
+        await returnAllEntries('Role');
+      } catch (e) {
+        expect((e as Error).message).toBe('A database error has occurred.');
+      }
+    });
 
-  test('Catch error on Role route', async () => {
-    try {
-      await returnEntryById('/Role/1', '1');
-    } catch (e) {
-      expect((e as Error).message).toBe('A database error has occurred.');
-    }
+    it('Catch error on Role route', async () => {
+      try {
+        await returnEntryById('/Role/1', '1');
+      } catch (e) {
+        expect((e as Error).message).toBe('A database error has occurred.');
+      }
+    });
   });
-});
+};
