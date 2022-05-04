@@ -9,6 +9,7 @@ export const commentsTests = (): void => {
     afterEach(async () => {
       await prisma.comment.deleteMany();
       await prisma.post.deleteMany();
+      await prisma.user_Space_Role.deleteMany();
       await prisma.space.deleteMany();
       await prisma.user.deleteMany();
     });

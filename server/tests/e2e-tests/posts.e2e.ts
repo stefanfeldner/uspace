@@ -6,6 +6,7 @@ import { addMockPost, addMockSpace, addMockUser } from './helpers';
 export const postsTests = (): void => {
   describe('POST /posts', () => {
     afterEach(async () => {
+      await prisma.user_Space_Role.deleteMany();
       await prisma.user.deleteMany();
       await prisma.space.deleteMany();
       await prisma.post.deleteMany();
