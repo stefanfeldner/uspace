@@ -3,7 +3,7 @@ import { app, server } from '../../index';
 import { addMockUserSpaceRole } from './helpers';
 import request from 'supertest';
 export const spacesAndCreatorsTests = (): void => {
-  describe.only('GET /spaceAndCreators', () => {
+  describe('GET /spaceAndCreators', () => {
     afterEach(async () => {
       await prisma.comment.deleteMany();
       await prisma.post.deleteMany();
