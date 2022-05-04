@@ -68,49 +68,50 @@ jest.mock('../../../queries/space.queries', () => ({
     }
   }
 }));
+export const spaceModelTests = (): void => {
+  describe('Testing Space Model', () => {
+    it('createSpace() Should send space to db and return the saved space with an id added to it', async () => {
+      const response = await createSpace(MOCK_INCOMING_SPACE);
+      expect(response.id).toEqual(MOCK_SPACE.id);
+    });
 
-describe('Testing Space Model', () => {
-  test('createSpace() Should send space to db and return the saved space with an id added to it', async () => {
-    const response = await createSpace(MOCK_INCOMING_SPACE);
-    expect(response.id).toEqual(MOCK_SPACE.id);
-  });
+    it('createSpace() Should throw an error if called with the wrong arguments', async () => {
+      try {
+        expect(await createSpace({} as IIncomingSpace)).toThrowError();
+      } catch {}
+    });
 
-  test('createSpace() Should throw an error if called with the wrong arguments', async () => {
-    try {
-      expect(await createSpace({} as IIncomingSpace)).toThrowError();
-    } catch {}
-  });
+    it('returnSpaceData() Should return the space data fetched through a space id', async () => {
+      const response = await returnSpaceData(MOCK_ID);
+      expect(response).toEqual(MOCK_SPACE_DATA);
+    });
 
-  test('returnSpaceData() Should return the space data fetched through a space id', async () => {
-    const response = await returnSpaceData(MOCK_ID);
-    expect(response).toEqual(MOCK_SPACE_DATA);
-  });
+    it('returnSpaceData() Should return null if no no space if found with a given id', async () => {
+      const response = await returnSpaceData('26');
+      expect(response).toEqual(null);
+    });
 
-  test('returnSpaceData() Should return null if no no space if found with a given id', async () => {
-    const response = await returnSpaceData('26');
-    expect(response).toEqual(null);
-  });
+    it('returnSpaceData() Should throw and error if the wrong input is provided', async () => {
+      try {
+        await returnSpaceData('');
+      } catch (e) {
+        expect(e).toBeInstanceOf(CustomError);
+        expect((e as Error).message).toEqual('A database error has occurred.');
+      }
+    });
 
-  test('returnSpaceData() Should throw and error if the wrong input is provided', async () => {
-    try {
-      await returnSpaceData('');
-    } catch (e) {
-      expect(e).toBeInstanceOf(CustomError);
-      expect((e as Error).message).toEqual('A database error has occurred.');
-    }
-  });
+    it('deleteSingleSpace() Should return the id of the deleted space', async () => {
+      const response = await deleteSingleSpace(MOCK_ID);
+      expect(response).toEqual(MOCK_ID);
+    });
 
-  test('deleteSingleSpace() Should return the id of the deleted space', async () => {
-    const response = await deleteSingleSpace(MOCK_ID);
-    expect(response).toEqual(MOCK_ID);
+    it('deleteSingleSpace() Should throw an error if an error is caught', async () => {
+      try {
+        await deleteSingleSpace('');
+      } catch (e) {
+        expect(e).toBeInstanceOf(CustomError);
+        expect((e as Error).message).toEqual('A database error has occurred.');
+      }
+    });
   });
-
-  test('deleteSingleSpace() Should throw an error if an error is caught', async () => {
-    try {
-      await deleteSingleSpace('');
-    } catch (e) {
-      expect(e).toBeInstanceOf(CustomError);
-      expect((e as Error).message).toEqual('A database error has occurred.');
-    }
-  });
-});
+};

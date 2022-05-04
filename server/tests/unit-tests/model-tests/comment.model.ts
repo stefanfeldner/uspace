@@ -11,18 +11,19 @@ jest.mock('../../../queries/comment.queries', () => ({
     }
   }
 }));
+export const commentModelTests = (): void => {
+  describe('Testing Comment Model', () => {
+    it('Should send comment details to the db and get a comment with an id back', async () => {
+      const response = await createComment(MOCK_DETAILS);
+      expect(response.id).toEqual(MOCK_RESPONSE.id);
+    });
 
-describe('Testing Comment Model', () => {
-  test('Should send comment details to the db and get a comment with an id back', async () => {
-    const response = await createComment(MOCK_DETAILS);
-    expect(response.id).toEqual(MOCK_RESPONSE.id);
+    it('Should throw an error if called with wrong input', async () => {
+      try {
+        expect(await createComment({} as IIncomingComment)).toThrowError();
+      } catch (e) {
+        expect((e as Error).message).toEqual('A database error has occurred.');
+      }
+    });
   });
-
-  test('Should throw an error if called with wrong input', async () => {
-    try {
-      expect(await createComment({} as IIncomingComment)).toThrowError();
-    } catch (e) {
-      expect((e as Error).message).toEqual('A database error has occurred.');
-    }
-  });
-});
+};
