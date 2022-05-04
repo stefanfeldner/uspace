@@ -43,9 +43,9 @@ jobs:
           npx prisma db push
           npm test
         working-directory: ./server
+        env:
+          DATABASE_URL: ${{secrets.DATABASE_URL}}
       - run: |
           npm ci
           npm test
         working-directory: ./client
-        env:
-          DATABASE_URL: ${{secrets.DATABASE_URL}}
