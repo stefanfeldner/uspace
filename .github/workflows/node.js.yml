@@ -6,8 +6,6 @@ name: Node.js CI
 on:
   pull_request:
     branches: [main, dev]
-  push:
-    branches: [e2e-post]
 
 jobs:
   build:
