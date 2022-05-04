@@ -5,7 +5,7 @@
   "main": "index.ts",
   "scripts": {
     "tsilent": "cross-env NODE_ENV=test jest --silent",
-    "test": "cross-env NODE_ENV=test jest",
+    "test": "cross-env NODE_ENV=test jest tests/e2e-tests",
     "start": "cross-env NODE_ENV=dev nodemon"
   },
   "keywords": [],
