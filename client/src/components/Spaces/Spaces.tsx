@@ -19,7 +19,7 @@ function Spaces(props: Incoming) {
   const [allSpaces, setAllSpaces] = useState<SpaceWithCreatorType[]>([]);
   const [filterValue, setFilterValue] = useState<string>('');
   const [spaceNames, setSpaceNames] = useState<string[]>([]);
-
+  
   useEffect(() => {
     fetchSpaces();
   }, []);
