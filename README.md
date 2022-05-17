@@ -94,5 +94,4 @@ REACT_APP_API_FIREBASE_STORAGE_BUCKET=########################
 REACT_APP_API_FIREBASE_MESSAGING_SENDER_ID=########################
 REACT_APP_API_FIREBASE_APP_ID=394710398936=########################
 REACT_APP_API_FIREBASE_MEASUREMENT_ID=########################
-
 ```
