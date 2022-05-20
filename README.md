@@ -6,7 +6,7 @@ Imagine a place where everyone can share news on what's going on in their lives,
 
 uspace is here to help with that by letting you create your **own unique spaces** where you can share all those pieces of information quickly and easily.
 
-It allows users to either login or create a new account using **aut0** for authentication.
+It allows users to either login or create a new account using **auth0** for authentication.
 
 ![Homepage](https://github.com/stefanfeldner/uspace/blob/3e5b486ab0477d4176b442ccdaedfecef4cd9b1e/client/src/assets/img/home.png)
 
@@ -94,5 +94,4 @@ REACT_APP_API_FIREBASE_STORAGE_BUCKET=########################
 REACT_APP_API_FIREBASE_MESSAGING_SENDER_ID=########################
 REACT_APP_API_FIREBASE_APP_ID=394710398936=########################
 REACT_APP_API_FIREBASE_MEASUREMENT_ID=########################
-
 ```
