@@ -1,19 +1,21 @@
 const router = require('express').Router();
+const { postUser, getUserBySub } = require('./controllers/user.controller');
 const {
-  postUser,
-  postSpace,
   getAllEntries,
   getSingleEntryById,
-  postPost,
-  postComment,
+} = require('./controllers/modular.controller');
+const {
+  postSpace,
+  deleteSpace,
+  getSpaceData,
+} = require('./controllers/space.controller');
+const { postPost, deletePost } = require('./controllers/post.controller');
+const { postComment } = require('./controllers/comment.controller');
+const {
   postUserSpaceRole,
   getSpacesAndCreators,
-  getSpaceData,
-  getUserBySub,
-  deletePost,
-  deleteSpace,
   deleteUserSpaceRole,
-} = require('./controllers/user.controller');
+} = require('./controllers/bridges.controller');
 
 //
 // '/:table' routes are dynamic and return all entries of a given table

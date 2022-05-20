@@ -11,7 +11,8 @@ const Profile = () => {
   const [userEmail, setUserEmail] = useState<string>('');
   const [userPicture, setUserPicture] = useState<string>('');
   const [userName, setUserName] = useState<string>('');
-
+  console.log(user);
+  
   const fetchUser = async () => {
     const fetchedUser: UserType = await API_SERVICE.findUserBySub(user?.sub!);
     setUserEmail(fetchedUser.email);
