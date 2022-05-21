@@ -27,6 +27,8 @@ Once you have found the space you want to visit, click on it, and you'll see all
 ![SASS](https://img.shields.io/badge/SASS-hotpink.svg?style=for-the-badge&logo=SASS&logoColor=white)
 ![Firebase](https://img.shields.io/badge/firebase-%23039BE5.svg?style=for-the-badge&logo=firebase)
 
+Firebase was used for File uploads in the posts and Mantine for the Rich Text Editor.
+
 ### Backend
 
 ![NodeJS](https://img.shields.io/badge/node.js-6DA55F?style=for-the-badge&logo=node.js&logoColor=white)
