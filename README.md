@@ -34,11 +34,12 @@ Once you have found the space you want to visit, click on it, and you'll see all
 ![Prisma](https://img.shields.io/badge/Prisma-3982CE?style=for-the-badge&logo=Prisma&logoColor=white)
 ![Postgres](https://img.shields.io/badge/postgres-%23316192.svg?style=for-the-badge&logo=postgresql&logoColor=white)
 
+## Setup DB
+
 In server folder:
 
 ```
 $ npx prisma migrate dev --name init
-$ npx prisma generate
 ```
 In your DB, navigate to your Role table:
 
