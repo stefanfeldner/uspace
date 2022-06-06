@@ -109,31 +109,6 @@ function Spaces(props: Incoming) {
                 allSpaces={allSpaces}
                 setAllSpaces={setAllSpaces}
               />
-              <SpacesList
-                spaces={allSpaces}
-                allSpaces={allSpaces}
-                setAllSpaces={setAllSpaces}
-              />
-              <SpacesList
-                spaces={allSpaces}
-                allSpaces={allSpaces}
-                setAllSpaces={setAllSpaces}
-              />
-              <SpacesList
-                spaces={allSpaces}
-                allSpaces={allSpaces}
-                setAllSpaces={setAllSpaces}
-              />
-              <SpacesList
-                spaces={allSpaces}
-                allSpaces={allSpaces}
-                setAllSpaces={setAllSpaces}
-              />
-              <SpacesList
-                spaces={allSpaces}
-                allSpaces={allSpaces}
-                setAllSpaces={setAllSpaces}
-              />
             </div>
           </div>
         </div>
