@@ -2,6 +2,10 @@
 
 Full Stack Web Application by Stefan Feldner
 
+Try it out here: https://uspace.netlify.app/
+
+[![Netlify Status](https://api.netlify.com/api/v1/badges/b13d751f-be2f-4662-bf94-64eba740729a/deploy-status)](https://app.netlify.com/sites/uspace/deploys)
+
 Imagine a place where everyone can share news on what's going on in their lives, notes on the latest class, or, if you're a company, share the progress, on a new product or service.
 
 uspace is here to help with that by letting you create your **own unique spaces** where you can share all those pieces of information quickly and easily.
